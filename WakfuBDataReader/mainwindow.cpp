@@ -103,29 +103,185 @@ void MainWindow::ReadHeader()
 
     switch (m_fileId)
     {
+    case 1:
+        m_binaryReader = new Achievement();
+        break;
+    case 2:
+        m_binaryReader = new AchievementVariable();
+        break;
     case 3:
         m_binaryReader = new AchievementCategory();
+        break;
+    case 4:
+        m_binaryReader = new AreaEffect();
+        break;
+    case 5:
+        m_binaryReader = new AudioMarkerInteractiveElementParam();
+        break;
+    case 6:
+        m_binaryReader = new BackgroundFeedback();
+        break;
+    case 7:
+        m_binaryReader = new BackgroundInteractiveElementParam();
         break;
     case 8:
         m_binaryReader = new Boat();
         break;
+    case 9:
+        m_binaryReader = new BoatLink();
+        break;
+    case 10:
+        // ??
+        break;
+    case 11:
+        // ??
+        break;
+    case 12:
+        m_binaryReader = new Cannon();
+        break;
     case 13:
         m_binaryReader = new CensoredEntry();
+        break;
+    case 14: // not sure
+        m_binaryReader = new ChaosParam();
+        break;
+    case 15:
+        // ??
+        break;
+    case 16:
+        m_binaryReader = new CharacGainPerLevel();
+        break;
+    case 17:
+        m_binaryReader = new CitizenRank();
+        break;
+    case 18:
+        m_binaryReader = new ClientEvent();
+        break;
+    case 19:
+        // ??
+        break;
+    case 20:
+        m_binaryReader = new ClimateBonus();
+        break;
+    case 21:
+        m_binaryReader = new ClimateBonusList();
+        break;
+    case 22:
+        m_binaryReader = new CollectInteractiveElementParam();
         break;
     case 23:
         m_binaryReader = new Craft();
         break;
+    case 24:
+        m_binaryReader = new CraftInteractiveElementParam();
+        break;
+    case 25:
+        m_binaryReader = new DecorationInteractiveElementParam();
+        break;
+    case 26:
+        m_binaryReader = new DestructibleElementParam();
+        break;
+    case 27:
+        m_binaryReader = new Dialog();
+        break;
+    case 28:
+        m_binaryReader = new Drago();
+        break;
+    case 29:
+        m_binaryReader = new EffectGroup();
+        break;
+    case 30:
+        m_binaryReader = new GemBackgroundInteractiveElementParam();
+        break;
+    case 31:
+        m_binaryReader = new GenericActivableInteractiveElementParam();
+        break;
+    case 32:
+        m_binaryReader = new Ground();
+        break;
+    case 33:
+        m_binaryReader = new HavenBagModelView();
+        break;
     case 34:
         m_binaryReader = new InteractiveElementModel();
+        break;
+    case 35:
+        m_binaryReader = new Item();
+        break;
+    case 36:
+        m_binaryReader = new ItemSet();
         break;
     case 37:
         m_binaryReader = new ItemType();
         break;
+    case 38:
+        m_binaryReader = new LootChestInteractiveElementParam();
+        break;
+    case 39:
+        // ??
+        break;
+    case 40:
+        // ??
+        break;
+    case 41:
+        m_binaryReader = new MarketBoardInteractiveElementParam();
+        break;
+    case 42:
+        m_binaryReader = new Monster();
+        break;
+    case 43:
+        // ?
+        break;
+    case 44:
+        // ?
+        break;
+    case 45:
+        // ?
+        break;
+    case 46:
+        // ?
+        break;
     case 47:
         m_binaryReader = new MonsterType();
         break;
+    case 48:
+        m_binaryReader = new MonsterTypePest();
+        break;
+    case 49:
+        m_binaryReader = new MonsterTypeRelashionship();
+        break;
+    case 50:
+        // ?
+        break;
+    case 51:
+        m_binaryReader = new NationColors();
+        break;
+    case 52:
+        m_binaryReader = new NationLaw();
+        break;
     case 53:
         m_binaryReader = new NationRank();
+        break;
+    case 54:
+        m_binaryReader = new Protector();
+        break;
+    case 55:
+        m_binaryReader = new ProtectorBuff();
+        break;
+    case 56:
+        m_binaryReader = new ProtectorBuffList();
+        break;
+    case 57:
+        m_binaryReader = new ProtectorEcosystemProtection();
+        break;
+    case 58:
+        m_binaryReader = new Recipe();
+        break;
+    case 59:
+        // ?
+        break;
+    case 60:
+        // ?
         break;
     case 81:
         m_binaryReader = new Emote();

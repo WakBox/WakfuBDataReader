@@ -29,6 +29,11 @@ public:
         m_hoo = hoo;
     }
 
+    void CalcHoo()
+    {
+        m_hoo = (qint8)(qint32)(m_hoo + (m_fileId * (m_stream.device()->pos()) + m_size));
+    }
+
     template <class T>
     BinaryReader& operator>>(T& value)
     {
@@ -39,7 +44,7 @@ public:
     template <typename T>
     T Read()
     {
-        m_hoo = (qint8)(qint32)(m_hoo + (m_fileId * (m_stream.device()->pos()) + m_size));
+        CalcHoo();
 
         T v;
         *this >> v;
@@ -47,19 +52,18 @@ public:
         return v - m_hoo;
     }
 
+    float ReadFloat()
+    {
+        CalcHoo();
+        float v;
+        *this >> v;
+
+        return v;
+    }
+
     bool ReadBool() { return Read<bool>(); }
     qint32 ReadInt() { return Read<qint32>(); }
     quint32 ReadUInt() { return Read<quint32>(); }
-
-    // LE FLOAT est différent !
-    /*
-    public float getFloat()
-    {
-        this.akU();
-        return this.bmp.getFloat();
-    }
-    */
-    float ReadFloat() { return Read<float>(); }
     double ReadDouble() { return Read<double>(); }
     qint16 ReadShort() { return Read<qint16>(); }
     quint16 ReadUShort() { return Read<quint16>(); }
@@ -78,8 +82,11 @@ public:
         m_stream.readRawData(s, len);
     }
 
-    QString ReadString(qint32 len)
+    QString ReadString()
     {
+        quint32 len;
+        *this >> len;
+
         QByteArray bytes;
         bytes.resize(len);
 
@@ -92,6 +99,59 @@ public:
 
         return QString::fromUtf8(bytes);
     }
+
+    QString ReadStringArray()
+    {
+        qint32 size;
+        QString result = "[";
+
+        *this >> size;
+
+        for (quint16 i = 0; i < size; ++i)
+            result += ReadString() + ", ";
+
+        return result.remove(result.size(), -2);
+    }
+
+    QString ReadFloatArray()
+    {
+        qint32 size;
+        QString result = "[";
+
+        *this >> size;
+
+        for (quint16 i = 0; i < size; ++i)
+            result += QString::number(ReadFloat()) + ", ";
+
+        return result.remove(result.size(), -2);
+    }
+
+    template <typename T>
+    QString ReadArray()
+    {
+        quint32 size;
+        QString result = "[";
+
+        *this >> size;
+
+        for (quint16 i = 0; i < size; ++i)
+        {
+            T v = Read<T>();
+
+            result += QString::number(v);
+
+            if (i != size - 1)
+                result += ", ";
+        }
+
+        result += "]";
+        return result;
+    }
+
+    QString ReadByteArray() { return ReadArray<qint8>(); }
+    QString ReadIntArray() { return ReadArray<qint32>(); }
+    QString ReadShortArray() { return ReadArray<qint16>(); }
+    QString ReadLongArray() { return ReadArray<qint64>(); }
 
     QByteArray ReadAllFromCurrentPos() { return m_stream.device()->readAll(); }
     qint32 GetSize() { return m_size; }
