@@ -7,7 +7,7 @@ public:
 
     QString GetColumns()
     {
-        return QString("int|short|int|int|int|bool|int|int|int array|int");
+        return QString("int|short|int|int|byte|byte|int|bool|int|int|int array|int");
     }
 
     void Read(Rows rows)
@@ -26,6 +26,8 @@ public:
             d << r->ReadShort();
             d << r->ReadInt();
             d << r->ReadInt();
+            d << r->ReadByte();
+            d << r->ReadByte();
             d << r->ReadInt();
             d << r->ReadBool();
             d << r->ReadInt();

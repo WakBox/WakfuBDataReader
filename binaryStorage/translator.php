@@ -43,6 +43,7 @@ class OutputFile
 	private $columns = array();
 
 	private $translate = array(
+		'wtf??'			=> 'wtf??',
 		'get'			=> 'ReadByte|byte',
 		'readBoolean'	=> 'ReadBool|bool',
 		'getShort'		=> 'ReadShort|short',
@@ -107,6 +108,7 @@ class OutputFile
 	public function ParseLine($line)
 	{
 		$keys = array_keys($this->translate);
+
 		if ($newFunc = $this->Contains($line, $keys))
 		{
 			$translatedFunc = $this->translate[$keys[$newFunc]];

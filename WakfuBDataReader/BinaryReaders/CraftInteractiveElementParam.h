@@ -7,7 +7,7 @@ public:
 
     QString GetColumns()
     {
-        return QString("int|int|int|int|int array");
+        return QString("int|int|int|int|int array|byte");
     }
 
     void Read(Rows rows)
@@ -27,6 +27,7 @@ public:
             d << r->ReadInt();
             d << r->ReadInt();
             d << r->ReadIntArray();
+            d << r->ReadByte();
 
             data.push_back(d);
         }
