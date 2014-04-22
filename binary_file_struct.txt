@@ -1,0 +1,50 @@
+Wakfu binary file structure :
+
+byte order : Little Endian
+
+Header
+{
+	int size + 756423
+	int rows
+	
+	for (var i = 0; i < rows; ++i)
+	{
+		long id
+		int offset
+		int size
+		byte unk
+	}
+	
+	byte unkByte // I get 1
+	
+	for (var l = 0; l < unkByte; ++l)
+	{
+		byte unkByte2 // I get 1
+		
+		int strSize
+		byte[strSize] string // (I get "id" for 13.bin)
+		
+		byte rows // (again !?)
+		
+		for (var k = 0; k < unkByte3)
+		{
+			long id // (I guess it's id) and it's in random order ?
+			
+			if (unkByte2 == 0)
+			{
+				int unkInt
+				for (var l = 0; l < unkInt; ++l)
+					int unkInt2
+			}
+			else
+			{
+				int unkInt
+			}
+		}
+	}
+}
+
+Content
+{
+	Check enum to find the BinaryStorage file that read it.
+}

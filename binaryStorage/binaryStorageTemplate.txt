@@ -1,0 +1,31 @@
+#include "BaseBinaryReader.h"
+
+class %className% : public BaseBinaryReader
+{
+public:
+    %className%() {}
+
+    QString GetColumns()
+    {
+        return QString("%columns%");
+    }
+
+    void Read(Rows rows)
+    {
+        qint32 size = rows.size();
+
+        for (qint32 i = 0; i < size; ++i)
+        {
+            Row row = rows[i];
+            QVariantList d;
+
+            r->SetBufferPosition(row.offset);
+
+            // Struct
+%struct%
+            data.push_back(d);
+        }
+
+        emit Finished(data);
+    }
+};

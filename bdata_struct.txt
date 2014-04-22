@@ -1,0 +1,59 @@
+    public void a(dxp a, gk a0)
+    {
+        eae a1 = this.f(a); // lecture du header
+        K.trace((Object)new StringBuilder().append(((Object)a).getClass().getSimpleName()).append(": ").append(a1.dyS()).append(" entr\u00e9es").toString());
+
+        a1.a(a, a0);
+	    {
+	    	final void a(dxp a, gk a0)
+	    	{
+		        int i = this.mHr.length; // rows
+		        int i0 = 0;
+		        while(i0 < i)
+		        {
+		            dcu a1 = this.mHr[i0]; // récupère la struct row correspondant à l'id
+		            a.reset();
+
+					this.a(a1, a);
+					{
+						private void a(dcu a, dxp a0)
+						{
+							int i = a.gph; // offset
+							bYN a1 = this.mHt; // buffer sans le header
+							int i0 = a.hoo; // hoo
+
+							a1.y(i, (byte)i0);
+							{
+								protected void y(int i, byte i0)
+								{
+									this.hoo = i0;
+									this.bjs.position(i);
+								}
+							}
+
+							a0.a(this.mHt);
+							{
+								// BinaryStorage reader
+							}
+
+							if((long)(a.m_size + i) == this.mHt.position())
+							{
+								return;
+							}
+							else
+							{
+								throw new Exception("Taille de donn\u00e9e incorrecte ");
+							}
+						}
+					}
+
+			        // Assigne les valeurs ?
+		            a0.a(a);
+		            i0 = i0 + 1;
+		        }
+		    }
+	    }
+
+	    // Remove file
+	    this.a(a1);
+    }
