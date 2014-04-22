@@ -1,6 +1,3 @@
-#ifndef CENSOREDENTRY_H
-#define CENSOREDENTRY_H
-
 #include "BaseBinaryReader.h"
 
 class CensoredEntry : public BaseBinaryReader
@@ -10,7 +7,7 @@ public:
 
     QString GetColumns()
     {
-        return QString("int|bool|int|int|word");
+        return QString("int|bool|int|int|string");
     }
 
     void Read(Rows rows)
@@ -24,13 +21,12 @@ public:
 
             r->SetBufferPosition(row.offset);
 
+            // Struct
             d << r->ReadInt();
             d << r->ReadBool();
             d << r->ReadInt();
             d << r->ReadInt();
-
-            qint32 strSize = r->ReadInt();
-            d << r->ReadString(strSize);
+            d << r->ReadString();
 
             data.push_back(d);
         }
@@ -38,5 +34,3 @@ public:
         emit Finished(data);
     }
 };
-
-#endif // CENSOREDENTRY_H

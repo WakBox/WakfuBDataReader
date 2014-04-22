@@ -25,11 +25,9 @@ public:
             d << r->ReadInt();
             d << r->ReadInt();
             d << r->ReadFloat();
-
             d << r->ReadBool();
             d << r->ReadBool();
             d << r->ReadBool();
-
 
             data.push_back(d);
         }

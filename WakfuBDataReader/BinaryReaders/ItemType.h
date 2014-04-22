@@ -7,7 +7,7 @@ public:
 
     QString GetColumns()
     {
-        return QString("short|short|bool|bool|bool|string[]|string[]");
+        return QString("short|short|bool|bool|bool|string array|string array|short|int array");
     }
 
     void Read(Rows rows)
@@ -24,25 +24,13 @@ public:
             // Struct
             d << r->ReadShort();
             d << r->ReadShort();
-
             d << r->ReadBool();
             d << r->ReadBool();
             d << r->ReadBool();
-
-            for (quint8 j = 0; j < 2; ++j)
-            {
-                qint32 strNum = r->ReadInt();
-                QStringList str;
-
-                for (qint16 j = 0; j < strNum; ++j)
-                {
-                    qint32 strSize = r->ReadInt();
-                    str << r->ReadString(strSize);
-                }
-
-                d << str.join("|");
-            }
-
+            d << r->ReadStringArray();
+            d << r->ReadStringArray();
+            d << r->ReadShort();
+            d << r->ReadIntArray();
 
             data.push_back(d);
         }

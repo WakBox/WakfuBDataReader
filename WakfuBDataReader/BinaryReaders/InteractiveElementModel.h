@@ -7,7 +7,7 @@ public:
 
     QString GetColumns()
     {
-        return QString("viewId|type|gfx|color|height|unkInt|unkInt");
+        return QString("int|short|int|int|int|int");
     }
 
     void Read(Rows rows)
@@ -26,7 +26,6 @@ public:
             d << r->ReadShort();
             d << r->ReadInt();
             d << r->ReadInt();
-            d << r->ReadByte();
             d << r->ReadInt();
             d << r->ReadInt();
 

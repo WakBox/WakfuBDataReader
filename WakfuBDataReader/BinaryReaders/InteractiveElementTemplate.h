@@ -7,7 +7,7 @@ public:
 
     QString GetColumns()
     {
-        return QString("int|short|short|int|int|short|short|bool|bool|bool|bool|byte|short|string|int");
+        return QString("int|short|short|int|int|short|short|bool|bool|bool|bool|short|string|int|int array|int|int|short|int|int array");
     }
 
     void Read(Rows rows)
@@ -25,62 +25,23 @@ public:
             d << r->ReadInt();
             d << r->ReadShort();
             d << r->ReadShort();
-            d << r->ReadInt(); // X
-            d << r->ReadInt(); // Y
-            d << r->ReadShort();
-            d << r->ReadShort();
-
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-
-            d << r->ReadByte();
-            d << r->ReadShort();
-
-            // clg().intern()
-            qint32 strSize = r->ReadInt();
-            d << r->ReadString(strSize);
-
             d << r->ReadInt();
-
-            // cli()
-            qint32 intSize = r->ReadInt();
-            qint32 j = 0;
-            while (j < intSize)
-            {
-                r->ReadInt();
-                ++j;
-            }
-
-            qint32 iEgSize = r->ReadInt();
-            j = 0;
-            while (j < iEgSize)
-            {
-                r->ReadInt();
-                r->ReadInt();
-                r->ReadShort();
-                ++j;
-            }
-
-            qint32 iEhSize = r->ReadInt();
-            j = 0;
-            while (j < iEhSize)
-            {
-                r->ReadShort();
-                r->ReadInt();
-                ++j;
-            }
-
-            // cli()
-            intSize = r->ReadInt();
-            j = 0;
-            while (j < intSize)
-            {
-                r->ReadInt();
-                ++j;
-            }
-
+            d << r->ReadInt();
+            d << r->ReadShort();
+            d << r->ReadShort();
+            d << r->ReadBool();
+            d << r->ReadBool();
+            d << r->ReadBool();
+            d << r->ReadBool();
+            d << r->ReadShort();
+            d << r->ReadString();
+            d << r->ReadInt();
+            d << r->ReadIntArray();
+            d << r->ReadInt();
+            d << r->ReadInt();
+            d << r->ReadShort();
+            d << r->ReadInt();
+            d << r->ReadIntArray();
 
             data.push_back(d);
         }

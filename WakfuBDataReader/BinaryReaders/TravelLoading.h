@@ -1,6 +1,5 @@
 #include "BaseBinaryReader.h"
 
-// Call from other BinaryStorage reader...
 class TravelLoading : public BaseBinaryReader
 {
 public:
@@ -23,9 +22,7 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
-            qint32 strSize = r->ReadInt();
-            d << r->ReadString(strSize);
-
+            d << r->ReadString();
             d << r->ReadInt();
             d << r->ReadInt();
             d << r->ReadInt();
