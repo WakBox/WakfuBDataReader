@@ -283,11 +283,215 @@ void MainWindow::ReadHeader()
     case 60:
         // ?
         break;
+    case 61:
+        // ?
+        break;
+    case 62:
+        // ?
+        break;
+    case 63:
+        // ?
+        break;
+    case 64:
+        m_binaryReader = new Skill();
+        break;
+    case 65:
+        m_binaryReader = new SkillAction();
+        break;
+    case 66:
+        m_binaryReader = new Spell();
+        break;
+    case 67:
+        m_binaryReader = new State();
+        break;
+    case 68:
+        m_binaryReader = new StaticEffect();
+        break;
+    case 69:
+        m_binaryReader = new StoolInteractiveElementParam();
+        break;
+    case 70:
+        m_binaryReader = new StorageBox();
+        break;
+    case 71:
+        m_binaryReader = new StreetLightInteractiveElementParam();
+        break;
+    case 72:
+        m_binaryReader = new Teleporter();
+        break;
+    case 73:
+        m_binaryReader = new TimelineBuffList();
+        break;
+    case 74:
+        // ?
+        break;
+    case 75:
+        // ?
+        break;
+    case 76:
+        m_binaryReader = new Zaap();
+        break;
+    case 77:
+        m_binaryReader = new ZaapLink();
+        break;
+    case 78:
+        m_binaryReader = new Aptitude();
+        break;
+    case 79:
+        m_binaryReader = new BoardInteractiveElementParam();
+        break;
+    case 80:
+        m_binaryReader = new ChallengeLootList();
+        break;
     case 81:
         m_binaryReader = new Emote();
         break;
+    case 82:
+        m_binaryReader = new ExchangeInteractiveElementParam();
+        break;
+    case 83:
+        // ?
+        break;
+    case 84:
+        // ?
+        break;
+    case 85:
+        m_binaryReader = new RecycleMachineInteractiveElementParam();
+        break;
+    case 86:
+        m_binaryReader = new AvatarBreed();
+        break;
+    case 87:
+        m_binaryReader = new ArcadeDungeon();
+        break;
+    case 88:
+        // ?
+        break;
+    case 89:
+        break;
+    case 90:
+        m_binaryReader = new ArcadeChallenge();
+        break;
+    case 91:
+        break;
+    case 92:
+        m_binaryReader = new GenericActivableInteractiveElementParam();
+        break;
+    case 93:
+        break;
+    case 94:
+        break;
+    case 95:
+        m_binaryReader = new DungeonDisplayerInteractiveElementParam();
+        break;
+    case 96:
+        m_binaryReader = new RewardDisplayerInteractiveElementParam();
+        break;
+    case 97:
+        m_binaryReader = new HavenWorldBuilding();
+        break;
+    case 98:
+        m_binaryReader = new AlmanachEntry();
+        break;
+    case 99:
+        m_binaryReader = new AlmanachDate();
+        break;
+    case 100:
+        m_binaryReader = new HavenWorldDefinition();
+        break;
+    case 101:
+        m_binaryReader = new HavenWorldPatchDefinition();
+        break;
+    case 102:
+        break;
+    case 103:
+        m_binaryReader = new HavenWorldBuildingEvolution();
+        break;
+    case 104:
+        m_binaryReader = new HavenWorldBuildingCatalog();
+        break;
+    case 105:
+        m_binaryReader = new BookcaseInteractiveElementParam();
+        break;
+    case 106:
+        m_binaryReader = new EquipableDummyInteractiveElementParam();
+        break;
+    case 107:
+        m_binaryReader = new HavenWorldBuildingVisualDefinition();
+        break;
+    case 108:
+        m_binaryReader = new KrosmozGameBoardInteractiveElementParam();
+        break;
+    case 109:
+        m_binaryReader = new KrosmozGameCollectionInteractiveElementParam();
+        break;
+    case 110:
+        break;
+    case 111:
+        m_binaryReader = new HavenWorldBoardInteractiveElementParam();
+        break;
+    case 112:
+        break;
+    case 113:
+        m_binaryReader = new KrosmozFigure();
+        break;
+    case 114:
+        m_binaryReader = new LightLootList();
+        break;
+    case 115:
+        m_binaryReader = new AchievementList();
+        break;
+    case 116:
+        m_binaryReader = new AvatarBreedColors();
+        break;
+    case 117:
+        m_binaryReader = new Pet();
+        break;
+    case 118:
+        m_binaryReader = new DoorInteractiveElementParam();
+        break;
+    case 119:
+        m_binaryReader = new Dungeon();
+        break;
+    case 120:
+        m_binaryReader = new Lock();
+        break;
+    case 121:
+        m_binaryReader = new Bags();
+        break;
+    case 122:
+        m_binaryReader = new Treasure();
+        break;
+    case 123:
+        m_binaryReader = new MagiCraftLootList();
+        break;
+    case 124:
+        m_binaryReader = new GemAndPowder();
+        break;
+    case 125:
+        break;
+    case 126:
+        m_binaryReader = new HavenWorldBuildingDeco(); // ?
+        break;
+    case 127:
+        break;
     case 128:
         m_binaryReader = new InteractiveElementTemplate();
+        break;
+    case 129:
+        m_binaryReader = new Tutorial();
+        break;
+    case 130:
+        m_binaryReader = new FightChallenge();
+        break;
+    case 131:
+        m_binaryReader = new CompanionItem();
+        break;
+    case 132:
+        m_binaryReader = new FightChallengeMonster();
+        break;
+    case 133:
+        m_binaryReader = new Secret();
         break;
     default:
         break;
