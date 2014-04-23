@@ -375,8 +375,7 @@ void MainWindow::ReadHeader()
         break;
     case 91:
         break;
-    case 92: // déjà à case 31 !
-        m_binaryReader = new GenericActivableInteractiveElementParam();
+    case 92:
         break;
     case 93:
         break;
