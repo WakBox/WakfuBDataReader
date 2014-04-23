@@ -101,6 +101,7 @@ void MainWindow::ReadHeader()
     ui->statusBar->showMessage("Reading data...");
     QByteArray buffer = reader.ReadAllFromCurrentPos();
 
+    // TraveLoading.h unused !
     switch (m_fileId)
     {
     case 1:
@@ -281,7 +282,7 @@ void MainWindow::ReadHeader()
         // ?
         break;
     case 60:
-        // ?
+        m_binaryReader = new Resource();
         break;
     case 61:
         // ?
@@ -374,7 +375,7 @@ void MainWindow::ReadHeader()
         break;
     case 91:
         break;
-    case 92:
+    case 92: // déjà à case 31 !
         m_binaryReader = new GenericActivableInteractiveElementParam();
         break;
     case 93:
@@ -471,7 +472,7 @@ void MainWindow::ReadHeader()
     case 125:
         break;
     case 126:
-        m_binaryReader = new HavenWorldBuildingDeco(); // ?
+        m_binaryReader = new HavenWorldBuildingDeco();
         break;
     case 127:
         break;
