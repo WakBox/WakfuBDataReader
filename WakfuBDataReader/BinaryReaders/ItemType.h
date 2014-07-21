@@ -5,11 +5,6 @@ class ItemType : public BaseBinaryReader
 public:
     ItemType() {}
 
-    QString GetColumns()
-    {
-        return QString("short|short|bool|bool|bool|string array|string array|short|int array");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,24 +12,22 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadStringArray();
-            d << r->ReadStringArray();
-            d << r->ReadShort();
-            d << r->ReadIntArray();
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadStringArray("string array");
+            r->ReadStringArray("string array");
+            r->ReadShort("short");
+            r->ReadIntArray("int array");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

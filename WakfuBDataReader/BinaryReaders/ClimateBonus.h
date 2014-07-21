@@ -5,11 +5,6 @@ class ClimateBonus : public BaseBinaryReader
 public:
     ClimateBonus() {}
 
-    QString GetColumns()
-    {
-        return QString("int|int|string|int|short|float|float|float");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,23 +12,21 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadString();
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadString("string");
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

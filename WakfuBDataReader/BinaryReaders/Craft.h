@@ -5,11 +5,6 @@ class Craft : public BaseBinaryReader
 public:
     Craft() {}
 
-    QString GetColumns()
-    {
-        return QString("int|int|float|bool|bool|bool");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,21 +12,19 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadFloat();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadFloat("float");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

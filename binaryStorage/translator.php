@@ -114,8 +114,7 @@ class OutputFile
 			$translatedFunc = $this->translate[$keys[$newFunc]];
 			$translatedFunc = explode('|', $translatedFunc);
 
-			$this->functions[] = $translatedFunc[0];
-			$this->columns[] = $translatedFunc[1];
+			$this->functions[] = array($translatedFunc[0], $translatedFunc[1]);
 		}
 	}
 
@@ -128,7 +127,7 @@ class OutputFile
 
 		$struct = '';
 		foreach ($this->functions as $f)
-			$struct .= '            d << r->' . $f . '();' . "\n";
+			$struct .= '            r->' . $f[0] . '("' . $f[1] . '");' . "\n";
 
 		$template = str_replace('%struct%', $struct, $template);
 		file_put_contents('translator/' . $this->outputFile, $template);

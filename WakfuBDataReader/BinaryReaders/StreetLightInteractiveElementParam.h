@@ -5,11 +5,6 @@ class StreetLightInteractiveElementParam : public BaseBinaryReader
 public:
     StreetLightInteractiveElementParam() {}
 
-    QString GetColumns()
-    {
-        return QString("int|int|float|int|bool|int|bool|int|int|bool|int|byte");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,27 +12,25 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadFloat();
-            d << r->ReadInt();
-            d << r->ReadBool();
-            d << r->ReadInt();
-            d << r->ReadBool();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadBool();
-            d << r->ReadInt();
-            d << r->ReadByte();
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadFloat("float");
+            r->ReadInt("int");
+            r->ReadBool("bool");
+            r->ReadInt("int");
+            r->ReadBool("bool");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadBool("bool");
+            r->ReadInt("int");
+            r->ReadByte("byte");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

@@ -12,18 +12,17 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            r->ReadInt("Emote ID");
-            r->ReadShort("Type");
-            r->ReadString("Emote");
-            r->ReadBool();
-            r->ReadBool();
-            r->ReadBool();
-            r->ReadBool();
-            r->ReadStringArray();
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadString("string");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadStringArray("string array");
 
             r->PushRow();
         }

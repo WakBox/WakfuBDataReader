@@ -171,10 +171,13 @@ public class InteractiveElementTemplateBinaryData implements dEZ {
         this.bxt = (byte)i3;
         int i4 = a.getShort();
         this.fCE = (short)i4;
+        
         this.fCG = a.clg().intern();
         this.bGs = a.getInt();
         this.blY = a.cli();
         int i5 = a.getInt();
+        
+        
         this.iEg = new Hd[i5];
         int i6 = 0;
         while(i6 < i5)

@@ -5,11 +5,6 @@ class HavenWorldBuildingEvolution : public BaseBinaryReader
 public:
     HavenWorldBuildingEvolution() {}
 
-    QString GetColumns()
-    {
-        return QString("int|short|int|int|long|byte");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,21 +12,19 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadLong();
-            d << r->ReadByte();
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadLong("long");
+            r->ReadByte("byte");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

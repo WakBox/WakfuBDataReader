@@ -197,8 +197,6 @@ public class AchievementBinaryData implements dEZ {
         this.nbm = a.getLong();
         this.msU = a.readBoolean();
         this.aZE = a.getInt();
-
-        this.test = a.get();
     }
     
     final public int gZ()

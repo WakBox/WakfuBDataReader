@@ -5,11 +5,6 @@ class NationColors : public BaseBinaryReader
 public:
     NationColors() {}
 
-    QString GetColumns()
-    {
-        return QString("int ID|string Color");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,17 +12,15 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadString();
+            r->ReadInt("int");
+            r->ReadString("string");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

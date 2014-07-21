@@ -5,11 +5,6 @@ class BackgroundFeedback : public BaseBinaryReader
 public:
     BackgroundFeedback() {}
 
-    QString GetColumns()
-    {
-        return QString("int|short|int");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,18 +12,16 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadInt();
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadInt("int");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

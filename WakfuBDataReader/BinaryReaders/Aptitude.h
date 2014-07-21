@@ -5,11 +5,6 @@ class Aptitude : public BaseBinaryReader
 public:
     Aptitude() {}
 
-    QString GetColumns()
-    {
-        return QString("int|short|byte|int|int|int|short|int|int array|int|int array|int array");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,27 +12,25 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadByte();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadInt();
-            d << r->ReadIntArray();
-            d << r->ReadInt();
-            d << r->ReadIntArray();
-            d << r->ReadIntArray();
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadByte("byte");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadInt("int");
+            r->ReadIntArray("int array");
+            r->ReadInt("int");
+            r->ReadIntArray("int array");
+            r->ReadIntArray("int array");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

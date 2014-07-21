@@ -5,11 +5,6 @@ class Monster : public BaseBinaryReader
 public:
     Monster() {}
 
-    QString GetColumns()
-    {
-        return QString("int|int|short|short|float|float|int|int|int|int|int|int|int|int|int|int|int|float|float|float|float|float|float|float|float|float|float|int|int|int|int|int|int|int|int|int|int|int|int|int|int|int|int|float|float|float|float|float|float|float|float|float|float|float|float|float|float|bool|short|short|short|int|int array|int array|short array|int|byte|short|short|short|short|int|int|int|int|int|short|int|int|int|int array|int|int|int|int|int");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,101 +12,99 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadBool();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadInt();
-            d << r->ReadIntArray();
-            d << r->ReadIntArray();
-            d << r->ReadShortArray();
-            d << r->ReadInt();
-            d << r->ReadByte();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadIntArray();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadBool("bool");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadInt("int");
+            r->ReadIntArray("int array");
+            r->ReadIntArray("int array");
+            r->ReadShortArray("short array");
+            r->ReadInt("int");
+            r->ReadByte("byte");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadIntArray("int array");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

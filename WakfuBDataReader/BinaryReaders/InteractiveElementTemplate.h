@@ -5,11 +5,6 @@ class InteractiveElementTemplate : public BaseBinaryReader
 public:
     InteractiveElementTemplate() {}
 
-    QString GetColumns()
-    {
-        return QString("int|short|short|int|int|short|short|bool|bool|bool|bool|byte|short|string|int|int array|int|int|short|int|int array");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,47 +12,34 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            r->ReadInt();
-            r->ReadShort();
-            r->ReadShort();
-            r->ReadInt();
-            r->ReadInt();
-            r->ReadShort();
-            r->ReadShort();
-            r->ReadBool();
-            r->ReadBool();
-            r->ReadBool();
-            r->ReadBool();
-            r->ReadByte();
-            r->ReadShort();
-
-            r->ReadString();
-
-            r->ReadInt();
-            r->ReadIntArray();
-
-            int intSize = r->ReadInt();
-            intSize;
-            for (int i = 0; i < intSize; ++i)
-            {
-                r->ReadInt();
-                r->ReadInt();
-                r->ReadShort();
-            }
-
-            r->ReadInt();
-            r->ReadShort();
-            r->ReadInt();
-            r->ReadIntArray();
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadByte("byte");
+            r->ReadShort("short");
+            r->ReadString("string");
+            r->ReadInt("int");
+            r->ReadIntArray("int array");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadInt("int");
+            r->ReadIntArray("int array");
 
             r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

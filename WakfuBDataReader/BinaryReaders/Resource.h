@@ -5,11 +5,6 @@ class Resource : public BaseBinaryReader
 public:
     Resource() {}
 
-    QString GetColumns()
-    {
-        return QString("int|int|short|short|short|short|bool|bool|bool|short|int array|int array|int|short|int|int|int|int array");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,33 +12,31 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadShort();
-            d << r->ReadIntArray();
-            d << r->ReadIntArray();
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadIntArray();
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadShort("short");
+            r->ReadIntArray("int array");
+            r->ReadIntArray("int array");
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadIntArray("int array");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

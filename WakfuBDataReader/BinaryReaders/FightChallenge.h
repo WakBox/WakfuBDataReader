@@ -5,11 +5,6 @@ class FightChallenge : public BaseBinaryReader
 public:
     FightChallenge() {}
 
-    QString GetColumns()
-    {
-        return QString("int|int|string|int|int|int|int|bool|int array|int array|int");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,26 +12,24 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadString();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadBool();
-            d << r->ReadIntArray();
-            d << r->ReadIntArray();
-            d << r->ReadInt();
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadString("string");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadBool("bool");
+            r->ReadIntArray("int array");
+            r->ReadIntArray("int array");
+            r->ReadInt("int");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

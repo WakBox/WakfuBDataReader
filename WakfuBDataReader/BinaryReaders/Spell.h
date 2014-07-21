@@ -5,11 +5,6 @@ class Spell : public BaseBinaryReader
 public:
     Spell() {}
 
-    QString GetColumns()
-    {
-        return QString("int|int|int|short|short|short|short|float|short|bool|bool|bool|bool|bool|bool|int|string|float|float|float|float|float|float|float|float|float|float|short|short|short|short|short|string|byte|bool|bool|bool|int array|byte|bool|bool|bool|bool|bool|bool|int array|int|byte|int|string");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,65 +12,63 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadFloat();
-            d << r->ReadShort();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadInt();
-            d << r->ReadString();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadFloat();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadString();
-            d << r->ReadByte();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadIntArray();
-            d << r->ReadByte();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadIntArray();
-            d << r->ReadInt();
-            d << r->ReadByte();
-            d << r->ReadInt();
-            d << r->ReadString();
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadFloat("float");
+            r->ReadShort("short");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadInt("int");
+            r->ReadString("string");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadFloat("float");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadString("string");
+            r->ReadByte("byte");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadIntArray("int array");
+            r->ReadByte("byte");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadBool("bool");
+            r->ReadIntArray("int array");
+            r->ReadInt("int");
+            r->ReadByte("byte");
+            r->ReadInt("int");
+            r->ReadString("string");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

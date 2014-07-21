@@ -5,11 +5,6 @@ class DoorInteractiveElementParam : public BaseBinaryReader
 public:
     DoorInteractiveElementParam() {}
 
-    QString GetColumns()
-    {
-        return QString("int|int|bool|int|int|string");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,21 +12,19 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadBool();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadString();
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadBool("bool");
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadString("string");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };

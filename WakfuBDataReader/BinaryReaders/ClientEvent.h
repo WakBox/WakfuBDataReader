@@ -5,11 +5,6 @@ class ClientEvent : public BaseBinaryReader
 public:
     ClientEvent() {}
 
-    QString GetColumns()
-    {
-        return QString("int|int|short|short|string|string array|bool|int");
-    }
-
     void Read(Rows rows)
     {
         qint32 size = rows.size();
@@ -17,23 +12,21 @@ public:
         for (qint32 i = 0; i < size; ++i)
         {
             Row row = rows[i];
-            QVariantList d;
-
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadString();
-            d << r->ReadStringArray();
-            d << r->ReadBool();
-            d << r->ReadInt();
+            r->ReadInt("int");
+            r->ReadInt("int");
+            r->ReadShort("short");
+            r->ReadShort("short");
+            r->ReadString("string");
+            r->ReadStringArray("string array");
+            r->ReadBool("bool");
+            r->ReadInt("int");
 
-            data.push_back(d);
+            r->PushRow();
         }
 
-        emit Finished(data);
+        emit Finished(r->GetCols(), r->GetRows());
     }
 };
