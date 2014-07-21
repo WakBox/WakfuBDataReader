@@ -1,8 +1,6 @@
 #ifndef BINARYREADERINCLUDE_H
 #define BINARYREADERINCLUDE_H
 
-#include "Emote.h"
-/*
 #include "AchievementCategory.h"
 #include "Achievement.h"
 #include "AchievementList.h"
@@ -107,5 +105,5 @@
 #include "Tutorial.h"
 #include "Zaap.h"
 #include "ZaapLink.h"
-*/
+
 #endif // BINARYREADERINCLUDE_H

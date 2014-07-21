@@ -15,8 +15,8 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
-            r->ReadInt("int");
-            r->ReadLong("long");
+            r->ReadInt("ID");
+            r->ReadLong("SQL Timestamp");
             r->ReadInt("int");
 
             r->PushRow();

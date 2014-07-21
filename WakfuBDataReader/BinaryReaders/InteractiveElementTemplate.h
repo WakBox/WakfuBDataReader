@@ -15,11 +15,11 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
-            r->ReadInt("int");
+            r->ReadInt("ID");
             r->ReadShort("short");
             r->ReadShort("short");
-            r->ReadInt("int");
-            r->ReadInt("int");
+            r->ReadInt("X");
+            r->ReadInt("Y");
             r->ReadShort("short");
             r->ReadShort("short");
             r->ReadBool("bool");
@@ -31,12 +31,25 @@ public:
             r->ReadString("string");
             r->ReadInt("int");
             r->ReadIntArray("int array");
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadShort("short");
-            r->ReadInt("int");
-            r->ReadIntArray("int array");
 
+            qint32 size = r->ReadInt(QString());
+            for (quint32 i = 0; i < size; ++i)
+            {
+                QString j = QString::number(i);
+                r->ReadInt("X [" + j + "]");
+                r->ReadInt("Y [" + j + "]");
+                r->ReadShort("short [" + j + "]");
+            }
+
+            size = r->ReadInt(QString());
+            for (quint32 i = 0; i < size; ++i)
+            {
+                QString j = QString::number(i);
+                r->ReadShort("short [" + j + "]");
+                r->ReadInt("int [" + j + "]");
+            }
+
+            r->ReadIntArray("int array");
             r->PushRow();
         }
 

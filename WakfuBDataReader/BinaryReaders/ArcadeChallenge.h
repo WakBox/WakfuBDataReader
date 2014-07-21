@@ -15,7 +15,7 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
-            r->ReadInt("int");
+            r->ReadInt("ID");
 
             r->PushRow();
         }

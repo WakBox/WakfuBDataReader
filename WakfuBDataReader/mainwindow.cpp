@@ -111,7 +111,7 @@ void MainWindow::ReadHeader()
     QByteArray buffer = reader.ReadAllFromCurrentPos();
 
     switch (m_fileId)
-    {/*
+    {
     case 1:
         m_binaryReader = new Achievement();
         break;
@@ -500,10 +500,6 @@ void MainWindow::ReadHeader()
         break;
     case 133:
         m_binaryReader = new Secret();
-        break;*/
-
-    case 81:
-        m_binaryReader = new Emote();
         break;
     default:
         break;

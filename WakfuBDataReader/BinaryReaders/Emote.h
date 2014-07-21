@@ -15,9 +15,9 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
-            r->ReadInt("int");
-            r->ReadShort("short");
-            r->ReadString("string");
+            r->ReadInt("Emote ID");
+            r->ReadShort("Type"); // type 1 = normal, type 2 = need a target ?
+            r->ReadString("Name");
             r->ReadBool("bool");
             r->ReadBool("bool");
             r->ReadBool("bool");

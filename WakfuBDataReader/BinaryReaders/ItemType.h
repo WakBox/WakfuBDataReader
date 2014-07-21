@@ -15,8 +15,8 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
-            r->ReadShort("short");
-            r->ReadShort("short");
+            r->ReadShort("Type");
+            r->ReadShort("Parent Type");
             r->ReadBool("bool");
             r->ReadBool("bool");
             r->ReadBool("bool");

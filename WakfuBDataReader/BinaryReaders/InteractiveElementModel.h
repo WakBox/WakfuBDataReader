@@ -15,11 +15,11 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
-            r->ReadInt("int");
-            r->ReadShort("short");
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadByte("byte");
+            r->ReadInt("ViewId");
+            r->ReadShort("Type");
+            r->ReadInt("GFX");
+            r->ReadInt("Color");
+            r->ReadByte("Height");
             r->ReadInt("int");
             r->ReadInt("int");
 

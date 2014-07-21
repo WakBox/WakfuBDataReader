@@ -15,8 +15,8 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
+            r->ReadInt("ID categorie");
+            r->ReadInt("Categorie parente");
 
             r->PushRow();
         }

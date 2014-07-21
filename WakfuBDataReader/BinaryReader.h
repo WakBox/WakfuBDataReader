@@ -176,10 +176,10 @@ public:
             Read<T>(name + " [" + QString::number(i) + "]");
     }
 
-    void ReadByteArray() { ReadArray<qint8>(); }
-    void ReadIntArray() { ReadArray<qint32>(); }
-    void ReadShortArray() { ReadArray<qint16>(); }
-    void ReadLongArray() { ReadArray<qint64>(); }
+    void ReadByteArray(QString name = "unk") { ReadArray<qint8>(name); }
+    void ReadIntArray(QString name = "unk") { ReadArray<qint32>(name); }
+    void ReadShortArray(QString name = "unk") { ReadArray<qint16>(name); }
+    void ReadLongArray(QString name = "unk") { ReadArray<qint64>(name); }
 
     QByteArray ReadAllFromCurrentPos() { return m_stream.device()->readAll(); }
     qint32 GetSize() { return m_size; }

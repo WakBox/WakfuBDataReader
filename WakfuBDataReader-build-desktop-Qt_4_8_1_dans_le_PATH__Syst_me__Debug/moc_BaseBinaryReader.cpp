@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'BaseBinaryReader.h'
 **
-** Created: Mon Jul 21 07:48:51 2014
+** Created: Mon Jul 21 20:26:12 2014
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

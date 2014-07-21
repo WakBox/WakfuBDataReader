@@ -18,9 +18,13 @@ public:
             r->ReadShort("short");
             r->ReadInt("int");
             r->ReadIntArray("int array");
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadIntArray("int array");
+
+            qint32 size = r->ReadInt(QString());
+            for (quint32 i = 0; i < size; ++i)
+            {
+                r->ReadInt("int");
+                r->ReadIntArray("int array");
+            }
 
             r->PushRow();
         }

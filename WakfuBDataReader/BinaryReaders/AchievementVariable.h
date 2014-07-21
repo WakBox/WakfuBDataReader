@@ -15,8 +15,8 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
-            r->ReadInt("int");
-            r->ReadString("string");
+            r->ReadInt("ID");
+            r->ReadString("Name");
 
             r->PushRow();
         }

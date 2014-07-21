@@ -15,8 +15,13 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
+            r->ReadInt("ID");
+            qint32 size = r->ReadInt(QString());
+            for (quint32 i = 0; i < size; ++i)
+            {
+                r->ReadInt("int");
+                r->ReadInt("Order");
+            }
 
             r->PushRow();
         }
