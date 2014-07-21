@@ -7,7 +7,7 @@ public:
 
     QString GetColumns()
     {
-        return QString("int|long|int");
+        return QString("int ID|long timestamp|int");
     }
 
     void Read(Rows rows)

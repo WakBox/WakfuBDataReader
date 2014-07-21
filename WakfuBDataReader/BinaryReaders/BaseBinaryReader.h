@@ -17,17 +17,13 @@ public:
         r = new BinaryReader(buffer, fileId, fileSize);
     }
 
-    QVector<QVariantList> GetData() { return data; }
-
-    virtual QString GetColumns() = 0;
     virtual void Read(Rows rows) = 0;
 
 signals:
-    void Finished(QVector<QVariantList> data);
+    void Finished(Entry cols, DataRow rows);
 
 protected:
     BinaryReader* r;
-    QVector<QVariantList> data;
 };
 
 #endif // BASEBINARYREADER_H

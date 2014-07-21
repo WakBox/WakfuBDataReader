@@ -7,6 +7,8 @@
 #include <QDebug>
 #include <QTreeWidget>
 
+#include "BinaryReader.h"
+
 struct Row
 {
     long id;
@@ -20,6 +22,8 @@ typedef QMap<int, Row> Rows;
 namespace Ui {
 class MainWindow;
 }
+
+class BinaryReader;
 class BaseBinaryReader;
 
 class MainWindow : public QMainWindow
@@ -34,7 +38,7 @@ public:
 
 public slots:
     void Open();
-    void UpdateTreeData(QVector<QVariantList> data);
+    void UpdateTreeData(Entry cols, DataRow rows);
     
 private:
     Ui::MainWindow *ui;

@@ -7,7 +7,7 @@ public:
 
     QString GetColumns()
     {
-        return QString("int|string");
+        return QString("int ID|string Color");
     }
 
     void Read(Rows rows)

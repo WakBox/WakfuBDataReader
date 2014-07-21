@@ -22,29 +22,40 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadBool();
-            d << r->ReadByte();
-            d << r->ReadShort();
-            d << r->ReadString();
-            d << r->ReadInt();
-            d << r->ReadIntArray();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadInt();
-            d << r->ReadIntArray();
+            r->ReadInt();
+            r->ReadShort();
+            r->ReadShort();
+            r->ReadInt();
+            r->ReadInt();
+            r->ReadShort();
+            r->ReadShort();
+            r->ReadBool();
+            r->ReadBool();
+            r->ReadBool();
+            r->ReadBool();
+            r->ReadByte();
+            r->ReadShort();
 
-            data.push_back(d);
+            r->ReadString();
+
+            r->ReadInt();
+            r->ReadIntArray();
+
+            int intSize = r->ReadInt();
+            intSize;
+            for (int i = 0; i < intSize; ++i)
+            {
+                r->ReadInt();
+                r->ReadInt();
+                r->ReadShort();
+            }
+
+            r->ReadInt();
+            r->ReadShort();
+            r->ReadInt();
+            r->ReadIntArray();
+
+            r->PushRow();
         }
 
         emit Finished(data);

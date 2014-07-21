@@ -44,6 +44,15 @@ void MainWindow::Open()
 
 void MainWindow::ReadHeader()
 {
+    // Clean first
+    if (m_binaryReader)
+    {
+        delete m_binaryReader;
+        m_binaryReader = NULL;
+
+        ui->treeWidget->clear();
+    }
+
     BinaryReader reader(m_file, m_fileId);
     int rows = reader.ReadInt();
     qDebug() << rows;
@@ -101,9 +110,8 @@ void MainWindow::ReadHeader()
     ui->statusBar->showMessage("Reading data...");
     QByteArray buffer = reader.ReadAllFromCurrentPos();
 
-    // TraveLoading.h unused !
     switch (m_fileId)
-    {
+    {/*
     case 1:
         m_binaryReader = new Achievement();
         break;
@@ -492,6 +500,10 @@ void MainWindow::ReadHeader()
         break;
     case 133:
         m_binaryReader = new Secret();
+        break;*/
+
+    case 81:
+        m_binaryReader = new Emote();
         break;
     default:
         break;
@@ -505,39 +517,40 @@ void MainWindow::ReadHeader()
 
     m_binaryReader->Open(buffer, m_fileId, reader.GetSize());
 
-    connect(m_binaryReader, SIGNAL(Finished(QVector<QVariantList>)), this, SLOT(UpdateTreeData(QVector<QVariantList>)));
+    connect(m_binaryReader, SIGNAL(Finished(Entry, DataRow)), this, SLOT(UpdateTreeData(Entry, DataRow)));
     m_binaryReader->Read(m_rows);
 }
 
-void MainWindow::UpdateTreeData(QVector<QVariantList> data)
+void MainWindow::UpdateTreeData(Entry cols, DataRow rows)
 {
-    ui->statusBar->showMessage("Loading " + QString::number(data.size()) + " rows...");
+    ui->statusBar->showMessage("Loading " + QString::number(rows.size()) + " rows...");
 
-    QString columns = m_binaryReader->GetColumns();
-    QStringList col = columns.split("|");
-    col.prepend("#");
+    QStringList labels;
+    for (Entry::ConstIterator itr = cols.begin(); itr != cols.end(); ++itr)
+        labels << (*itr).name;
 
-    ui->treeWidget->setColumnCount(col.size());
-    ui->treeWidget->setHeaderLabels(col);
+    labels.prepend("#");
+    ui->treeWidget->setColumnCount(labels.size());
+    ui->treeWidget->setHeaderLabels(labels);
 
-    for (quint16 i = 0; i < col.size(); ++i)
+    for (quint16 i = 0; i < labels.size(); ++i)
         ui->treeWidget->header()->resizeSection(i, 100);
 
     QList<QTreeWidgetItem*> items;
-
-    for (quint32 i = 0; i < data.size(); ++i)
+    for (quint32 i = 0; i < rows.size(); ++i)
     {
         QTreeWidgetItem *item = new QTreeWidgetItem;
-        QVariantList d = data.at(i);
+        Entry d = rows.at(i);
+        int index = 0;
 
-        item->setText(0, QString::number(i));
+        item->setText(index++, QString::number(i));
 
-        for (quint32 j = 0; j < d.size(); ++j)
-            item->setText(j + 1, d.at(j).toString());
+        for (Entry::ConstIterator itr = d.begin(); itr != d.end(); ++itr)
+            item->setText(index++, (*itr).value.toString());
 
         items.push_back(item);
     }
 
     ui->treeWidget->addTopLevelItems(items);
-    ui->statusBar->showMessage("Data successfully loaded. " + QString::number(data.size()) + " entries.");
+    ui->statusBar->showMessage("Data successfully loaded. " + QString::number(rows.size()) + " entries.");
 }
