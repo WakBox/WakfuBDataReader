@@ -22,9 +22,25 @@ public:
             r->ReadInt("int");
             r->ReadInt("int");
             r->ReadShort("Item Level");
-            r->ReadStringArray("string array");
-            r->ReadInt("int");
-            r->ReadShort("short");
+
+            // Stats
+            qint32 strSize = r->ReadInt(QString());
+
+            for (qint32 i = 0; i < strSize; ++i)
+            {
+                switch (i)
+                {
+                case 0: r->ReadString("Item type"); break;
+                case 2: r->ReadString("Action Point"); break;
+                case 5: r->ReadString("Minimum range"); break;
+                case 6: r->ReadString("Maximum range"); break;
+                default:
+                    r->ReadString("Unk String [" + QString::number(i) + "]");
+                }
+            }
+
+            r->ReadInt("Slot Id");
+            r->ReadShort("Stackable");
             r->ReadByte("byte");
             r->ReadByte("byte");
             r->ReadByte("byte");

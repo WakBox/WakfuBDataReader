@@ -65,7 +65,7 @@ public:
 
     void PushRow()
     {
-        if (m_entries.size() > m_cols.size())
+        if (!m_cols.size())
             m_cols = m_entries;
 
         m_rows.push_back(m_entries);
@@ -99,6 +99,7 @@ public:
     {
         CalcHoo();
         float v;
+
         *this >> v;
 
         if (!name.isEmpty())
@@ -152,9 +153,12 @@ public:
     void ReadStringArray(QString name = "unk")
     {
         qint32 size = ReadInt(QString());
+        QString result = "[";
 
-        for (quint16 i = 0; i < size; ++i)
-            ReadString(((name != "unk") ? name : name + " " + QString::number(m_col++)) + " [" + QString::number(i) + "]");
+        for (qint32 i = 0; i < size; ++i)
+            result += ReadString(QString()) + ", ";
+
+        AddEntry((name != "unk") ? name : name + " " + QString::number(m_col++), result.remove(result.size(), -2));
     }
 
     // Y'a un problème avec les floats...
@@ -172,7 +176,7 @@ public:
     {
         quint32 size = ReadInt(QString());
 
-        for (quint16 i = 0; i < size; ++i)
+        for (qint32 i = 0; i < size; ++i)
             Read<T>(name + " [" + QString::number(i) + "]");
     }
 
