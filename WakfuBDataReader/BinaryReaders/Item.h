@@ -7,12 +7,13 @@ public:
 
     QString GetColumns()
     {
-        return QString("int|int|short|int|int|int|short|string array|int|short|byte|byte|byte|int|int|bool|bool|bool|bool|short|byte|string|int array|byte|byte|byte|byte|int array|int|int array|byte array|byte array");
+        return r->GetColumns();
     }
 
     void Read(Rows rows)
     {
         qint32 size = rows.size();
+        r->FirstRow();
 
         for (qint32 i = 0; i < size; ++i)
         {
@@ -22,21 +23,21 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
+            d << r->ReadInt("Item Id");
+            d << r->ReadInt("Parent Item Id ?");
+            d << r->ReadShort("Item set");
             d << r->ReadInt();
             d << r->ReadInt();
-            d << r->ReadShort();
             d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadShort();
-            d << r->ReadStringArray();
-            d << r->ReadInt();
-            d << r->ReadShort();
+            d << r->ReadShort("Item level");
+            d << r->ReadStringArray("Conditions");
+            d << r->ReadInt("Slot Id (Item type)");
+            d << r->ReadShort("Stackable");
+            d << r->ReadByte("Action Point cost");
             d << r->ReadByte();
             d << r->ReadByte();
-            d << r->ReadByte();
-            d << r->ReadInt();
-            d << r->ReadInt();
+            d << r->ReadInt("Min range");
+            d << r->ReadInt("Max range");
             d << r->ReadBool();
             d << r->ReadBool();
             d << r->ReadBool();
@@ -50,12 +51,27 @@ public:
             d << r->ReadByte();
             d << r->ReadByte();
             d << r->ReadIntArray();
-            d << r->ReadInt();
+
+            quint32 size = r->ReadInt();
+            for (quint32 i = 0; i < size; ++i)
+            {
+                d << r->ReadInt();
+                d << r->ReadInt();
+                d << r->ReadBool();
+                d << r->ReadBool();
+                d << r->ReadBool();
+                d << r->ReadBool();
+                d << r->ReadString();
+                d << r->ReadStringArray();
+                d << r->ReadStringArray();
+            }
+
             d << r->ReadIntArray();
             d << r->ReadByteArray();
             d << r->ReadByteArray();
 
             data.push_back(d);
+            r->FirstRow(false);
         }
 
         emit Finished(data);
