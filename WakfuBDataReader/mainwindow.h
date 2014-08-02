@@ -34,6 +34,7 @@ public:
 
 public slots:
     void Open();
+    void OnRowClicked(QTreeWidgetItem* row, int column);
     void UpdateTreeData(QVector<QVariantList> data);
     
 private:
@@ -44,6 +45,8 @@ private:
     quint8 m_fileId;
 
     Rows m_rows;
+
+    QVector<QVariantList> m_data;
 };
 
 #endif // MAINWINDOW_H

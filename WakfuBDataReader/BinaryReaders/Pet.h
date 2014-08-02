@@ -7,12 +7,13 @@ public:
 
     QString GetColumns()
     {
-        return QString("int|int|int|int|int|long|long|byte|short|short|int|int|int|int|int array|int");
+        return r->GetColumns();
     }
 
     void Read(Rows rows)
     {
         qint32 size = rows.size();
+        r->FirstRow();
 
         for (qint32 i = 0; i < size; ++i)
         {
@@ -23,23 +24,56 @@ public:
 
             // Struct
             d << r->ReadInt();
-            d << r->ReadInt();
+            d << r->ReadInt("Pet Id");
             d << r->ReadInt();
             d << r->ReadInt();
             d << r->ReadInt();
             d << r->ReadLong();
             d << r->ReadLong();
-            d << r->ReadByte();
-            d << r->ReadShort();
-            d << r->ReadShort();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
-            d << r->ReadInt();
+            d << r->ReadByte("Level ?");
+            d << r->ReadShort("Level ?");
+            d << r->ReadShort("Level ?");
+
+            qint32 size = r->ReadInt(QString());
+            for (qint32 i = 0; i < size; ++i)
+            {
+                d << r->ReadByte();
+                d << r->ReadByte();
+            }
+
+            size = r->ReadInt(QString());
+            for (qint32 i = 0; i < size; ++i)
+            {
+                d << r->ReadInt();
+                d << r->ReadInt();
+            }
+
+            size = r->ReadInt(QString());
+            for (qint32 i = 0; i < size; ++i)
+            {
+                d << r->ReadInt();
+                d << r->ReadBool();
+            }
+
+            size = r->ReadInt(QString());
+            for (qint32 i = 0; i < size; ++i)
+            {
+                d << r->ReadInt();
+                d << r->ReadLong();
+            }
+
             d << r->ReadIntArray();
-            d << r->ReadInt();
+
+            size = r->ReadInt(QString());
+            for (qint32 i = 0; i < size; ++i)
+            {
+                d << r->ReadInt();
+                d << r->ReadInt();
+                d << r->ReadInt();
+            }
 
             data.push_back(d);
+            r->FirstRow(false);
         }
 
         emit Finished(data);

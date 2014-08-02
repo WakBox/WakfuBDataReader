@@ -115,7 +115,6 @@ class OutputFile
 			$translatedFunc = explode('|', $translatedFunc);
 
 			$this->functions[] = $translatedFunc[0];
-			$this->columns[] = $translatedFunc[1];
 		}
 	}
 
@@ -124,7 +123,6 @@ class OutputFile
 		echo ">> Generating output file \"$this->outputFile\"...\n";
 		$template = file_get_contents('binaryStorageTemplate.txt');
 		$template = str_replace('%className%', $this->className, $template);
-		$template = str_replace('%columns%', implode('|', $this->columns), $template);
 
 		$struct = '';
 		foreach ($this->functions as $f)

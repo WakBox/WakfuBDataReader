@@ -13,13 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    dialogview.cpp
 
 HEADERS  += mainwindow.h \
     BinaryReader.h \
-    BinaryReaders/InteractiveElementTemplate.h \
-    BinaryReaders/InteractiveElementModel.h
+    dialogview.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dialogview.ui
 
 include(BinaryReaders/BinaryReaders.pri)

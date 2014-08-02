@@ -7,12 +7,13 @@ public:
 
     QString GetColumns()
     {
-        return QString("int|int|string|int|int|int|int|bool|int array|int array|int");
+        return r->GetColumns();
     }
 
     void Read(Rows rows)
     {
         qint32 size = rows.size();
+        r->FirstRow();
 
         for (qint32 i = 0; i < size; ++i)
         {
@@ -35,6 +36,7 @@ public:
             d << r->ReadInt();
 
             data.push_back(d);
+            r->FirstRow(false);
         }
 
         emit Finished(data);

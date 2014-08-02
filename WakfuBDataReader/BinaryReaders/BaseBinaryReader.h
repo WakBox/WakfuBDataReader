@@ -18,6 +18,8 @@ public:
     }
 
     QVector<QVariantList> GetData() { return data; }
+    BRows GetRows() { return r->GetRows(); }
+
 
     virtual QString GetColumns() = 0;
     virtual void Read(Rows rows) = 0;

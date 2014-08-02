@@ -3,12 +3,22 @@
 
 #include <QtCore>
 
+struct Col
+{
+    QString name;
+    QVariant value;
+};
+
+typedef QVector<Col> BRow;
+typedef QVector<BRow> BRows;
+
 class BinaryReader
 {
 public:
     BinaryReader(QByteArray file, int fileId, int fileSize = 0) : m_buffer(file), m_stream(&m_buffer, QIODevice::ReadOnly), m_fileId(fileId), m_size(fileSize)
     {
         m_stream.setByteOrder(QDataStream::LittleEndian);
+        m_stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
 
         if (fileSize == 0)
         {
@@ -21,13 +31,33 @@ public:
         m_firstRow = false;
     }
 
+    BRows GetRows()
+    {
+        return m_rows;
+    }
+
     void FirstRow(bool first = true)
     {
+        if (!first)
+        {
+            m_rows.push_back(m_row);
+            m_row.clear();
+        }
+
         m_firstRow = first;
     }
 
-    void AddColumnName(QString name)
+    void AddColumnName(QString name, QVariant value = QVariant())
     {
+        if (!name.isEmpty())
+        {
+            Col col;
+            col.name = name;
+            col.value = value;
+
+            m_row.push_back(col);
+        }
+
         if (m_firstRow && !name.isEmpty())
         {
             if (m_columns.isEmpty())
@@ -67,22 +97,24 @@ public:
     template <typename T>
     T Read(QString name)
     {
-        AddColumnName(name);
         CalcHoo();
 
         T v;
         *this >> v;
 
-        return v - m_hoo;
+        v = v - m_hoo;
+        AddColumnName(name, v);
+
+        return v;
     }
 
     float ReadFloat(QString name = "float")
     {
-        AddColumnName(name);
         CalcHoo();
 
         float v;
         *this >> v;
+        AddColumnName(name, v);
 
         return v;
     }
@@ -110,7 +142,6 @@ public:
 
     QString ReadString(QString name = "string")
     {
-        AddColumnName(name);
         quint32 len = ReadInt(QString());
 
         QByteArray bytes;
@@ -123,41 +154,45 @@ public:
             bytes[i] = v;
         }
 
-        return QString::fromUtf8(bytes);
+        QString str = QString::fromUtf8(bytes);
+        AddColumnName(name, str);
+        return str;
     }
 
     QString ReadStringArray(QString name = "string array")
     {
-        AddColumnName(name);
         QString result = "[";
 
         quint32 size = ReadInt(QString());
 
         for (quint16 i = 0; i < size; ++i)
-            result += ReadString(QString()) + ", ";
+            result += ReadString(QString()) + "| ";
 
-        return result.remove(result.size(), -2) + "]";
+        result = result.remove(result.size(), -2) + "]";
+        AddColumnName(name, result);
+
+        return result;
     }
 
     QString ReadFloatArray(QString name = "float array")
     {
-        AddColumnName(name);
         QString result = "[";
 
         quint32 size = ReadInt(QString());
 
         for (quint16 i = 0; i < size; ++i)
-            result += QString::number(ReadFloat(QString())) + ", ";
+            result += QString::number(ReadFloat(QString())) + "| ";
 
-        return result.remove(result.size(), -2) + "]";
+        result = result.remove(result.size(), -2) + "]";
+        AddColumnName(name, result);
+
+        return result;
     }
 
     template <typename T>
     QString ReadArray(QString name)
     {
-        AddColumnName(name);
         QString result = "[";
-
         quint32 size = ReadInt(QString());
 
         for (quint16 i = 0; i < size; ++i)
@@ -167,10 +202,12 @@ public:
             result += QString::number(v);
 
             if (i != size - 1)
-                result += ", ";
+                result += "| ";
         }
 
         result += "]";
+        AddColumnName(name, result);
+
         return result;
     }
 
@@ -192,6 +229,9 @@ private:
 
     bool m_firstRow;
     QString m_columns;
+
+    BRow m_row;
+    BRows m_rows;
 };
 
 #endif // BINARYREADER_H

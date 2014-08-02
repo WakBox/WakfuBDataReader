@@ -3,6 +3,7 @@
 #include "BinaryReader.h"
 #include "BinaryReaders/BaseBinaryReader.h"
 #include "BinaryReaders/BinaryReaderInclude.h"
+#include "dialogview.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_fileId = 0;
 
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(Open()));
+    connect(ui->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(OnRowClicked(QTreeWidgetItem*,int)));
 }
 
 MainWindow::~MainWindow()
@@ -40,6 +42,13 @@ void MainWindow::Open()
     ui->statusBar->showMessage("Reading header file...");
 
     ReadHeader();
+}
+
+void MainWindow::OnRowClicked(QTreeWidgetItem* row, int column)
+{
+    DialogView view;
+    view.SetData(m_binaryReader->GetRows().at(row->text(0).toUInt()));
+    view.exec();
 }
 
 void MainWindow::ReadHeader()
@@ -70,12 +79,7 @@ void MainWindow::ReadHeader()
         qint8 unk = reader.ReadByte();
         qDebug() << unk;
 
-        qint32 strSize = reader.ReadInt();
-        QByteArray buffer;
-        buffer.resize(strSize);
-        reader.ReadRawBytes(buffer.data(), buffer.size());
-
-        QString index = QString(buffer);
+        QString index = reader.ReadString();
         //qDebug() << index;
 
         qint32 rows = reader.ReadInt();
@@ -511,6 +515,7 @@ void MainWindow::ReadHeader()
 
 void MainWindow::UpdateTreeData(QVector<QVariantList> data)
 {
+    m_data = data;
     ui->statusBar->showMessage("Loading " + QString::number(data.size()) + " rows...");
 
     QString columns = m_binaryReader->GetColumns();

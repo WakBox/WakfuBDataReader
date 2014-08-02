@@ -7,12 +7,13 @@ public:
 
     QString GetColumns()
     {
-        return QString("short|short|bool|bool|bool|string array|string array|short|int array");
+        return r->GetColumns();
     }
 
     void Read(Rows rows)
     {
         qint32 size = rows.size();
+        r->FirstRow();
 
         for (qint32 i = 0; i < size; ++i)
         {
@@ -22,8 +23,8 @@ public:
             r->SetBufferPosition(row.offset);
 
             // Struct
-            d << r->ReadShort();
-            d << r->ReadShort();
+            d << r->ReadShort("Type");
+            d << r->ReadShort("Parent type");
             d << r->ReadBool();
             d << r->ReadBool();
             d << r->ReadBool();
@@ -33,6 +34,7 @@ public:
             d << r->ReadIntArray();
 
             data.push_back(d);
+            r->FirstRow(false);
         }
 
         emit Finished(data);

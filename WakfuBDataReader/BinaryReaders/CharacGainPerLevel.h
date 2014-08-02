@@ -7,12 +7,13 @@ public:
 
     QString GetColumns()
     {
-        return QString("short|int|byte|float");
+        return r->GetColumns();
     }
 
     void Read(Rows rows)
     {
         qint32 size = rows.size();
+        r->FirstRow();
 
         for (qint32 i = 0; i < size; ++i)
         {
@@ -23,11 +24,15 @@ public:
 
             // Struct
             d << r->ReadShort();
-            d << r->ReadInt();
-            d << r->ReadByte();
-            d << r->ReadFloat();
+            qint32 size = r->ReadInt(QString());
+            for (qint32 i = 0; i < size; ++i)
+            {
+                d << r->ReadByte();
+                d << r->ReadFloat();
+            }
 
             data.push_back(d);
+            r->FirstRow(false);
         }
 
         emit Finished(data);
