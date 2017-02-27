@@ -18,6 +18,7 @@ public:
     BinaryReader(QByteArray file, int fileId, int fileSize = 0) : m_buffer(file), m_stream(&m_buffer, QIODevice::ReadOnly), m_fileId(fileId), m_size(fileSize)
     {
         m_stream.setByteOrder(QDataStream::LittleEndian);
+        m_stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
 
         if (fileSize == 0)
         {
@@ -81,7 +82,7 @@ public:
     }
 
     template <typename T>
-    T Read(QString name = "unk")
+    T Read()
     {
         CalcHoo();
 
@@ -89,35 +90,29 @@ public:
         *this >> v;
         v = v - m_hoo;
 
-        if (!name.isEmpty())
-            AddEntry((name != "unk") ? name : name + " " + QString::number(m_col++), v);
-
         return v;
     }
 
-    float ReadFloat(QString name = "unk")
+    float ReadFloat()
     {
         CalcHoo();
+
         float v;
-
         *this >> v;
-
-        if (!name.isEmpty())
-            AddEntry((name != "unk") ? name : name + " " + QString::number(m_col++), v);
 
         return v;
     }
 
-    bool ReadBool(QString name = "unk") { return Read<bool>(name); }
-    qint32 ReadInt(QString name = "unk") { return Read<qint32>(name); }
-    quint32 ReadUInt(QString name = "unk") { return Read<quint32>(name); }
-    double ReadDouble(QString name = "unk") { return Read<double>(name); }
-    qint16 ReadShort(QString name = "unk") { return Read<qint16>(name); }
-    quint16 ReadUShort(QString name = "unk") { return Read<quint16>(name); }
-    char ReadByte(QString name = "unk"){ return Read<qint8>(name); }
-    uchar ReadUByte(QString name = "unk") { return Read<quint8>(name); }
-    qint64 ReadLong(QString name = "unk") { return Read<qint64>(name); }
-    quint64 ReadULong(QString name = "unk") { return Read<quint64>(name); }
+    bool ReadBool() { return Read<bool>(); }
+    qint32 ReadInt() { return Read<qint32>(); }
+    quint32 ReadUInt() { return Read<quint32>(); }
+    double ReadDouble() { return Read<double>(); }
+    qint16 ReadShort() { return Read<qint16>(); }
+    quint16 ReadUShort() { return Read<quint16>(); }
+    qint8 ReadByte(){ return Read<qint8>(); }
+    quint8 ReadUByte() { return Read<quint8>(); }
+    qint64 ReadLong() { return Read<qint64>(); }
+    quint64 ReadULong() { return Read<quint64>(); }
 
     void ReadBytes(char*& s, uint len)
     {
@@ -129,9 +124,9 @@ public:
         m_stream.readRawData(s, len);
     }
 
-    QString ReadString(QString name = "unk")
+    QString ReadString()
     {
-        quint32 len = ReadInt(QString());
+        quint32 len = ReadInt();
 
         QByteArray bytes;
         bytes.resize(len);
@@ -144,46 +139,8 @@ public:
         }
 
         QString str = QString::fromUtf8(bytes);
-        if (!name.isEmpty())
-            AddEntry((name != "unk") ? name : name + " " + QString::number(m_col++), str);
-
         return str;
     }
-
-    void ReadStringArray(QString name = "unk")
-    {
-        qint32 size = ReadInt(QString());
-        QString result = "[";
-
-        for (qint32 i = 0; i < size; ++i)
-            result += ReadString(QString()) + ", ";
-
-        AddEntry((name != "unk") ? name : name + " " + QString::number(m_col++), result.remove(result.size(), -2));
-    }
-
-    // Y'a un problème avec les floats...
-    // Voir si incompatibilité Java <-> Qt ??
-    void ReadFloatArray(QString name = "unk")
-    {
-        qint32 size = ReadInt(QString());
-
-        for (quint16 i = 0; i < size; ++i)
-            ReadFloat(name + " [" + QString::number(i) + "]");
-    }
-
-    template <typename T>
-    void ReadArray(QString name = "unk")
-    {
-        quint32 size = ReadInt(QString());
-
-        for (qint32 i = 0; i < size; ++i)
-            Read<T>(name + " [" + QString::number(i) + "]");
-    }
-
-    void ReadByteArray(QString name = "unk") { ReadArray<qint8>(name); }
-    void ReadIntArray(QString name = "unk") { ReadArray<qint32>(name); }
-    void ReadShortArray(QString name = "unk") { ReadArray<qint16>(name); }
-    void ReadLongArray(QString name = "unk") { ReadArray<qint64>(name); }
 
     QByteArray ReadAllFromCurrentPos() { return m_stream.device()->readAll(); }
     qint32 GetSize() { return m_size; }

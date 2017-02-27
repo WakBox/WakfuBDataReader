@@ -16,9 +16,7 @@ SOURCES += main.cpp\
         mainwindow.cpp
 
 HEADERS  += mainwindow.h \
-    BinaryReader.h \
-    BinaryReaders/InteractiveElementTemplate.h \
-    BinaryReaders/InteractiveElementModel.h
+    BinaryReader.h
 
 FORMS    += mainwindow.ui
 

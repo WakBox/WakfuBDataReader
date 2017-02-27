@@ -141,7 +141,7 @@ void MainWindow::ReadHeader()
     case 1:
         m_binaryReader = new Achievement();
         break;
-    case 2:
+/*    case 2:
         m_binaryReader = new AchievementVariable();
         break;
     case 3:
@@ -526,7 +526,7 @@ void MainWindow::ReadHeader()
         break;
     case 133:
         m_binaryReader = new Secret();
-        break;
+        break;*/
     default:
         break;
     }
