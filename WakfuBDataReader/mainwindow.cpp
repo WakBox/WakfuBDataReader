@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    setAcceptDrops(true);
+
     ui->setupUi(this);
     ui->treeWidget->setSortingEnabled(true);
 
@@ -23,6 +25,25 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::dragEnterEvent(QDragEnterEvent *e)
+{
+    if (e->mimeData()->hasUrls())
+        e->acceptProposedAction();
+}
+
+void MainWindow::dropEvent(QDropEvent *e)
+{
+    foreach (const QUrl &url, e->mimeData()->urls())
+    {
+        QString filename = url.toLocalFile();
+
+        if (QFileInfo(filename).suffix() == "bin")
+            OpenFile(filename);
+
+        return;
+    }
+}
+
 void MainWindow::Open()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Open file"), "", tr("Binary file (*.bin)"));
@@ -30,6 +51,11 @@ void MainWindow::Open()
     if (filename.isNull())
         return;
 
+    OpenFile(filename);
+}
+
+void MainWindow::OpenFile(QString filename)
+{
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly))
         return;
@@ -37,13 +63,13 @@ void MainWindow::Open()
     m_file = file.readAll();
     m_fileId = (quint8)QFileInfo(filename).fileName().split(".").at(0).toUInt();
 
-    ui->statusBar->showMessage("Reading header file...");
-
     ReadHeader();
 }
 
 void MainWindow::ReadHeader()
 {
+    ui->statusBar->showMessage("Reading header file...");
+
     // Clean first
     if (m_binaryReader)
     {
