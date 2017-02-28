@@ -77,66 +77,78 @@ public:
 
             AchievementEntry entry;
 
-            /* Struct
-            r->ReadInt("id");
-            r->ReadInt("categoryId");
-            r->ReadBool("isVisible");
-            r->ReadBool("notifyOnPass");
-            r->ReadBool("IsActive");
-            r->ReadString("m_criterion");
-            //r->ReadString("m_activationCriterion");
+            entry.m_id = r->ReadInt();
+            entry.m_categoryId = r->ReadInt();
+            entry.m_isVisible = r->ReadBool();
+            entry.m_notifyOnPass = r->ReadBool();
+            entry.m_isActive = r->ReadBool();
+            entry.m_criterion = r->ReadString();
+            entry.m_activationCriterion = r->ReadString();
 
-            // AchievementGoal
-            qint32 size = r->ReadInt(QString());
-            for (quint32 i = 0; i < size; ++i)
+            qint32 achievementGoalSize = r->ReadInt();
+
+            for (qint32 i = 0; i < achievementGoalSize; ++i)
             {
-                r->ReadInt("m_id");
-                r->ReadBool("m_feedback");
-                r->ReadBool("m_hasPositionFeedback");
-                r->ReadShort("m_positionX");
-                r->ReadShort("m_positionY");
-                r->ReadShort("m_positionZ");
-                r->ReadShort("m_positionWorldId");
+                AchievementEntry::AchievementGoal achievementGoal;
 
-                // AchievementVariableListener
-                qint32 size2 = r->ReadInt(QString());
-                for (quint32 j = 0; j < size2; ++j)
+                achievementGoal.m_id = r->ReadInt();
+                achievementGoal.m_feedback = r->ReadBool();
+                achievementGoal.m_hasPositionFeedback = r->ReadBool();
+                achievementGoal.m_positionX = r->ReadShort();
+                achievementGoal.m_positionY = r->ReadShort();
+                achievementGoal.m_positionZ = r->ReadShort();
+                achievementGoal.m_positionWorldId = r->ReadShort();
+
+                qint32 achievementVariableListenerSize = r->ReadInt();
+
+                for (qint32 j = 0; j < achievementVariableListenerSize; ++j)
                 {
-                    r->ReadInt("m_id");
-                    r->ReadString("m_successCriterion");
-                    r->ReadIntArray("m_variableIds");
+                    AchievementEntry::AchievementGoal::AchievementVariableListener achievementVariableListener;
+
+                    achievementVariableListener.m_id = r->ReadInt();
+                    achievementVariableListener.m_successCriterion = r->ReadString();
+                    achievementVariableListener.m_variableIds = r->ReadIntArray();
+
+                    achievementGoal.m_vlisteners.push_back(achievementVariableListener);
                 }
+
+                entry.m_goals.push_back(achievementGoal);
             }
 
-            // AchievementReward
-            size = r->ReadInt(QString());
-            for (quint32 i = 0; i < size; ++i)
+            qint32 achievementRewardSize = r->ReadInt();
+
+            for (qint32 i = 0; i < achievementRewardSize; ++i)
             {
-                r->ReadInt("m_id");
-                r->ReadInt("m_type");
-                r->ReadIntArray("m_params");
+                AchievementEntry::AchievementReward achievementReward;
+
+                achievementReward.m_id = r->ReadInt();
+                achievementReward.m_type = r->ReadInt();
+                achievementReward.m_params = r->ReadIntArray();
+
+                entry.m_rewards.push_back(achievementReward);
             }
 
-            r->ReadInt("Duration");
-            r->ReadInt("m_cooldown");
-            r->ReadBool("m_shareable");
-            r->ReadBool("m_repeatable");
-            r->ReadBool("m_needsUserAccept");
-            r->ReadInt("m_recommandedLevel");
-            r->ReadInt("m_recommandedPlayers");
-            r->ReadBool("m_followable");
-            r->ReadInt("m_displayOnActivationDelay");
-            r->ReadLong("m_periodStartTime");
-            r->ReadLong("m_period");
-            r->ReadBool("m_autoCompass");
-            r->ReadInt("m_gfxId");
-            r->ReadBool("m_isMercenary");
-            r->ReadInt("m_mercenaryItemId");
-            r->ReadByte("m_mercenaryRank");
-            r->ReadInt("m_order");
-            */
+            entry.m_duration = r->ReadInt();
+            entry.m_cooldown = r->ReadInt();
+            entry.m_shareable = r->ReadBool();
+            entry.m_repeatable = r->ReadBool();
+            entry.m_needsUserAccept = r->ReadBool();
+            entry.m_recommandedLevel = r->ReadInt();
+            entry.m_recommandedPlayers = r->ReadInt();
+            entry.m_followable = r->ReadBool();
+            entry.m_displayOnActivationDelay = r->ReadInt();
+            entry.m_periodStartTime = r->ReadLong();
+            entry.m_period = r->ReadLong();
+            entry.m_autoCompass = r->ReadBool();
+            entry.m_gfxId = r->ReadInt();
+            entry.m_isMercenary = r->ReadBool();
+            entry.m_mercenaryItemId = r->ReadInt();
+            entry.m_mercenaryRank = r->ReadByte();
+            entry.m_order = r->ReadInt();
+
             r->PushRow();
 
+            // TMP
             break;
         }
 

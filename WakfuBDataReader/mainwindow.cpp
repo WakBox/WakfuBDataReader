@@ -80,16 +80,16 @@ void MainWindow::ReadHeader()
     }
 
     BinaryReader reader(m_file, m_fileId);
-    int rows = reader.ReadInt();
-    qDebug() << rows;
+    int rowsCount = reader.ReadInt();
+    qDebug() << rowsCount;
 
-    for (int i = 0; i < rows; ++i)
+    for (int i = 0; i < rowsCount; ++i)
     {
         Row row;
         row.id = reader.ReadLong();
         row.offset = reader.ReadInt();
         row.size = reader.ReadInt();
-        row.unk = reader.ReadByte();
+        row.seed = reader.ReadByte();
 
         m_rows.insert(i, row);
         /*qDebug() << "[" << i << "] "  << "id : " << row.id;
@@ -98,37 +98,27 @@ void MainWindow::ReadHeader()
         qDebug() << "unk byte : " << row.unk;*/
     }
 
-    qint8 blocks = reader.ReadByte();
-    qDebug() << "Blocks : " << blocks;
-    for (quint32 i = 0; i < blocks; ++i)
+    qint8 indexCount = reader.ReadByte();
+    qDebug() << "Blocks : " << indexCount;
+    for (qint8 i = 0; i < indexCount; ++i)
     {
-        qint8 unk = reader.ReadByte();
-        qDebug() << unk;
+        bool unique = reader.ReadByte();
+        qDebug() << unique;
 
-        qint32 strSize = reader.ReadInt();
-        QByteArray buffer;
-        buffer.resize(strSize);
-        reader.ReadRawBytes(buffer.data(), buffer.size());
+        QString indexName = reader.ReadString();
+        qint32 count = reader.ReadInt();
 
-        QString index = QString(buffer);
-        //qDebug() << index;
-
-        qint32 rows = reader.ReadInt();
-        for (qint32 k = 0; k < rows; ++k)
+        for (qint32 k = 0; k < count; ++k)
         {
-            qint64 id = reader.ReadLong();
+            reader.ReadLong(); // ID
 
-            if (unk == 0)
+            if (unique)
             {
-                qint32 unkInt = reader.ReadInt();
-                for (qint32 l = 0; l < unkInt; ++l)
-                {
-                    qint32 unkInt2 = reader.ReadInt();
-                }
+                reader.ReadInt();
             }
             else
             {
-                qint32 unkInt = reader.ReadInt();
+                reader.ReadIntArray();
             }
         }
     }
@@ -559,7 +549,7 @@ void MainWindow::UpdateTreeData(Entry cols, DataRow rows)
         ui->treeWidget->header()->resizeSection(i, 100);
 
     QList<QTreeWidgetItem*> items;
-    for (quint32 i = 0; i < rows.size(); ++i)
+    for (int i = 0; i < rows.size(); ++i)
     {
         QTreeWidgetItem *item = new QTreeWidgetItem;
         Entry d = rows.at(i);

@@ -142,6 +142,19 @@ public:
         return str;
     }
 
+    QList<qint32> ReadIntArray()
+    {
+        QList<qint32> intArray;
+        qint32 size = ReadInt();
+
+        for (qint32 i = 0; i < size; ++i)
+        {
+            intArray.push_back(ReadInt());
+        }
+
+        return intArray;
+    }
+
     QByteArray ReadAllFromCurrentPos() { return m_stream.device()->readAll(); }
     qint32 GetSize() { return m_size; }
 

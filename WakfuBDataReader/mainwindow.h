@@ -13,10 +13,10 @@
 
 struct Row
 {
-    long id;
-    int offset;
-    int size;
-    qint8 unk;
+    qint64 id;
+    qint32 offset;
+    qint32 size;
+    qint8 seed;
 };
 
 typedef QMap<int, Row> Rows;
