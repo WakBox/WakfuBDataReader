@@ -10,7 +10,7 @@ if ($handle = opendir('.'))
     while (false !== ($entry = readdir($handle)))
     {
         if ($entry != '.' && $entry != '..'
-         && $entry != 'translator.php')
+         && strpos($entry, '.java') !== false)
             $binaryReaders[] = $entry;
     }
 
@@ -34,45 +34,51 @@ else
 
 class OutputFile
 {
-	private $file = '';
+	private $fileName = '';
+	private $file = [];
+
 	private $outputFile = '';
 
 	private $className = '';
 
-	private $functions = array();
-	private $columns = array();
+	private $classes = [];
 
-	private $translate = array(
-		'wtf??'			=> 'wtf??',
-		'get'			=> 'ReadByte|byte',
-		'readBoolean'	=> 'ReadBool|bool',
-		'getShort'		=> 'ReadShort|short',
-		'getFloat'		=> 'ReadFloat|float', // à corriger
-		'getInt' 		=> 'ReadInt|int',
-		'getLong'		=> 'ReadLong|long',
-		'readUTF8'		=> 'ReadString|string', //todo
-		'clh'			=> 'ReadByteArray|byte array', // todo
-		'cli'			=> 'ReadIntArray|int array', // todo
-		'clj'			=> 'ReadShortArray|short array', // todo
-		'clk'			=> 'ReadFloatArray|float array', // todo
-		'cll'			=> 'ReadStringArray|string array', // todo
-		'clm'			=> 'ReadLongArray|long array' // todo
-	);
+	private $functions = [];
+	private $columns = [];
 
-	public function __construct($file)
+	private $translate = [
+		'wtf??'						=> 'wtf??',
+		'get'						=> 'ReadByte',
+		'readBoolean'				=> 'ReadBool',
+		'getShort'					=> 'ReadShort',
+		'getFloat'					=> 'ReadFloat',
+		'getInt' 					=> 'ReadInt',
+		'getLong'					=> 'ReadLong',
+		'readUTF8'					=> 'ReadString',
+		'readByteArray'				=> 'ReadByteArray',
+		'readIntArray'				=> 'ReadIntArray',
+		'readShortArray'			=> 'ReadShortArray',
+		'readFloatArray'			=> 'ReadFloatArray',
+		'readStringArray' 			=> 'ReadStringArray',
+		'readLongArray'				=> 'ReadLongArray'
+	];
+
+	public function __construct($fileName)
 	{
-		$this->file = $file;
+		$this->fileName = $fileName;
+		$this->file = file($fileName);
+		$this->totalLines = count($this->file);
 	}
 
 	public function Contains($what, $in)
 	{
-		$count = 0;
+		$pos = 0;
 		foreach ($in as $i)
 		{
 			if (preg_match("/(".$i.")(\\(\\))/is", $what))
-				return $count;
+				return $pos;
 			else
-				++$count;
+				++$pos;
 		}
 
 		return false;
@@ -90,11 +96,28 @@ class OutputFile
 	{
 		echo ">> Start parsing input file...\n";
 
+		// Step 1: Get classes
+		$classes = $this->ParseClasses();
+
+		// Step 2: Get sub classes struct
+		$subClassesStruct = $this->ParseSubClassesStruct($classes['sub_classes']);
+
+		// Step 3: Get main class struct
+		$this->ParseMainClassStruct();
+
+		// TMP
+		die;
+
 		$handle = fopen($this->file, 'r');
 		if ($handle) 
 		{
+			$lineNumber = 0;
 		    while (($line = fgets($handle, 4096)) !== false)
-				$this->ParseLine($line);
+		    {
+				$this->ParseLine($line, ++$lineNumber);
+		    }
+
+		    var_dump($this->classes); die;
 
 		    if (!feof($handle))
 		        echo ">> Error: unexpected fgets() fail\n";
@@ -105,17 +128,111 @@ class OutputFile
 			echo '>> Error while opening file : ' . $file . "\n";
 	}
 
-	public function ParseLine($line)
+	public function ParseClasses()
 	{
-		$keys = array_keys($this->translate);
+		$classes = [];
+		$lines = $this->file;
 
-		if ($newFunc = $this->Contains($line, $keys))
+		foreach ($lines as $pos => $line)
 		{
-			$translatedFunc = $this->translate[$keys[$newFunc]];
-			$translatedFunc = explode('|', $translatedFunc);
-
-			$this->functions[] = $translatedFunc[0];
+			if (empty($classes))
+			{
+				if (strpos($line, 'public class') !== false)
+				{
+					$className = explode(' implements ', $line)[0];
+					$classes['main_class'] = [
+						'name' => trim(str_replace('public class', '', $className)),
+						'pos' => $pos + 1
+					];
+				}
+			}
+			else
+			{
+				if (strpos($line, 'public static class') !== false)
+				{
+					$className = explode(' static class ', $line)[1];
+					$classes['sub_classes'][] = [
+						'name' => trim($className),
+						'pos' => $pos + 1
+					];
+				}					
+			}
 		}
+
+		return $classes;
+	}
+
+	public function ParseSubClassesStruct($subClasses)
+	{
+		$struct = [];
+
+		if (empty($subClasses))
+			return $struct;
+
+		$lines = $this->file;
+		foreach ($subClasses as $subClass)
+		{
+			echo '<br><br>PARSING ' . $subClass['name'] . '<br><br>';
+			for ($i = $subClass['pos']; $i < $this->totalLines; ++$i)
+			{
+				$line = $lines[$i];
+
+				if (strpos($line, 'read(final') !== false)
+				{
+					while (!empty($line))
+					{
+						$line = trim($lines[$i++]);
+						$translated = $this->TranslateFunction($line);
+
+						if (!empty($translated))
+							$struct[$subClass['name']][] = $translated;
+					}
+
+					var_dump($struct[$subClass['name']]);
+
+					break;
+				}
+			}
+		}
+	}
+
+	public function TranslateFunction($line)
+	{
+		if (strpos($line, 'new') !== false)
+		{
+			$name = explode(' = ', $line);
+			$name = trim(str_replace('this.', '', $name[0]));
+
+			$struct = str_replace('new', '', $name[1]);
+
+			var_dump($name . ' : ' . $struct);
+		}
+		else
+		{
+			$keys = array_keys($this->translate);
+
+			if ($newFunc = $this->Contains($line, $keys))
+			{
+				$function = $this->translate[$keys[$newFunc]];
+				$name = explode(' = ', $line)[0];
+
+				if (strpos($name, 'final') !== false)
+				{
+					$name = explode(' ', $name);
+					$name = trim($name[count($name) - 1]);
+					$function .= '();';
+				}
+				else
+				{
+					$name = trim(str_replace('this.', '', $name));
+					$function .= '("' . $name . '");';
+				}
+
+				return ['name' => $name, 'function' => $function];
+			}
+		}
+
+		return null;
 	}
 
 	public function GenerateOutputFile()
@@ -129,7 +246,7 @@ class OutputFile
 			$struct .= '            d << r->' . $f . '();' . "\n";
 
 		$template = str_replace('%struct%', $struct, $template);
-		file_put_contents('translator/' . $this->outputFile, $template);
+		file_put_contents('build/' . $this->outputFile, $template);
 		echo ">> DONE\n\n";
 	}
 }
