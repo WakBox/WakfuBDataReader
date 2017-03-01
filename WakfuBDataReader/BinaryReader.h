@@ -82,7 +82,7 @@ public:
     }
 
     template <typename T>
-    T Read()
+    T Read(QString name = "")
     {
         CalcHoo();
 
@@ -90,29 +90,35 @@ public:
         *this >> v;
         v = v - m_hoo;
 
+        if (!name.isEmpty())
+            AddEntry(name, v);
+
         return v;
     }
 
-    float ReadFloat()
+    float ReadFloat(QString name = "")
     {
         CalcHoo();
 
         float v;
         *this >> v;
 
+        if (!name.isEmpty())
+            AddEntry(name, v);
+
         return v;
     }
 
-    bool ReadBool() { return Read<bool>(); }
-    qint32 ReadInt() { return Read<qint32>(); }
-    quint32 ReadUInt() { return Read<quint32>(); }
-    double ReadDouble() { return Read<double>(); }
-    qint16 ReadShort() { return Read<qint16>(); }
-    quint16 ReadUShort() { return Read<quint16>(); }
-    qint8 ReadByte(){ return Read<qint8>(); }
-    quint8 ReadUByte() { return Read<quint8>(); }
-    qint64 ReadLong() { return Read<qint64>(); }
-    quint64 ReadULong() { return Read<quint64>(); }
+    bool ReadBool(QString name = "") { return Read<bool>(name); }
+    qint32 ReadInt(QString name = "") { return Read<qint32>(name); }
+    quint32 ReadUInt(QString name = "") { return Read<quint32>(name); }
+    double ReadDouble(QString name = "") { return Read<double>(name); }
+    qint16 ReadShort(QString name = "") { return Read<qint16>(name); }
+    quint16 ReadUShort(QString name = "") { return Read<quint16>(name); }
+    qint8 ReadByte(QString name = ""){ return Read<qint8>(name); }
+    quint8 ReadUByte(QString name = "") { return Read<quint8>(name); }
+    qint64 ReadLong(QString name = "") { return Read<qint64>(name); }
+    quint64 ReadULong(QString name = "") { return Read<quint64>(name); }
 
     void ReadBytes(char*& s, uint len)
     {
@@ -124,7 +130,7 @@ public:
         m_stream.readRawData(s, len);
     }
 
-    QString ReadString()
+    QString ReadString(QString name = "")
     {
         quint32 len = ReadInt();
 

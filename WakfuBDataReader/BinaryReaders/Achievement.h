@@ -77,13 +77,13 @@ public:
 
             AchievementEntry entry;
 
-            entry.m_id = r->ReadInt();
-            entry.m_categoryId = r->ReadInt();
-            entry.m_isVisible = r->ReadBool();
-            entry.m_notifyOnPass = r->ReadBool();
-            entry.m_isActive = r->ReadBool();
-            entry.m_criterion = r->ReadString();
-            entry.m_activationCriterion = r->ReadString();
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_categoryId = r->ReadInt("m_categoryId");
+            entry.m_isVisible = r->ReadBool("m_isVisible");
+            entry.m_notifyOnPass = r->ReadBool("m_notifyOnPass");
+            entry.m_isActive = r->ReadBool("m_isActive");
+            entry.m_criterion = r->ReadString("m_criterion");
+            entry.m_activationCriterion = r->ReadString("m_activationCriterion");
 
             qint32 achievementGoalSize = r->ReadInt();
 
@@ -128,28 +128,25 @@ public:
                 entry.m_rewards.push_back(achievementReward);
             }
 
-            entry.m_duration = r->ReadInt();
-            entry.m_cooldown = r->ReadInt();
-            entry.m_shareable = r->ReadBool();
-            entry.m_repeatable = r->ReadBool();
-            entry.m_needsUserAccept = r->ReadBool();
-            entry.m_recommandedLevel = r->ReadInt();
-            entry.m_recommandedPlayers = r->ReadInt();
-            entry.m_followable = r->ReadBool();
-            entry.m_displayOnActivationDelay = r->ReadInt();
-            entry.m_periodStartTime = r->ReadLong();
-            entry.m_period = r->ReadLong();
-            entry.m_autoCompass = r->ReadBool();
-            entry.m_gfxId = r->ReadInt();
-            entry.m_isMercenary = r->ReadBool();
-            entry.m_mercenaryItemId = r->ReadInt();
-            entry.m_mercenaryRank = r->ReadByte();
-            entry.m_order = r->ReadInt();
+            entry.m_duration = r->ReadInt("m_duration");
+            entry.m_cooldown = r->ReadInt("m_cooldown");
+            entry.m_shareable = r->ReadBool("m_shareable");
+            entry.m_repeatable = r->ReadBool("m_repeatable");
+            entry.m_needsUserAccept = r->ReadBool("m_needsUserAccept");
+            entry.m_recommandedLevel = r->ReadInt("m_recommandedLevel");
+            entry.m_recommandedPlayers = r->ReadInt("m_recommandedPlayers");
+            entry.m_followable = r->ReadBool("m_followable");
+            entry.m_displayOnActivationDelay = r->ReadInt("m_displayOnActivationDelay");
+            entry.m_periodStartTime = r->ReadLong("m_periodStartTime");
+            entry.m_period = r->ReadLong("m_period");
+            entry.m_autoCompass = r->ReadBool("m_autoCompass");
+            entry.m_gfxId = r->ReadInt("m_gfxId");
+            entry.m_isMercenary = r->ReadBool("m_isMercenary");
+            entry.m_mercenaryItemId = r->ReadInt("m_mercenaryItemId");
+            entry.m_mercenaryRank = r->ReadByte("m_mercenaryRank");
+            entry.m_order = r->ReadInt("m_order");
 
             r->PushRow();
-
-            // TMP
-            break;
         }
 
         emit Finished(r->GetCols(), r->GetRows());

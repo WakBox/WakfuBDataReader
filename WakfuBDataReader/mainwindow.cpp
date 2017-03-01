@@ -3,6 +3,7 @@
 #include "BinaryReader.h"
 #include "BinaryReaders/BaseBinaryReader.h"
 #include "BinaryReaders/BinaryReaderInclude.h"
+#include "TreeWidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -551,7 +552,7 @@ void MainWindow::UpdateTreeData(Entry cols, DataRow rows)
     QList<QTreeWidgetItem*> items;
     for (int i = 0; i < rows.size(); ++i)
     {
-        QTreeWidgetItem *item = new QTreeWidgetItem;
+        TreeWidgetItem *item = new TreeWidgetItem(ui->treeWidget);
         Entry d = rows.at(i);
         int index = 0;
 

@@ -16,7 +16,8 @@ SOURCES += main.cpp\
         mainwindow.cpp
 
 HEADERS  += mainwindow.h \
-    BinaryReader.h
+    BinaryReader.h \
+    TreeWidget.h
 
 FORMS    += mainwindow.ui
 
