@@ -1,5 +1,12 @@
 #include "BaseBinaryReader.h"
 
+struct EquipableDummyInteractiveElementParamBinaryData
+{
+    qint32 m_id;
+    QString m_animName;
+    qint8 m_sex;
+};
+
 class EquipableDummyInteractiveElementParam : public BaseBinaryReader
 {
 public:
@@ -14,10 +21,11 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadString("string");
-            r->ReadByte("byte");
+            EquipableDummyInteractiveElementParamBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_animName = r->ReadString("m_animName");
+            entry.m_sex = r->ReadByte("m_sex");
 
             r->PushRow();
         }

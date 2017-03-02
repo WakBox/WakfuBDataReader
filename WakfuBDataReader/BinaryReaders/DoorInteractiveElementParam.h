@@ -1,5 +1,15 @@
 #include "BaseBinaryReader.h"
 
+struct DoorInteractiveElementParamBinaryData
+{
+    qint32 m_id;
+    qint32 m_visualId;
+    bool m_consumeItem;
+    qint32 m_itemNeeded;
+    qint32 m_kamaCost;
+    QString m_criterion;
+};
+
 class DoorInteractiveElementParam : public BaseBinaryReader
 {
 public:
@@ -14,13 +24,14 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("ID");
-            r->ReadInt("int");
-            r->ReadBool("bool");
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadString("string");
+            DoorInteractiveElementParamBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_visualId = r->ReadInt("m_visualId");
+            entry.m_consumeItem = r->ReadBool("m_consumeItem");
+            entry.m_itemNeeded = r->ReadInt("m_itemNeeded");
+            entry.m_kamaCost = r->ReadInt("m_kamaCost");
+            entry.m_criterion = r->ReadString("m_criterion");
 
             r->PushRow();
         }

@@ -2,7 +2,6 @@
 #define BINARYREADERINCLUDE_H
 
 #include "Achievement.h"
-/*
 #include "AchievementCategory.h"
 #include "AchievementList.h"
 #include "AchievementVariable.h"
@@ -106,5 +105,5 @@
 #include "Tutorial.h"
 #include "Zaap.h"
 #include "ZaapLink.h"
-*/
+
 #endif // BINARYREADERINCLUDE_H

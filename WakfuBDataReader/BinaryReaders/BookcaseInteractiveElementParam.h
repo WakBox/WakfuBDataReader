@@ -1,5 +1,11 @@
 #include "BaseBinaryReader.h"
 
+struct BookcaseInteractiveElementParamBinaryData
+{
+    qint32 m_id;
+    qint8 m_size;
+};
+
 class BookcaseInteractiveElementParam : public BaseBinaryReader
 {
 public:
@@ -14,9 +20,10 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadByte("byte");
+            BookcaseInteractiveElementParamBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_size = r->ReadByte("m_size");
 
             r->PushRow();
         }

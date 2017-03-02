@@ -1,5 +1,16 @@
 #include "BaseBinaryReader.h"
 
+struct Event
+{
+    qint32 m_eventId;
+};
+
+struct TutorialBinaryData
+{
+    qint32 m_id;
+    QList<Event> m_eventIds;
+};
+
 class Tutorial : public BaseBinaryReader
 {
 public:
@@ -14,12 +25,21 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("ID");
+            TutorialBinaryData entry;
 
-            qint32 size = r->ReadInt(QString());
-            for (quint32 i = 0; i < size; ++i)
-                r->ReadInt("int");
+            entry.m_id = r->ReadInt("m_id");
+
+            qint32 eventIdCount = r->ReadInt();
+
+            for (qint32 i = 0; i < eventIdCount; ++i)
+            {
+                Event event;
+
+                event.m_eventId = r->ReadInt();
+
+                entry.m_eventIds.push_back(event);
+            }
+
 
             r->PushRow();
         }

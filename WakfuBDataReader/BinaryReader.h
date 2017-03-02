@@ -145,20 +145,68 @@ public:
         }
 
         QString str = QString::fromUtf8(bytes);
+
+        if (!name.isEmpty())
+            AddEntry(name, str);
+
         return str;
     }
 
-    QList<qint32> ReadIntArray()
+    QList<qint32> ReadIntArray(QString name = "")
     {
         QList<qint32> intArray;
         qint32 size = ReadInt();
+        QStringList v;
 
         for (qint32 i = 0; i < size; ++i)
         {
-            intArray.push_back(ReadInt());
+            qint32 value = ReadInt();
+            intArray.push_back(value);
+            v.push_back(QString::number(value));
         }
 
+        if (!name.isEmpty())
+            AddEntry(name, v.join("|"));
+
         return intArray;
+    }
+
+    QList<float> ReadFloatArray(QString name = "")
+    {
+        QList<float> floatArray;
+        qint32 size = ReadInt();
+        QStringList v;
+
+        for (qint32 i = 0; i < size; ++i)
+        {
+            float value = ReadFloat();
+            floatArray.push_back(value);
+            v.push_back(QString::number(value));
+        }
+
+        if (!name.isEmpty())
+            AddEntry(name, v.join("|"));
+
+        return floatArray;
+    }
+
+    QList<qint8> ReadByteArray(QString name = "")
+    {
+        QList<qint8> byteArray;
+        qint32 size = ReadInt();
+        QStringList v;
+
+        for (qint32 i = 0; i < size; ++i)
+        {
+            qint8 value = ReadByte();
+            byteArray.push_back(value);
+            v.push_back(QString::number(value));
+        }
+
+        if (!name.isEmpty())
+            AddEntry(name, v.join("|"));
+
+        return byteArray;
     }
 
     QByteArray ReadAllFromCurrentPos() { return m_stream.device()->readAll(); }

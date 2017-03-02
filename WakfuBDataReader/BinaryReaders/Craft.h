@@ -1,5 +1,15 @@
 #include "BaseBinaryReader.h"
 
+struct CraftBinaryData
+{
+    qint32 m_craftId;
+    qint32 m_bookItemId;
+    float m_xpFactor;
+    bool m_innate;
+    bool m_conceptualCraft;
+    bool m_hiddenCraft;
+};
+
 class Craft : public BaseBinaryReader
 {
 public:
@@ -14,13 +24,14 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadFloat("float");
-            r->ReadBool("bool");
-            r->ReadBool("bool");
-            r->ReadBool("bool");
+            CraftBinaryData entry;
+
+            entry.m_craftId = r->ReadInt("m_craftId");
+            entry.m_bookItemId = r->ReadInt("m_bookItemId");
+            entry.m_xpFactor = r->ReadFloat("m_xpFactor");
+            entry.m_innate = r->ReadBool("m_innate");
+            entry.m_conceptualCraft = r->ReadBool("m_conceptualCraft");
+            entry.m_hiddenCraft = r->ReadBool("m_hiddenCraft");
 
             r->PushRow();
         }

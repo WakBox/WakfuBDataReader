@@ -1,5 +1,10 @@
 #include "BaseBinaryReader.h"
 
+struct BoardInteractiveElementParamBinaryData
+{
+    qint32 m_id;
+};
+
 class BoardInteractiveElementParam : public BaseBinaryReader
 {
 public:
@@ -14,8 +19,9 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
+            BoardInteractiveElementParamBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
 
             r->PushRow();
         }

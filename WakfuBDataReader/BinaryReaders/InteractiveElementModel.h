@@ -1,5 +1,16 @@
 #include "BaseBinaryReader.h"
 
+struct InteractiveElementModelBinaryData
+{
+    qint32 m_id;
+    qint16 m_type;
+    qint32 m_gfx;
+    qint32 m_color;
+    qint8 m_height;
+    qint32 m_particleId;
+    qint32 m_particleOffsetZ;
+};
+
 class InteractiveElementModel : public BaseBinaryReader
 {
 public:
@@ -14,14 +25,15 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("ViewId");
-            r->ReadShort("Type");
-            r->ReadInt("GFX");
-            r->ReadInt("Color");
-            r->ReadByte("Height");
-            r->ReadInt("int");
-            r->ReadInt("int");
+            InteractiveElementModelBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_type = r->ReadShort("m_type");
+            entry.m_gfx = r->ReadInt("m_gfx");
+            entry.m_color = r->ReadInt("m_color");
+            entry.m_height = r->ReadByte("m_height");
+            entry.m_particleId = r->ReadInt("m_particleId");
+            entry.m_particleOffsetZ = r->ReadInt("m_particleOffsetZ");
 
             r->PushRow();
         }

@@ -1,5 +1,11 @@
 #include "BaseBinaryReader.h"
 
+struct DungeonDisplayerInteractiveElementParamBinaryData
+{
+    qint32 m_id;
+    qint32 m_dungeonId;
+};
+
 class DungeonDisplayerInteractiveElementParam : public BaseBinaryReader
 {
 public:
@@ -14,9 +20,10 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
+            DungeonDisplayerInteractiveElementParamBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_dungeonId = r->ReadInt("m_dungeonId");
 
             r->PushRow();
         }

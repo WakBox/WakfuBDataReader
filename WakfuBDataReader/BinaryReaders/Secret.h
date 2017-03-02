@@ -1,5 +1,12 @@
 #include "BaseBinaryReader.h"
 
+struct SecretBinaryData
+{
+    qint32 m_id;
+    qint16 m_level;
+    qint16 m_itemId;
+};
+
 class Secret : public BaseBinaryReader
 {
 public:
@@ -14,10 +21,11 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadShort("short");
-            r->ReadShort("short");
+            SecretBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_level = r->ReadShort("m_level");
+            entry.m_itemId = r->ReadShort("m_itemId");
 
             r->PushRow();
         }

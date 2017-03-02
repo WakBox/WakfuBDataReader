@@ -1,5 +1,13 @@
 #include "BaseBinaryReader.h"
 
+struct ZaapLinkBinaryData
+{
+    qint32 m_id;
+    qint32 m_start;
+    qint32 m_end;
+    qint32 m_cost;
+};
+
 class ZaapLink : public BaseBinaryReader
 {
 public:
@@ -14,11 +22,12 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadInt("int");
+            ZaapLinkBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_start = r->ReadInt("m_start");
+            entry.m_end = r->ReadInt("m_end");
+            entry.m_cost = r->ReadInt("m_cost");
 
             r->PushRow();
         }

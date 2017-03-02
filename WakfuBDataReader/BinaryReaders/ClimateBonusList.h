@@ -1,5 +1,11 @@
 #include "BaseBinaryReader.h"
 
+struct ClimateBonusListBinaryData
+{
+    qint32 m_buffListId;
+    QList<qint32> m_entries;
+};
+
 class ClimateBonusList : public BaseBinaryReader
 {
 public:
@@ -14,9 +20,10 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadIntArray("int array");
+            ClimateBonusListBinaryData entry;
+
+            entry.m_buffListId = r->ReadInt("m_buffListId");
+            entry.m_entries = r->ReadIntArray("m_entries");
 
             r->PushRow();
         }

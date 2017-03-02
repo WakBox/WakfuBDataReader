@@ -1,18 +1,18 @@
 #include "BaseBinaryReader.h"
 
-struct TimelineBuffListBinaryData
+struct AptitudeBonusBinaryData
 {
-    qint32 m_id;
-    qint32 m_typeId;
+    qint32 m_bonusId;
+    qint32 m_categoryId;
+    qint32 m_max;
     qint32 m_gfxId;
-    bool m_forPlayer;
     QList<qint32> m_effectIds;
 };
 
-class TimelineBuffList : public BaseBinaryReader
+class AptitudeBonus : public BaseBinaryReader
 {
 public:
-    TimelineBuffList() {}
+    AptitudeBonus() {}
 
     void Read(Rows rows)
     {
@@ -23,12 +23,12 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            TimelineBuffListBinaryData entry;
+            AptitudeBonusBinaryData entry;
 
-            entry.m_id = r->ReadInt("m_id");
-            entry.m_typeId = r->ReadInt("m_typeId");
+            entry.m_bonusId = r->ReadInt("m_bonusId");
+            entry.m_categoryId = r->ReadInt("m_categoryId");
+            entry.m_max = r->ReadInt("m_max");
             entry.m_gfxId = r->ReadInt("m_gfxId");
-            entry.m_forPlayer = r->ReadBool("m_forPlayer");
             entry.m_effectIds = r->ReadIntArray("m_effectIds");
 
             r->PushRow();

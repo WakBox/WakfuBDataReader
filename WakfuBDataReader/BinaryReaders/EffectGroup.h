@@ -1,5 +1,11 @@
 #include "BaseBinaryReader.h"
 
+struct EffectGroupBinaryData
+{
+    qint32 m_id;
+    QList<qint32> m_effectIds;
+};
+
 class EffectGroup : public BaseBinaryReader
 {
 public:
@@ -14,9 +20,10 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadIntArray("int array");
+            EffectGroupBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_effectIds = r->ReadIntArray("m_effectIds");
 
             r->PushRow();
         }

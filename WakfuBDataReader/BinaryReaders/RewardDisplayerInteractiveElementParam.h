@@ -1,5 +1,11 @@
 #include "BaseBinaryReader.h"
 
+struct RewardDisplayerInteractiveElementParamBinaryData
+{
+    qint32 m_id;
+    QList<qint32> m_itemIds;
+};
+
 class RewardDisplayerInteractiveElementParam : public BaseBinaryReader
 {
 public:
@@ -14,9 +20,10 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadIntArray("int array");
+            RewardDisplayerInteractiveElementParamBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_itemIds = r->ReadIntArray("m_itemIds");
 
             r->PushRow();
         }

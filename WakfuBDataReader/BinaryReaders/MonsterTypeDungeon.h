@@ -1,15 +1,17 @@
 #include "BaseBinaryReader.h"
 
-struct AchievementCategoryBinaryData
+struct MonsterTypeDungeonBinaryData
 {
     qint32 m_id;
-    qint32 m_parentId;
+    qint32 m_familyId;
+    qint32 m_dungeonId;
+    qint16 m_level;
 };
 
-class AchievementCategory : public BaseBinaryReader
+class MonsterTypeDungeon : public BaseBinaryReader
 {
 public:
-    AchievementCategory() {}
+    MonsterTypeDungeon() {}
 
     void Read(Rows rows)
     {
@@ -20,10 +22,12 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            AchievementCategoryBinaryData entry;
+            MonsterTypeDungeonBinaryData entry;
 
             entry.m_id = r->ReadInt("m_id");
-            entry.m_parentId = r->ReadInt("m_parentId");
+            entry.m_familyId = r->ReadInt("m_familyId");
+            entry.m_dungeonId = r->ReadInt("m_dungeonId");
+            entry.m_level = r->ReadShort("m_level");
 
             r->PushRow();
         }

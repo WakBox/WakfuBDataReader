@@ -1,5 +1,15 @@
 #include "BaseBinaryReader.h"
 
+struct LockBinaryData
+{
+    qint32 m_id;
+    qint32 m_lockedItemId;
+    qint32 m_lockValue;
+    qint64 m_periodDuration;
+    qint64 m_unlockDate;
+    bool m_availableForCitizensOnly;
+};
+
 class Lock : public BaseBinaryReader
 {
 public:
@@ -14,13 +24,14 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadLong("long");
-            r->ReadLong("long");
-            r->ReadBool("bool");
+            LockBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_lockedItemId = r->ReadInt("m_lockedItemId");
+            entry.m_lockValue = r->ReadInt("m_lockValue");
+            entry.m_periodDuration = r->ReadLong("m_periodDuration");
+            entry.m_unlockDate = r->ReadLong("m_unlockDate");
+            entry.m_availableForCitizensOnly = r->ReadBool("m_availableForCitizensOnly");
 
             r->PushRow();
         }

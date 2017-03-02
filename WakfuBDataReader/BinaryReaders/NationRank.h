@@ -1,5 +1,13 @@
 #include "BaseBinaryReader.h"
 
+struct NationRankBinaryData
+{
+    qint32 m_id;
+    float m_citizenPointLossFactor;
+    QString m_criteria;
+    qint32 m_citizenScoreLine;
+};
+
 class NationRank : public BaseBinaryReader
 {
 public:
@@ -14,11 +22,12 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadFloat("float");
-            r->ReadString("string");
-            r->ReadInt("int");
+            NationRankBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_citizenPointLossFactor = r->ReadFloat("m_citizenPointLossFactor");
+            entry.m_criteria = r->ReadString("m_criteria");
+            entry.m_citizenScoreLine = r->ReadInt("m_citizenScoreLine");
 
             r->PushRow();
         }

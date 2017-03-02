@@ -1,5 +1,14 @@
 #include "BaseBinaryReader.h"
 
+struct HavenWorldBuildingDecoBinaryData
+{
+    qint32 m_id;
+    qint16 m_catalogEntryId;
+    qint32 m_kamaCost;
+    qint32 m_ressourceCost;
+    qint32 m_editorGroupId;
+};
+
 class HavenWorldBuildingDeco : public BaseBinaryReader
 {
 public:
@@ -14,12 +23,13 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadShort("short");
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadInt("int");
+            HavenWorldBuildingDecoBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_catalogEntryId = r->ReadShort("m_catalogEntryId");
+            entry.m_kamaCost = r->ReadInt("m_kamaCost");
+            entry.m_ressourceCost = r->ReadInt("m_ressourceCost");
+            entry.m_editorGroupId = r->ReadInt("m_editorGroupId");
 
             r->PushRow();
         }

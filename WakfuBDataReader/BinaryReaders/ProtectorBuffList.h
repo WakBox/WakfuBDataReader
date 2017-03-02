@@ -1,5 +1,11 @@
 #include "BaseBinaryReader.h"
 
+struct ProtectorBuffListBinaryData
+{
+    qint32 m_buffListId;
+    QList<qint32> m_buffLists;
+};
+
 class ProtectorBuffList : public BaseBinaryReader
 {
 public:
@@ -14,9 +20,10 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadIntArray("int array");
+            ProtectorBuffListBinaryData entry;
+
+            entry.m_buffListId = r->ReadInt("m_buffListId");
+            entry.m_buffLists = r->ReadIntArray("m_buffLists");
 
             r->PushRow();
         }

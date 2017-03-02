@@ -1,15 +1,13 @@
 #include "BaseBinaryReader.h"
 
-struct AchievementCategoryBinaryData
+struct 
 {
-    qint32 m_id;
-    qint32 m_parentId;
 };
 
-class AchievementCategory : public BaseBinaryReader
+class ScenarioBinaryStorable.java : public BaseBinaryReader
 {
 public:
-    AchievementCategory() {}
+    ScenarioBinaryStorable.java() {}
 
     void Read(Rows rows)
     {
@@ -20,10 +18,8 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            AchievementCategoryBinaryData entry;
+             entry;
 
-            entry.m_id = r->ReadInt("m_id");
-            entry.m_parentId = r->ReadInt("m_parentId");
 
             r->PushRow();
         }

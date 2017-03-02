@@ -1,5 +1,12 @@
 #include "BaseBinaryReader.h"
 
+struct GemBackgroundInteractiveElementParamBinaryData
+{
+    qint32 m_id;
+    qint32 m_backgroundFeedback;
+    QList<qint32> m_havreGemTypes;
+};
+
 class GemBackgroundInteractiveElementParam : public BaseBinaryReader
 {
 public:
@@ -14,10 +21,11 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadIntArray("int array");
+            GemBackgroundInteractiveElementParamBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_backgroundFeedback = r->ReadInt("m_backgroundFeedback");
+            entry.m_havreGemTypes = r->ReadIntArray("m_havreGemTypes");
 
             r->PushRow();
         }

@@ -1,5 +1,13 @@
 #include "BaseBinaryReader.h"
 
+struct ItemSetBinaryData
+{
+    qint16 m_id;
+    qint32 m_linkedItemReferenceId;
+    QList<qint32> m_itemsId;
+    QList<TIntObjectHashMap<int> m_effectIdsByPartCount;
+};
+
 class ItemSet : public BaseBinaryReader
 {
 public:
@@ -14,17 +22,33 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadShort("short");
-            r->ReadInt("int");
-            r->ReadIntArray("int array");
+            ItemSetBinaryData entry;
 
-            qint32 size = r->ReadInt(QString());
-            for (quint32 i = 0; i < size; ++i)
+            entry.m_id = r->ReadShort("m_id");
+            entry.m_linkedItemReferenceId = r->ReadInt("m_linkedItemReferenceId");
+            entry.m_itemsId = r->ReadIntArray("m_itemsId");
+
+            qint32 effectIdsByPartCountCount = r->ReadInt();
+
+            for (qint32 i = 0; i < effectIdsByPartCountCount; ++i)
             {
-                r->ReadInt("int");
-                r->ReadIntArray("int array");
+                TIntObjectHashMap<int tIntObjectHashMap<int;
+
+
+                entry.m_effectIdsByPartCount.push_back(tIntObjectHashMap<int);
             }
+
+
+            qint32 effectIdsByPartCountKey = r->ReadInt();
+
+            for (qint32 i = 0; i < effectIdsByPartCountKey; ++i)
+            {
+                ReadIntArray(); readIntArray();;
+
+
+                entry.effectIdsByPartCountValue.push_back(readIntArray(););
+            }
+
 
             r->PushRow();
         }

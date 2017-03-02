@@ -1,5 +1,12 @@
 #include "BaseBinaryReader.h"
 
+struct RecycleMachineInteractiveElementParamBinaryData
+{
+    qint32 m_id;
+    qint32 m_visualMruId;
+    qint8 if (buffer.get() != 0) {;
+};
+
 class RecycleMachineInteractiveElementParam : public BaseBinaryReader
 {
 public:
@@ -14,10 +21,11 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadByte("byte");
+            RecycleMachineInteractiveElementParamBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_visualMruId = r->ReadInt("m_visualMruId");
+            entry.if (buffer.get() != 0) { = r->ReadByte("if (buffer.get() != 0) {");
 
             r->PushRow();
         }

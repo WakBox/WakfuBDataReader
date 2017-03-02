@@ -1,5 +1,15 @@
 #include "BaseBinaryReader.h"
 
+struct CitizenRankBinaryData
+{
+    qint32 m_id;
+    qint32 m_cap;
+    qint32 m_pdcLossFactor;
+    QString m_translationKey;
+    QString m_color;
+    QList<qint32> m_rules;
+};
+
 class CitizenRank : public BaseBinaryReader
 {
 public:
@@ -14,13 +24,14 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadString("string");
-            r->ReadString("string");
-            r->ReadIntArray("int array");
+            CitizenRankBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_cap = r->ReadInt("m_cap");
+            entry.m_pdcLossFactor = r->ReadInt("m_pdcLossFactor");
+            entry.m_translationKey = r->ReadString("m_translationKey");
+            entry.m_color = r->ReadString("m_color");
+            entry.m_rules = r->ReadIntArray("m_rules");
 
             r->PushRow();
         }

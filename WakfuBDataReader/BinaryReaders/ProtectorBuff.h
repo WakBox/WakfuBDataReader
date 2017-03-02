@@ -1,5 +1,14 @@
 #include "BaseBinaryReader.h"
 
+struct ProtectorBuffBinaryData
+{
+    qint32 m_buffId;
+    qint32 m_gfxId;
+    QString m_criteria;
+    qint8 m_origin;
+    QList<qint32> m_effects;
+};
+
 class ProtectorBuff : public BaseBinaryReader
 {
 public:
@@ -14,12 +23,13 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadString("string");
-            r->ReadByte("byte");
-            r->ReadIntArray("int array");
+            ProtectorBuffBinaryData entry;
+
+            entry.m_buffId = r->ReadInt("m_buffId");
+            entry.m_gfxId = r->ReadInt("m_gfxId");
+            entry.m_criteria = r->ReadString("m_criteria");
+            entry.m_origin = r->ReadByte("m_origin");
+            entry.m_effects = r->ReadIntArray("m_effects");
 
             r->PushRow();
         }

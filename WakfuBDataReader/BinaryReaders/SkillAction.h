@@ -1,5 +1,14 @@
 #include "BaseBinaryReader.h"
 
+struct SkillActionBinaryData
+{
+    qint32 m_id;
+    qint32 m_mruGfxId;
+    QString m_mruKey;
+    QList<qint32> m_associatedItems;
+    QString m_animLinkage;
+};
+
 class SkillAction : public BaseBinaryReader
 {
 public:
@@ -14,12 +23,13 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadString("string");
-            r->ReadIntArray("int array");
-            r->ReadString("string");
+            SkillActionBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_mruGfxId = r->ReadInt("m_mruGfxId");
+            entry.m_mruKey = r->ReadString("m_mruKey");
+            entry.m_associatedItems = r->ReadIntArray("m_associatedItems");
+            entry.m_animLinkage = r->ReadString("m_animLinkage");
 
             r->PushRow();
         }

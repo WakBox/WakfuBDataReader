@@ -1,5 +1,17 @@
 #include "BaseBinaryReader.h"
 
+struct LootEntry
+{
+    qint32 m_itemId;
+};
+
+struct MagiCraftLootListBinaryData
+{
+    qint32 m_id;
+    qint8 m_gemType;
+    QList<LootEntry> m_entries;
+};
+
 class MagiCraftLootList : public BaseBinaryReader
 {
 public:
@@ -14,10 +26,22 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadByte("byte");
-            r->ReadInt("int");
+            MagiCraftLootListBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_gemType = r->ReadByte("m_gemType");
+
+            qint32 entrieCount = r->ReadInt();
+
+            for (qint32 i = 0; i < entrieCount; ++i)
+            {
+                LootEntry lootEntry;
+
+                lootEntry.m_itemId = r->ReadInt();
+
+                entry.m_entries.push_back(lootEntry);
+            }
+
 
             r->PushRow();
         }

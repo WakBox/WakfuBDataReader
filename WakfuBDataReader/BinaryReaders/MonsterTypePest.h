@@ -1,5 +1,12 @@
 #include "BaseBinaryReader.h"
 
+struct MonsterTypePestBinaryData
+{
+    qint32 m_id;
+    qint32 m_familyId;
+    qint32 m_pestMonsterId;
+};
+
 class MonsterTypePest : public BaseBinaryReader
 {
 public:
@@ -14,10 +21,11 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadInt("int");
+            MonsterTypePestBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_familyId = r->ReadInt("m_familyId");
+            entry.m_pestMonsterId = r->ReadInt("m_pestMonsterId");
 
             r->PushRow();
         }

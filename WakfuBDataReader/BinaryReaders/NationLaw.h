@@ -1,5 +1,20 @@
 #include "BaseBinaryReader.h"
 
+struct NationLawBinaryData
+{
+    qint32 m_id;
+    qint32 m_lawConstantId;
+    QList<QString> m_params;
+    qint32 m_basePointsModification;
+    qint32 m_percentPointsModification;
+    qint32 m_lawPointCost;
+    bool m_lawLocked;
+    bool m_applicableToCitizen;
+    bool m_applicableToAlliedForeigner;
+    bool m_applicableToNeutralForeigner;
+    QList<qint32> m_restrictedNations;
+};
+
 class NationLaw : public BaseBinaryReader
 {
 public:
@@ -14,18 +29,19 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadStringArray("string array");
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadInt("int");
-            r->ReadBool("bool");
-            r->ReadBool("bool");
-            r->ReadBool("bool");
-            r->ReadBool("bool");
-            r->ReadIntArray("int array");
+            NationLawBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_lawConstantId = r->ReadInt("m_lawConstantId");
+            entry.m_params = r->ReadStringArray("m_params");
+            entry.m_basePointsModification = r->ReadInt("m_basePointsModification");
+            entry.m_percentPointsModification = r->ReadInt("m_percentPointsModification");
+            entry.m_lawPointCost = r->ReadInt("m_lawPointCost");
+            entry.m_lawLocked = r->ReadBool("m_lawLocked");
+            entry.m_applicableToCitizen = r->ReadBool("m_applicableToCitizen");
+            entry.m_applicableToAlliedForeigner = r->ReadBool("m_applicableToAlliedForeigner");
+            entry.m_applicableToNeutralForeigner = r->ReadBool("m_applicableToNeutralForeigner");
+            entry.m_restrictedNations = r->ReadIntArray("m_restrictedNations");
 
             r->PushRow();
         }

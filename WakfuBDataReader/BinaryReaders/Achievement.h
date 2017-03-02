@@ -1,10 +1,33 @@
 #include "BaseBinaryReader.h"
 
-struct AchievementEntry
+struct AchievementVariableListener
 {
-    struct AchievementGoal;
-    struct AchievementReward;
+    qint32 m_id;
+    QString m_successCriterion;
+    QList<qint32> m_variableIds;
+};
 
+struct AchievementGoal
+{
+    qint32 m_id;
+    bool m_feedback;
+    bool m_hasPositionFeedback;
+    qint16 m_positionX;
+    qint16 m_positionY;
+    qint16 m_positionZ;
+    qint16 m_positionWorldId;
+    QList<AchievementVariableListener> m_vlisteners;
+};
+
+struct AchievementReward
+{
+    qint32 m_id;
+    qint32 m_type;
+    QList<qint32> m_params;
+};
+
+struct AchievementBinaryData
+{
     qint32 m_id;
     qint32 m_categoryId;
     bool m_isVisible;
@@ -31,34 +54,6 @@ struct AchievementEntry
     qint32 m_mercenaryItemId;
     qint8 m_mercenaryRank;
     qint32 m_order;
-
-    struct AchievementGoal
-    {
-        struct AchievementVariableListener;
-
-        qint32 m_id;
-        bool m_feedback;
-        bool m_hasPositionFeedback;
-        qint16 m_positionX;
-        qint16 m_positionY;
-        qint16 m_positionZ;
-        qint16 m_positionWorldId;
-        QList<AchievementVariableListener> m_vlisteners;
-
-        struct AchievementVariableListener
-        {
-            qint32 m_id;
-            QString m_successCriterion;
-            QList<qint32> m_variableIds;
-        };
-    };
-
-    struct AchievementReward
-    {
-        qint32 m_id;
-        qint32 m_type;
-        QList<qint32> m_params;
-    };
 };
 
 class Achievement : public BaseBinaryReader
@@ -75,7 +70,7 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            AchievementEntry entry;
+            AchievementBinaryData entry;
 
             entry.m_id = r->ReadInt("m_id");
             entry.m_categoryId = r->ReadInt("m_categoryId");
@@ -85,11 +80,11 @@ public:
             entry.m_criterion = r->ReadString("m_criterion");
             entry.m_activationCriterion = r->ReadString("m_activationCriterion");
 
-            qint32 achievementGoalSize = r->ReadInt();
+            qint32 goalCount = r->ReadInt();
 
-            for (qint32 i = 0; i < achievementGoalSize; ++i)
+            for (qint32 i = 0; i < goalCount; ++i)
             {
-                AchievementEntry::AchievementGoal achievementGoal;
+                AchievementGoal achievementGoal;
 
                 achievementGoal.m_id = r->ReadInt();
                 achievementGoal.m_feedback = r->ReadBool();
@@ -98,12 +93,11 @@ public:
                 achievementGoal.m_positionY = r->ReadShort();
                 achievementGoal.m_positionZ = r->ReadShort();
                 achievementGoal.m_positionWorldId = r->ReadShort();
+                qint32 vlistenerCount = r->ReadInt();
 
-                qint32 achievementVariableListenerSize = r->ReadInt();
-
-                for (qint32 j = 0; j < achievementVariableListenerSize; ++j)
+                for (qint32 j = 0; j < vlistenerCount; ++j)
                 {
-                    AchievementEntry::AchievementGoal::AchievementVariableListener achievementVariableListener;
+                    AchievementVariableListener achievementVariableListener;
 
                     achievementVariableListener.m_id = r->ReadInt();
                     achievementVariableListener.m_successCriterion = r->ReadString();
@@ -115,11 +109,12 @@ public:
                 entry.m_goals.push_back(achievementGoal);
             }
 
-            qint32 achievementRewardSize = r->ReadInt();
 
-            for (qint32 i = 0; i < achievementRewardSize; ++i)
+            qint32 rewardCount = r->ReadInt();
+
+            for (qint32 i = 0; i < rewardCount; ++i)
             {
-                AchievementEntry::AchievementReward achievementReward;
+                AchievementReward achievementReward;
 
                 achievementReward.m_id = r->ReadInt();
                 achievementReward.m_type = r->ReadInt();

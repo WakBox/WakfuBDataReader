@@ -1,5 +1,11 @@
 #include "BaseBinaryReader.h"
 
+struct DecorationInteractiveElementParamBinaryData
+{
+    qint32 m_id;
+    QList<qint32> m_havreGemTypes;
+};
+
 class DecorationInteractiveElementParam : public BaseBinaryReader
 {
 public:
@@ -14,9 +20,10 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadIntArray("int array");
+            DecorationInteractiveElementParamBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_havreGemTypes = r->ReadIntArray("m_havreGemTypes");
 
             r->PushRow();
         }

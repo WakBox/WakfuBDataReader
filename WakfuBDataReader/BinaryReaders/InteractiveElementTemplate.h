@@ -1,5 +1,35 @@
 #include "BaseBinaryReader.h"
 
+struct Point3
+{
+    qint32 m_x;
+    qint32 m_y;
+    qint16 m_z;
+};
+
+struct InteractiveElementTemplateBinaryData
+{
+    qint32 m_id;
+    qint16 m_modelType;
+    qint16 m_worldId;
+    qint32 m_x;
+    qint32 m_y;
+    qint16 m_z;
+    qint16 m_initialState;
+    bool m_initiallyVisible;
+    bool m_initiallyUsable;
+    bool m_blockingMovement;
+    bool m_blockingLos;
+    qint8 m_direction;
+    qint16 m_activationPattern;
+    QString m_parameter;
+    qint32 m_templateId;
+    QList<qint32> m_properties;
+    QList<Point3> m_positionsTrigger;
+    QList<TShortIntHashMap(actionCount);> m_actions;
+    QList<qint32> m_views;
+};
+
 class InteractiveElementTemplate : public BaseBinaryReader
 {
 public:
@@ -14,42 +44,62 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("ID");
-            r->ReadShort("short");
-            r->ReadShort("short");
-            r->ReadInt("X");
-            r->ReadInt("Y");
-            r->ReadShort("short");
-            r->ReadShort("short");
-            r->ReadBool("bool");
-            r->ReadBool("bool");
-            r->ReadBool("bool");
-            r->ReadBool("bool");
-            r->ReadByte("byte");
-            r->ReadShort("short");
-            r->ReadString("string");
-            r->ReadInt("int");
-            r->ReadIntArray("int array");
+            InteractiveElementTemplateBinaryData entry;
 
-            qint32 size = r->ReadInt(QString());
-            for (quint32 i = 0; i < size; ++i)
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_modelType = r->ReadShort("m_modelType");
+            entry.m_worldId = r->ReadShort("m_worldId");
+            entry.m_x = r->ReadInt("m_x");
+            entry.m_y = r->ReadInt("m_y");
+            entry.m_z = r->ReadShort("m_z");
+            entry.m_initialState = r->ReadShort("m_initialState");
+            entry.m_initiallyVisible = r->ReadBool("m_initiallyVisible");
+            entry.m_initiallyUsable = r->ReadBool("m_initiallyUsable");
+            entry.m_blockingMovement = r->ReadBool("m_blockingMovement");
+            entry.m_blockingLos = r->ReadBool("m_blockingLos");
+            entry.m_direction = r->ReadByte("m_direction");
+            entry.m_activationPattern = r->ReadShort("m_activationPattern");
+            entry.m_parameter = r->ReadString("m_parameter");
+            entry.m_templateId = r->ReadInt("m_templateId");
+            entry.m_properties = r->ReadIntArray("m_properties");
+
+            qint32 positionsTriggerCount = r->ReadInt();
+
+            for (qint32 i = 0; i < positionsTriggerCount; ++i)
             {
-                QString j = QString::number(i);
-                r->ReadInt("X [" + j + "]");
-                r->ReadInt("Y [" + j + "]");
-                r->ReadShort("short [" + j + "]");
+                Point3 point3;
+
+                point3.m_x = r->ReadInt();
+                point3.m_y = r->ReadInt();
+                point3.m_z = r->ReadShort();
+
+                entry.m_positionsTrigger.push_back(point3);
             }
 
-            size = r->ReadInt(QString());
-            for (quint32 i = 0; i < size; ++i)
+
+            qint32 actionCount = r->ReadInt();
+
+            for (qint32 i = 0; i < actionCount; ++i)
             {
-                QString j = QString::number(i);
-                r->ReadShort("short [" + j + "]");
-                r->ReadInt("int [" + j + "]");
+                TShortIntHashMap(actionCount); tShortIntHashMap(actionCount);;
+
+
+                entry.m_actions.push_back(tShortIntHashMap(actionCount););
             }
 
-            r->ReadIntArray("int array");
+
+            qint32 actionKey = r->ReadShort();
+
+            for (qint32 i = 0; i < actionKey; ++i)
+            {
+                ReadInt(); readInt();;
+
+
+                entry.actionValue.push_back(readInt(););
+            }
+
+            entry.m_views = r->ReadIntArray("m_views");
+
             r->PushRow();
         }
 

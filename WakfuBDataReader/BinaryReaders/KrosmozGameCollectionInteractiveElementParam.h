@@ -1,5 +1,11 @@
 #include "BaseBinaryReader.h"
 
+struct KrosmozGameCollectionInteractiveElementParamBinaryData
+{
+    qint32 m_id;
+    qint8 m_gameId;
+};
+
 class KrosmozGameCollectionInteractiveElementParam : public BaseBinaryReader
 {
 public:
@@ -14,9 +20,10 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadByte("byte");
+            KrosmozGameCollectionInteractiveElementParamBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_gameId = r->ReadByte("m_gameId");
 
             r->PushRow();
         }

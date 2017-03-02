@@ -1,5 +1,32 @@
 #include "BaseBinaryReader.h"
 
+struct EventAction
+{
+    qint32 m_id;
+    qint32 m_type;
+    QList<QString> m_params;
+};
+
+struct EventActionGroup
+{
+    qint32 m_id;
+    qint16 m_dropRate;
+    QString m_criterion;
+    QList<EventAction> m_actions;
+};
+
+struct ClientEventBinaryData
+{
+    qint32 m_id;
+    qint32 m_type;
+    qint16 m_dropRate;
+    qint16 m_maxCount;
+    QString m_criterion;
+    QList<QString> m_filters;
+    bool m_activeOnStart;
+    QList<EventActionGroup> m_actionGroups;
+};
+
 class ClientEvent : public BaseBinaryReader
 {
 public:
@@ -14,30 +41,41 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("ID");
-            r->ReadInt("Type");
-            r->ReadShort("short");
-            r->ReadShort("short");
-            r->ReadString("string");
-            r->ReadStringArray("string array");
-            r->ReadBool("bool");
+            ClientEventBinaryData entry;
 
-            qint32 size = r->ReadInt(QString());
-            for (quint32 i = 0; i < size; ++i)
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_type = r->ReadInt("m_type");
+            entry.m_dropRate = r->ReadShort("m_dropRate");
+            entry.m_maxCount = r->ReadShort("m_maxCount");
+            entry.m_criterion = r->ReadString("m_criterion");
+            entry.m_filters = r->ReadStringArray("m_filters");
+            entry.m_activeOnStart = r->ReadBool("m_activeOnStart");
+
+            qint32 actionGroupCount = r->ReadInt();
+
+            for (qint32 i = 0; i < actionGroupCount; ++i)
             {
-                r->ReadInt("ID");
-                r->ReadShort("short");
-                r->ReadString("string");
+                EventActionGroup eventActionGroup;
 
-                qint32 size2 = r->ReadInt(QString());
-                for (quint32 j = 0; j < size2; ++j)
+                eventActionGroup.m_id = r->ReadInt();
+                eventActionGroup.m_dropRate = r->ReadShort();
+                eventActionGroup.m_criterion = r->ReadString();
+                qint32 actionCount = r->ReadInt();
+
+                for (qint32 j = 0; j < actionCount; ++j)
                 {
-                    r->ReadInt("ID");
-                    r->ReadInt("Type");
-                    r->ReadStringArray("Params");
+                    EventAction eventAction;
+
+                    eventAction.m_id = r->ReadInt();
+                    eventAction.m_type = r->ReadInt();
+                    eventAction.m_params = r->ReadStringArray();
+
+                    eventActionGroup.m_actions.push_back(eventAction);
                 }
+
+                entry.m_actionGroups.push_back(eventActionGroup);
             }
+
 
             r->PushRow();
         }

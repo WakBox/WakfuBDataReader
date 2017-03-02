@@ -1,5 +1,11 @@
 #include "BaseBinaryReader.h"
 
+struct ChaosParamBinaryData
+{
+    qint8 m_chaosLevel;
+    qint32 m_chaosCollectorParamId;
+};
+
 class ChaosParam : public BaseBinaryReader
 {
 public:
@@ -14,9 +20,10 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadByte("byte");
-            r->ReadInt("int");
+            ChaosParamBinaryData entry;
+
+            entry.m_chaosLevel = r->ReadByte("m_chaosLevel");
+            entry.m_chaosCollectorParamId = r->ReadInt("m_chaosCollectorParamId");
 
             r->PushRow();
         }

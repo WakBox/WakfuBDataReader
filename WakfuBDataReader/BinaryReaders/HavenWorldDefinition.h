@@ -1,5 +1,16 @@
 #include "BaseBinaryReader.h"
 
+struct HavenWorldDefinitionBinaryData
+{
+    qint32 m_id;
+    qint16 m_worldId;
+    qint8 m_workers;
+    qint16 m_exitWorldId;
+    qint16 m_exitCellX;
+    qint16 m_exitCellY;
+    qint16 m_exitCellZ;
+};
+
 class HavenWorldDefinition : public BaseBinaryReader
 {
 public:
@@ -14,14 +25,15 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("int");
-            r->ReadShort("short");
-            r->ReadByte("byte");
-            r->ReadShort("short");
-            r->ReadShort("short");
-            r->ReadShort("short");
-            r->ReadShort("short");
+            HavenWorldDefinitionBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_worldId = r->ReadShort("m_worldId");
+            entry.m_workers = r->ReadByte("m_workers");
+            entry.m_exitWorldId = r->ReadShort("m_exitWorldId");
+            entry.m_exitCellX = r->ReadShort("m_exitCellX");
+            entry.m_exitCellY = r->ReadShort("m_exitCellY");
+            entry.m_exitCellZ = r->ReadShort("m_exitCellZ");
 
             r->PushRow();
         }

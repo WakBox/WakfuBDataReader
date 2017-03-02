@@ -1,5 +1,13 @@
 #include "BaseBinaryReader.h"
 
+struct BagsBinaryData
+{
+    qint32 m_id;
+    qint16 m_capacity;
+    qint32 m_bagType;
+    QList<qint32> m_validItemCategories;
+};
+
 class Bags : public BaseBinaryReader
 {
 public:
@@ -14,11 +22,12 @@ public:
             Row row = rows[i];
             r->SetBufferPosition(row.offset);
 
-            // Struct
-            r->ReadInt("ID");
-            r->ReadShort("short");
-            r->ReadInt("int");
-            r->ReadIntArray("int array");
+            BagsBinaryData entry;
+
+            entry.m_id = r->ReadInt("m_id");
+            entry.m_capacity = r->ReadShort("m_capacity");
+            entry.m_bagType = r->ReadInt("m_bagType");
+            entry.m_validItemCategories = r->ReadIntArray("m_validItemCategories");
 
             r->PushRow();
         }
