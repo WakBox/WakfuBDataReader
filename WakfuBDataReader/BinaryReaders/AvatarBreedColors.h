@@ -1,3 +1,6 @@
+#ifndef AVATARBREEDCOLORS_H
+#define AVATARBREEDCOLORS_H
+
 #include "BaseBinaryReader.h"
 
 struct Color
@@ -107,3 +110,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

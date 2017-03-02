@@ -1,3 +1,6 @@
+#ifndef PROTECTOR_H
+#define PROTECTOR_H
+
 #include "BaseBinaryReader.h"
 
 struct ProtectorFaunaWill
@@ -127,3 +130,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

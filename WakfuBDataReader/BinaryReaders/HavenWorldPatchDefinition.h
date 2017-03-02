@@ -1,3 +1,6 @@
+#ifndef HAVENWORLDPATCHDEFINITION_H
+#define HAVENWORLDPATCHDEFINITION_H
+
 #include "BaseBinaryReader.h"
 
 struct HavenWorldPatchDefinitionBinaryData
@@ -37,3 +40,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

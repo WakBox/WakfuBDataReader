@@ -1,3 +1,6 @@
+#ifndef ACHIEVEMENTCATEGORY_H
+#define ACHIEVEMENTCATEGORY_H
+
 #include "BaseBinaryReader.h"
 
 struct AchievementCategoryBinaryData
@@ -31,3 +34,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

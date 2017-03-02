@@ -1,5 +1,7 @@
+#ifndef STREETLIGHTINTERACTIVEELEMENTPARAM_H
+#define STREETLIGHTINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
-#include "ChaosParam.h"
 
 struct StreetLightInteractiveElementParamBinaryData
 {
@@ -58,3 +60,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

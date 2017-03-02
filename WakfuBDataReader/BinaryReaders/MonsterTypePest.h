@@ -1,3 +1,6 @@
+#ifndef MONSTERTYPEPEST_H
+#define MONSTERTYPEPEST_H
+
 #include "BaseBinaryReader.h"
 
 struct MonsterTypePestBinaryData
@@ -33,3 +36,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

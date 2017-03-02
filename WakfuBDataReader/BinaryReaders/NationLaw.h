@@ -1,3 +1,6 @@
+#ifndef NATIONLAW_H
+#define NATIONLAW_H
+
 #include "BaseBinaryReader.h"
 
 struct NationLawBinaryData
@@ -49,3 +52,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

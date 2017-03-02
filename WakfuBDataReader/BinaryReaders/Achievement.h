@@ -1,3 +1,6 @@
+#ifndef ACHIEVEMENT_H
+#define ACHIEVEMENT_H
+
 #include "BaseBinaryReader.h"
 
 struct AchievementVariableListener
@@ -147,3 +150,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

@@ -244,7 +244,7 @@ public:
 
         for (qint32 i = 0; i < size; ++i)
         {
-            qint8 value = ReadShort();
+            qint16 value = ReadShort();
             shortArray.push_back(value);
             v.push_back(QString::number(value));
         }
@@ -253,6 +253,25 @@ public:
             AddEntry(name, v.join("|"));
 
         return shortArray;
+    }
+
+    QList<qint64> ReadLongArray(QString name = "")
+    {
+        QList<qint64> longArray;
+        qint32 size = ReadInt();
+        QStringList v;
+
+        for (qint32 i = 0; i < size; ++i)
+        {
+            qint64 value = ReadLong();
+            longArray.push_back(value);
+            v.push_back(QString::number(value));
+        }
+
+        if (!name.isEmpty())
+            AddEntry(name, v.join("|"));
+
+        return longArray;
     }
 
     QByteArray ReadAllFromCurrentPos() { return m_stream.device()->readAll(); }

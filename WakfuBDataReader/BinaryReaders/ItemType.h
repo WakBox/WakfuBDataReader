@@ -1,3 +1,6 @@
+#ifndef ITEMTYPE_H
+#define ITEMTYPE_H
+
 #include "BaseBinaryReader.h"
 
 struct ItemTypeBinaryData
@@ -45,3 +48,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

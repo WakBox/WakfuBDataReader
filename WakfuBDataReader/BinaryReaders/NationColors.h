@@ -1,3 +1,6 @@
+#ifndef NATIONCOLORS_H
+#define NATIONCOLORS_H
+
 #include "BaseBinaryReader.h"
 
 struct NationColorsBinaryData
@@ -31,3 +34,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

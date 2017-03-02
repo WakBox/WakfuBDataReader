@@ -1,3 +1,6 @@
+#ifndef TUTORIAL_H
+#define TUTORIAL_H
+
 #include "BaseBinaryReader.h"
 
 struct Event
@@ -47,3 +50,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef ARCADEDUNGEON_H
+#define ARCADEDUNGEON_H
+
 #include "BaseBinaryReader.h"
 
 struct RankDef
@@ -123,3 +126,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

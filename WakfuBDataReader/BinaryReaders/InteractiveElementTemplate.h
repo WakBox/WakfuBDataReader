@@ -1,3 +1,6 @@
+#ifndef INTERACTIVEELEMENTTEMPLATE_H
+#define INTERACTIVEELEMENTTEMPLATE_H
+
 #include "BaseBinaryReader.h"
 
 struct Point3
@@ -94,3 +97,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

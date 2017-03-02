@@ -1,3 +1,6 @@
+#ifndef BOARDINTERACTIVEELEMENTPARAM_H
+#define BOARDINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct BoardInteractiveElementParamBinaryData
@@ -29,3 +32,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

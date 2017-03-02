@@ -1,3 +1,6 @@
+#ifndef ALMANACHDATE_H
+#define ALMANACHDATE_H
+
 #include "BaseBinaryReader.h"
 
 struct AlmanachDateBinaryData
@@ -33,3 +36,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

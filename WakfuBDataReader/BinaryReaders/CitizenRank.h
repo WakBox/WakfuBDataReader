@@ -1,3 +1,6 @@
+#ifndef CITIZENRANK_H
+#define CITIZENRANK_H
+
 #include "BaseBinaryReader.h"
 
 struct CitizenRankBinaryData
@@ -39,3 +42,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

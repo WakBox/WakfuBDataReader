@@ -1,3 +1,6 @@
+#ifndef CENSOREDENTRY_H
+#define CENSOREDENTRY_H
+
 #include "BaseBinaryReader.h"
 
 struct CensoredEntryBinaryData
@@ -37,3 +40,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

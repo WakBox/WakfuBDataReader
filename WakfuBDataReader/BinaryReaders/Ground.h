@@ -1,3 +1,6 @@
+#ifndef GROUND_H
+#define GROUND_H
+
 #include "BaseBinaryReader.h"
 
 struct GroundBinaryData
@@ -45,9 +48,12 @@ public:
                 entry.m_resourceTypeFertility.insert(resourceTypeFertilityKey, resourceTypeFertilityValue);
             }
 
+
             r->PushRow();
         }
 
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

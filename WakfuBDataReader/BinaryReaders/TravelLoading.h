@@ -1,3 +1,6 @@
+#ifndef TRAVELLOADING_H
+#define TRAVELLOADING_H
+
 #include "BaseBinaryReader.h"
 
 struct TravelLoadingBinaryData
@@ -35,3 +38,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

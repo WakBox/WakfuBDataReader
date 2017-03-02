@@ -1,3 +1,6 @@
+#ifndef HAVENWORLDBUILDING_H
+#define HAVENWORLDBUILDING_H
+
 #include "BaseBinaryReader.h"
 
 struct Interactive
@@ -109,3 +112,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

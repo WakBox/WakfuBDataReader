@@ -1,3 +1,6 @@
+#ifndef TREASURE_H
+#define TREASURE_H
+
 #include "BaseBinaryReader.h"
 
 struct TreasureBinaryData
@@ -45,3 +48,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

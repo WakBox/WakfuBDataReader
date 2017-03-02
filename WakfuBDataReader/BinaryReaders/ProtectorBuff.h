@@ -1,3 +1,6 @@
+#ifndef PROTECTORBUFF_H
+#define PROTECTORBUFF_H
+
 #include "BaseBinaryReader.h"
 
 struct ProtectorBuffBinaryData
@@ -37,3 +40,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

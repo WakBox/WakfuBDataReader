@@ -1,3 +1,6 @@
+#ifndef CLIENTEVENT_H
+#define CLIENTEVENT_H
+
 #include "BaseBinaryReader.h"
 
 struct EventAction
@@ -83,3 +86,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

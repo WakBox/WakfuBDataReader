@@ -1,3 +1,6 @@
+#ifndef STOOLINTERACTIVEELEMENTPARAM_H
+#define STOOLINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct StoolInteractiveElementParamBinaryData
@@ -41,3 +44,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

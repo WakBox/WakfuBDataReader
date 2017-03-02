@@ -1,3 +1,6 @@
+#ifndef INSTANCEINTERACTIONLEVEL_H
+#define INSTANCEINTERACTIONLEVEL_H
+
 #include "BaseBinaryReader.h"
 
 struct InstanceInteractionLevelBinaryData
@@ -35,3 +38,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

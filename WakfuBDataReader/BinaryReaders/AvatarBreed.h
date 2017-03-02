@@ -1,3 +1,6 @@
+#ifndef AVATARBREED_H
+#define AVATARBREED_H
+
 #include "BaseBinaryReader.h"
 
 struct AvatarBreedBinaryData
@@ -63,3 +66,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

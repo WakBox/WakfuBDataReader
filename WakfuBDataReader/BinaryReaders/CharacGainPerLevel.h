@@ -1,3 +1,6 @@
+#ifndef CHARACGAINPERLEVEL_H
+#define CHARACGAINPERLEVEL_H
+
 #include "BaseBinaryReader.h"
 
 struct CharacGainPerLevelBinaryData
@@ -40,3 +43,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

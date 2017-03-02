@@ -1,3 +1,6 @@
+#ifndef ZAAPLINK_H
+#define ZAAPLINK_H
+
 #include "BaseBinaryReader.h"
 
 struct ZaapLinkBinaryData
@@ -35,3 +38,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef GEMANDPOWDER_H
+#define GEMANDPOWDER_H
+
 #include "BaseBinaryReader.h"
 
 struct GemAndPowderBinaryData
@@ -29,3 +32,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

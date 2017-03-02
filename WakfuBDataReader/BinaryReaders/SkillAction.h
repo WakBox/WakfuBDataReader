@@ -1,3 +1,6 @@
+#ifndef SKILLACTION_H
+#define SKILLACTION_H
+
 #include "BaseBinaryReader.h"
 
 struct SkillActionBinaryData
@@ -37,3 +40,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

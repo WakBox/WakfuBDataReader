@@ -1,3 +1,6 @@
+#ifndef COLLECTINTERACTIVEELEMENTPARAM_H
+#define COLLECTINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct CollectItem
@@ -83,3 +86,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

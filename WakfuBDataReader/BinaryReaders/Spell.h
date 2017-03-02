@@ -1,3 +1,6 @@
+#ifndef SPELL_H
+#define SPELL_H
+
 #include "BaseBinaryReader.h"
 
 struct CustomCharac
@@ -167,8 +170,8 @@ public:
                     qint8 costKey = r->ReadByte();
 
                     CustomCharac costValue;
-                    baseCastParameterValue.m_base = r->ReadInt();
-                    baseCastParameterValue.m_increment = r->ReadFloat();
+                    costValue.m_base = r->ReadInt();
+                    costValue.m_increment = r->ReadFloat();
 
                     alternativeCastValue.m_costs.insert(costKey, costValue);
                 }
@@ -197,3 +200,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

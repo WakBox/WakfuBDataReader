@@ -1,6 +1,8 @@
-#include "BaseBinaryReader.h"
+#ifndef BACKGROUNDINTERACTIVEELEMENTPARAM_H
+#define BACKGROUNDINTERACTIVEELEMENTPARAM_H
 
-struct ChaosParamBinaryData;
+#include "BaseBinaryReader.h"
+#include "ChaosParam.h"
 
 struct BackgroundInteractiveElementParamBinaryData
 {
@@ -43,3 +45,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

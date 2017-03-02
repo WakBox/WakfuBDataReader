@@ -1,3 +1,6 @@
+#ifndef SECRET_H
+#define SECRET_H
+
 #include "BaseBinaryReader.h"
 
 struct SecretBinaryData
@@ -33,3 +36,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

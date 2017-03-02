@@ -1,3 +1,6 @@
+#ifndef GEMBACKGROUNDINTERACTIVEELEMENTPARAM_H
+#define GEMBACKGROUNDINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct GemBackgroundInteractiveElementParamBinaryData
@@ -33,3 +36,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef PROTECTORBUFFLIST_H
+#define PROTECTORBUFFLIST_H
+
 #include "BaseBinaryReader.h"
 
 struct ProtectorBuffListBinaryData
@@ -31,3 +34,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

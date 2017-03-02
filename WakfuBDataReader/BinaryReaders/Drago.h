@@ -1,4 +1,8 @@
+#ifndef DRAGO_H
+#define DRAGO_H
+
 #include "BaseBinaryReader.h"
+#include "TravelLoading.h"
 
 struct DragoBinaryData
 {
@@ -51,3 +55,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

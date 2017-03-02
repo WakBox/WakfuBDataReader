@@ -1,3 +1,6 @@
+#ifndef LOCK_H
+#define LOCK_H
+
 #include "BaseBinaryReader.h"
 
 struct LockBinaryData
@@ -39,3 +42,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

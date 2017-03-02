@@ -1,3 +1,6 @@
+#ifndef BAGS_H
+#define BAGS_H
+
 #include "BaseBinaryReader.h"
 
 struct BagsBinaryData
@@ -35,3 +38,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

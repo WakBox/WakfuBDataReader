@@ -1,3 +1,6 @@
+#ifndef PROTECTORECOSYSTEMPROTECTION_H
+#define PROTECTORECOSYSTEMPROTECTION_H
+
 #include "BaseBinaryReader.h"
 
 struct ProtectorFaunaProtection
@@ -81,3 +84,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

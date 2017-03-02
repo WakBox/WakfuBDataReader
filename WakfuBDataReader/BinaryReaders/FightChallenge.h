@@ -1,3 +1,6 @@
+#ifndef FIGHTCHALLENGE_H
+#define FIGHTCHALLENGE_H
+
 #include "BaseBinaryReader.h"
 
 struct FightChallengeReward
@@ -64,10 +67,11 @@ public:
                 entry.m_rewards.push_back(reward);
             }
 
-
             r->PushRow();
         }
 
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

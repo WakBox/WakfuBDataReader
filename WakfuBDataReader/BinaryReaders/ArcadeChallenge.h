@@ -1,3 +1,6 @@
+#ifndef ARCADECHALLENGE_H
+#define ARCADECHALLENGE_H
+
 #include "BaseBinaryReader.h"
 
 struct ArcadeChallengeBinaryData
@@ -29,3 +32,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

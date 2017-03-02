@@ -1,3 +1,6 @@
+#ifndef DIALOG_H
+#define DIALOG_H
+
 #include "BaseBinaryReader.h"
 
 struct Answer
@@ -55,3 +58,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

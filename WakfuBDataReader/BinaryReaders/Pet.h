@@ -1,3 +1,6 @@
+#ifndef PET_H
+#define PET_H
+
 #include "BaseBinaryReader.h"
 
 struct HealthPenalty
@@ -175,3 +178,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

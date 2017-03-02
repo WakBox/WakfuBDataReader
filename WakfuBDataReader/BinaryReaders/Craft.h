@@ -1,3 +1,6 @@
+#ifndef CRAFT_H
+#define CRAFT_H
+
 #include "BaseBinaryReader.h"
 
 struct CraftBinaryData
@@ -39,3 +42,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

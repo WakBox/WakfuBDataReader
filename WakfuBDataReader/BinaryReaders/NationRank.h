@@ -1,3 +1,6 @@
+#ifndef NATIONRANK_H
+#define NATIONRANK_H
+
 #include "BaseBinaryReader.h"
 
 struct NationRankBinaryData
@@ -35,3 +38,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

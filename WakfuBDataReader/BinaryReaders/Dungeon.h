@@ -1,3 +1,6 @@
+#ifndef DUNGEON_H
+#define DUNGEON_H
+
 #include "BaseBinaryReader.h"
 
 struct DungeonBinaryData
@@ -35,3 +38,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

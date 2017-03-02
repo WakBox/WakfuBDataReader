@@ -1,3 +1,6 @@
+#ifndef REWARDDISPLAYERINTERACTIVEELEMENTPARAM_H
+#define REWARDDISPLAYERINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct RewardDisplayerInteractiveElementParamBinaryData
@@ -31,3 +34,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

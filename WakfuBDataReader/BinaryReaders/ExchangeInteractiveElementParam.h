@@ -1,3 +1,6 @@
+#ifndef EXCHANGEINTERACTIVEELEMENTPARAM_H
+#define EXCHANGEINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct Consumable
@@ -109,3 +112,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

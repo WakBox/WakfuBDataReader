@@ -1,3 +1,6 @@
+#ifndef RECIPE_H
+#define RECIPE_H
+
 #include "BaseBinaryReader.h"
 
 struct RecipeIngredient
@@ -117,3 +120,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

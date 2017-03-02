@@ -1,3 +1,6 @@
+#ifndef AUDIOMARKERINTERACTIVEELEMENTPARAM_H
+#define AUDIOMARKERINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct AudioMarkerInteractiveElementParamBinaryData
@@ -33,3 +36,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

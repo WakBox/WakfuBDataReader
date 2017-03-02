@@ -1,3 +1,6 @@
+#ifndef BOATLINK_H
+#define BOATLINK_H
+
 #include "BaseBinaryReader.h"
 
 struct BoatLinkBinaryData
@@ -41,3 +44,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

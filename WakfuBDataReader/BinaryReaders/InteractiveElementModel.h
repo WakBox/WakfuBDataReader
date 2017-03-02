@@ -1,3 +1,6 @@
+#ifndef INTERACTIVEELEMENTMODEL_H
+#define INTERACTIVEELEMENTMODEL_H
+
 #include "BaseBinaryReader.h"
 
 struct InteractiveElementModelBinaryData
@@ -41,3 +44,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

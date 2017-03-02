@@ -1,5 +1,7 @@
+#ifndef RECYCLEMACHINEINTERACTIVEELEMENTPARAM_H
+#define RECYCLEMACHINEINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
-#include "ChaosParam.h"
 
 struct RecycleMachineInteractiveElementParamBinaryData
 {
@@ -40,3 +42,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

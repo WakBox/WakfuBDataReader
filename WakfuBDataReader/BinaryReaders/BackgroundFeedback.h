@@ -1,3 +1,6 @@
+#ifndef BACKGROUNDFEEDBACK_H
+#define BACKGROUNDFEEDBACK_H
+
 #include "BaseBinaryReader.h"
 
 struct Page
@@ -55,3 +58,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

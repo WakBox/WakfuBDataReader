@@ -1,3 +1,6 @@
+#ifndef HAVENWORLDBUILDINGDECO_H
+#define HAVENWORLDBUILDINGDECO_H
+
 #include "BaseBinaryReader.h"
 
 struct HavenWorldBuildingDecoBinaryData
@@ -37,3 +40,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

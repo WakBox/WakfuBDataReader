@@ -1,3 +1,6 @@
+#ifndef ACHIEVEMENTVARIABLE_H
+#define ACHIEVEMENTVARIABLE_H
+
 #include "BaseBinaryReader.h"
 
 struct AchievementVariableBinaryData
@@ -33,3 +36,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

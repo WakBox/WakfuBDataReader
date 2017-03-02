@@ -1,3 +1,6 @@
+#ifndef LIGHTLOOTLIST_H
+#define LIGHTLOOTLIST_H
+
 #include "BaseBinaryReader.h"
 
 struct LootEntry
@@ -51,3 +54,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

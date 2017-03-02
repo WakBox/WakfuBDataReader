@@ -1,3 +1,6 @@
+#ifndef EQUIPABLEDUMMYINTERACTIVEELEMENTPARAM_H
+#define EQUIPABLEDUMMYINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct EquipableDummyInteractiveElementParamBinaryData
@@ -33,3 +36,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

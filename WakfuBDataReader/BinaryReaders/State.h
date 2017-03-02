@@ -1,3 +1,6 @@
+#ifndef STATE_H
+#define STATE_H
+
 #include "BaseBinaryReader.h"
 
 struct StateBinaryData
@@ -77,3 +80,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

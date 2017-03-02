@@ -1,3 +1,6 @@
+#ifndef KROSMOZGAMECOLLECTIONINTERACTIVEELEMENTPARAM_H
+#define KROSMOZGAMECOLLECTIONINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct KrosmozGameCollectionInteractiveElementParamBinaryData
@@ -31,3 +34,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

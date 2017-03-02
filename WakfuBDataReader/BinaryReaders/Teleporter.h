@@ -1,3 +1,6 @@
+#ifndef TELEPORTER_H
+#define TELEPORTER_H
+
 #include "BaseBinaryReader.h"
 
 struct Destination
@@ -85,3 +88,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

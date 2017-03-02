@@ -1,3 +1,6 @@
+#ifndef CANNON_H
+#define CANNON_H
+
 #include "BaseBinaryReader.h"
 #include "TravelLoading.h"
 
@@ -77,3 +80,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

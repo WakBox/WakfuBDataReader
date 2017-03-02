@@ -1,3 +1,6 @@
+#ifndef ACHIEVEMENTLIST_H
+#define ACHIEVEMENTLIST_H
+
 #include "BaseBinaryReader.h"
 
 struct AchievementListData
@@ -49,3 +52,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

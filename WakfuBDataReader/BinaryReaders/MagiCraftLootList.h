@@ -1,3 +1,6 @@
+#ifndef MAGICRAFTLOOTLIST_H
+#define MAGICRAFTLOOTLIST_H
+
 #include "BaseBinaryReader.h"
 
 struct MagiCraftLootEntry
@@ -49,3 +52,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

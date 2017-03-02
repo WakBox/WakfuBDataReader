@@ -1,3 +1,6 @@
+#ifndef BOAT_H
+#define BOAT_H
+
 #include "BaseBinaryReader.h"
 
 struct BoatBinaryData
@@ -41,3 +44,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

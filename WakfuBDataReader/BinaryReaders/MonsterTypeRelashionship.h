@@ -1,3 +1,6 @@
+#ifndef MONSTERTYPERELASHIONSHIP_H
+#define MONSTERTYPERELASHIONSHIP_H
+
 #include "BaseBinaryReader.h"
 
 struct MonsterTypeRelashionshipBinaryData
@@ -33,3 +36,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

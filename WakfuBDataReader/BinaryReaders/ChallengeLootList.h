@@ -1,3 +1,6 @@
+#ifndef CHALLENGELOOTLIST_H
+#define CHALLENGELOOTLIST_H
+
 #include "BaseBinaryReader.h"
 
 struct ChallengeLootEntry
@@ -49,3 +52,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef HAVENWORLDBUILDINGVISUALDEFINITION_H
+#define HAVENWORLDBUILDINGVISUALDEFINITION_H
+
 #include "BaseBinaryReader.h"
 
 struct VisualElement
@@ -67,3 +70,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

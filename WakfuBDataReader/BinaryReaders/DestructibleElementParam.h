@@ -1,3 +1,6 @@
+#ifndef DESTRUCTIBLEELEMENTPARAM_H
+#define DESTRUCTIBLEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct DestructibleElementParamBinaryData
@@ -43,3 +46,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

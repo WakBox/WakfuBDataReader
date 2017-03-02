@@ -1,3 +1,6 @@
+#ifndef HAVENWORLDDEFINITION_H
+#define HAVENWORLDDEFINITION_H
+
 #include "BaseBinaryReader.h"
 
 struct HavenWorldDefinitionBinaryData
@@ -41,3 +44,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

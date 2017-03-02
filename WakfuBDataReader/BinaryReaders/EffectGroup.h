@@ -1,3 +1,6 @@
+#ifndef EFFECTGROUP_H
+#define EFFECTGROUP_H
+
 #include "BaseBinaryReader.h"
 
 struct EffectGroupBinaryData
@@ -31,3 +34,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

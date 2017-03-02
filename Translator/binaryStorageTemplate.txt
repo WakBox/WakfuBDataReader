@@ -1,3 +1,6 @@
+#ifndef %includeGuards%_H
+#define %includeGuards%_H
+
 #include "BaseBinaryReader.h"
 
 %struct%
@@ -22,3 +25,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

@@ -1,6 +1,7 @@
-#include "BaseBinaryReader.h"
+#ifndef CRAFTINTERACTIVEELEMENTPARAM_H
+#define CRAFTINTERACTIVEELEMENTPARAM_H
 
-struct ChaosParamBinaryData;
+#include "BaseBinaryReader.h"
 
 struct CraftInteractiveElementParamBinaryData
 {
@@ -47,3 +48,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef FIGHTCHALLENGEMONSTER_H
+#define FIGHTCHALLENGEMONSTER_H
+
 #include "BaseBinaryReader.h"
 
 struct FightChallengeMonsterBinaryData
@@ -35,3 +38,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

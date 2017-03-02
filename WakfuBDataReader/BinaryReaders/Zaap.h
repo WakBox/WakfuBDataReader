@@ -1,5 +1,7 @@
+#ifndef ZAAP_H
+#define ZAAP_H
+
 #include "BaseBinaryReader.h"
-#include "TravelLoading.h"
 
 struct ZaapBinaryData
 {
@@ -56,3 +58,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

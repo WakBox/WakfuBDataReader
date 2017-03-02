@@ -1,3 +1,6 @@
+#ifndef MARKETBOARDINTERACTIVEELEMENTPARAM_H
+#define MARKETBOARDINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct MarketBoardInteractiveElementParamBinaryData
@@ -41,3 +44,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

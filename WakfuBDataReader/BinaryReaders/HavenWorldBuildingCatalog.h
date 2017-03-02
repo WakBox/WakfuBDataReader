@@ -1,3 +1,6 @@
+#ifndef HAVENWORLDBUILDINGCATALOG_H
+#define HAVENWORLDBUILDINGCATALOG_H
+
 #include "BaseBinaryReader.h"
 
 struct BuildingCondition
@@ -63,3 +66,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

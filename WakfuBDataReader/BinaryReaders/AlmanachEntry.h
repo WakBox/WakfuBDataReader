@@ -1,3 +1,6 @@
+#ifndef ALMANACHENTRY_H
+#define ALMANACHENTRY_H
+
 #include "BaseBinaryReader.h"
 
 struct AlmanachEntryBinaryData
@@ -35,3 +38,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

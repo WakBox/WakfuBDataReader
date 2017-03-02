@@ -1,3 +1,6 @@
+#ifndef EMOTE_H
+#define EMOTE_H
+
 #include "BaseBinaryReader.h"
 
 struct EmoteBinaryData
@@ -43,3 +46,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

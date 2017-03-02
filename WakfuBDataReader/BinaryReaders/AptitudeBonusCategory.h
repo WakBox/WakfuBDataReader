@@ -1,3 +1,6 @@
+#ifndef APTITUDEBONUSCATEGORY_H
+#define APTITUDEBONUSCATEGORY_H
+
 #include "BaseBinaryReader.h"
 
 struct AptitudeBonusCategoryBinaryData
@@ -33,3 +36,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

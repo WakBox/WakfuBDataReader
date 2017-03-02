@@ -1,3 +1,6 @@
+#ifndef HAVENBAGMODELVIEW_H
+#define HAVENBAGMODELVIEW_H
+
 #include "BaseBinaryReader.h"
 
 struct HavenBagModelViewBinaryData
@@ -37,3 +40,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

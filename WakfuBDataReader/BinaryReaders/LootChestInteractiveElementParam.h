@@ -1,5 +1,7 @@
+#ifndef LOOTCHESTINTERACTIVEELEMENTPARAM_H
+#define LOOTCHESTINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
-#include "ChaosParam.h"
 
 struct LootChestInteractiveElementParamBinaryData
 {
@@ -56,3 +58,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

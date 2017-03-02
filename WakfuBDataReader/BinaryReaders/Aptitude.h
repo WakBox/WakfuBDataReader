@@ -1,3 +1,6 @@
+#ifndef APTITUDE_H
+#define APTITUDE_H
+
 #include "BaseBinaryReader.h"
 
 struct AptitudeBinaryData
@@ -51,3 +54,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

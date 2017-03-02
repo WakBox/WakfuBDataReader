@@ -1,3 +1,6 @@
+#ifndef HAVENWORLDBUILDINGEVOLUTION_H
+#define HAVENWORLDBUILDINGEVOLUTION_H
+
 #include "BaseBinaryReader.h"
 
 struct HavenWorldBuildingEvolutionBinaryData
@@ -39,3 +42,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

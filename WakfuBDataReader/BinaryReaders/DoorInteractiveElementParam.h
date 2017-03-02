@@ -1,3 +1,6 @@
+#ifndef DOORINTERACTIVEELEMENTPARAM_H
+#define DOORINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct DoorInteractiveElementParamBinaryData
@@ -39,3 +42,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

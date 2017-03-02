@@ -1,3 +1,6 @@
+#ifndef KROSMOZFIGURE_H
+#define KROSMOZFIGURE_H
+
 #include "BaseBinaryReader.h"
 
 struct KrosmozFigureBinaryData
@@ -35,3 +38,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef BOOKCASEINTERACTIVEELEMENTPARAM_H
+#define BOOKCASEINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct BookcaseInteractiveElementParamBinaryData
@@ -31,3 +34,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

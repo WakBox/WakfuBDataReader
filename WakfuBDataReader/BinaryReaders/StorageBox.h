@@ -1,5 +1,7 @@
+#ifndef STORAGEBOX_H
+#define STORAGEBOX_H
+
 #include "BaseBinaryReader.h"
-#include "ChaosParam.h"
 
 struct Compartment
 {
@@ -66,3 +68,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

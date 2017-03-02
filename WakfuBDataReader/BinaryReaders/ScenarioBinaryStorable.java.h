@@ -1,3 +1,6 @@
+#ifndef SCENARIOBINARYSTORABLE.JAVA_H
+#define SCENARIOBINARYSTORABLE.JAVA_H
+
 #include "BaseBinaryReader.h"
 
 struct 
@@ -27,3 +30,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

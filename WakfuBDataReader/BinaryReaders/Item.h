@@ -1,3 +1,6 @@
+#ifndef ITEM_H
+#define ITEM_H
+
 #include "BaseBinaryReader.h"
 
 struct ItemAction
@@ -123,3 +126,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef CLIMATEBONUSLIST_H
+#define CLIMATEBONUSLIST_H
+
 #include "BaseBinaryReader.h"
 
 struct ClimateBonusListBinaryData
@@ -31,3 +34,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

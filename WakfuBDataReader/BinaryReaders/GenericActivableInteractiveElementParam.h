@@ -1,3 +1,6 @@
+#ifndef GENERICACTIVABLEINTERACTIVEELEMENTPARAM_H
+#define GENERICACTIVABLEINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct Action
@@ -108,3 +111,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

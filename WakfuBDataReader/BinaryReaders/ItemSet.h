@@ -1,3 +1,6 @@
+#ifndef ITEMSET_H
+#define ITEMSET_H
+
 #include "BaseBinaryReader.h"
 
 struct ItemSetBinaryData
@@ -5,7 +8,6 @@ struct ItemSetBinaryData
     qint16 m_id;
     qint32 m_linkedItemReferenceId;
     QList<qint32> m_itemsId;
-
     QMap<qint32, QList<qint32>> m_effectIdsByPartCount;
 };
 
@@ -45,3 +47,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

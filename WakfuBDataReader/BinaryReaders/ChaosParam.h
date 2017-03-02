@@ -1,3 +1,6 @@
+#ifndef CHAOSPARAM_H
+#define CHAOSPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct ChaosParamBinaryData
@@ -31,3 +34,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

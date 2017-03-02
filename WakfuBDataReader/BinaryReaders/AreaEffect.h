@@ -1,3 +1,6 @@
+#ifndef AREAEFFECT_H
+#define AREAEFFECT_H
+
 #include "BaseBinaryReader.h"
 
 struct AreaEffectBinaryData
@@ -75,3 +78,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

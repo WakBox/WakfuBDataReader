@@ -1,3 +1,6 @@
+#ifndef HAVENWORLDBOARDINTERACTIVEELEMENTPARAM_H
+#define HAVENWORLDBOARDINTERACTIVEELEMENTPARAM_H
+
 #include "BaseBinaryReader.h"
 
 struct HavenWorldBoardInteractiveElementParamBinaryData
@@ -39,3 +42,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef TIMELINEBUFFLIST_H
+#define TIMELINEBUFFLIST_H
+
 #include "BaseBinaryReader.h"
 
 struct TimelineBuffListBinaryData
@@ -37,3 +40,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

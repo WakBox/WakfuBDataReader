@@ -1,3 +1,6 @@
+#ifndef STATICEFFECT_H
+#define STATICEFFECT_H
+
 #include "BaseBinaryReader.h"
 
 struct StaticEffectBinaryData
@@ -139,3 +142,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

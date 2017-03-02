@@ -1,3 +1,6 @@
+#ifndef COMPANIONITEM_H
+#define COMPANIONITEM_H
+
 #include "BaseBinaryReader.h"
 
 struct CompanionItemBinaryData
@@ -29,3 +32,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

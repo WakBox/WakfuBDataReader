@@ -1,3 +1,6 @@
+#ifndef RESOURCE_H
+#define RESOURCE_H
+
 #include "BaseBinaryReader.h"
 
 struct ResourceStepAction
@@ -138,3 +141,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

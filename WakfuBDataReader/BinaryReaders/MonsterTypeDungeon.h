@@ -1,3 +1,6 @@
+#ifndef MONSTERTYPEDUNGEON_H
+#define MONSTERTYPEDUNGEON_H
+
 #include "BaseBinaryReader.h"
 
 struct MonsterTypeDungeonBinaryData
@@ -35,3 +38,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

@@ -366,6 +366,7 @@ class OutputFile
 		echo ">> Generating output file \"$this->outputFile\"...\n";
 		$template = file_get_contents('binaryStorageTemplate.txt');
 
+		$template = str_replace('%includeGuards%', strtoupper($this->className), $template);
 		$template = str_replace('%struct%', $outputData['struct'], $template);
 		$template = str_replace('%className%', $this->className, $template);
 		$template = str_replace('%reader%', $outputData['reader'], $template);

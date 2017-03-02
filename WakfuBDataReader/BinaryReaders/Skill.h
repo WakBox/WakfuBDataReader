@@ -1,3 +1,6 @@
+#ifndef SKILL_H
+#define SKILL_H
+
 #include "BaseBinaryReader.h"
 
 struct SkillBinaryData
@@ -47,3 +50,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif

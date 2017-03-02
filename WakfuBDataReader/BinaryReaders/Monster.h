@@ -1,3 +1,6 @@
+#ifndef MONSTER_H
+#define MONSTER_H
+
 #include "BaseBinaryReader.h"
 
 struct SpellInfo
@@ -381,3 +384,5 @@ public:
         emit Finished(r->GetCols(), r->GetRows());
     }
 };
+
+#endif
