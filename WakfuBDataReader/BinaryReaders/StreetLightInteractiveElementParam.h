@@ -1,4 +1,5 @@
 #include "BaseBinaryReader.h"
+#include "ChaosParam.h"
 
 struct StreetLightInteractiveElementParamBinaryData
 {
@@ -13,7 +14,7 @@ struct StreetLightInteractiveElementParamBinaryData
     qint32 m_extinctionVisualId;
     bool m_extinctionUseObject;
     qint32 m_extinctionDuration;
-    qint8 if (buffer.get() != 0) {;
+    ChaosParamBinaryData m_chaosParams;
 };
 
 class StreetLightInteractiveElementParam : public BaseBinaryReader
@@ -43,7 +44,13 @@ public:
             entry.m_extinctionVisualId = r->ReadInt("m_extinctionVisualId");
             entry.m_extinctionUseObject = r->ReadBool("m_extinctionUseObject");
             entry.m_extinctionDuration = r->ReadInt("m_extinctionDuration");
-            entry.if (buffer.get() != 0) { = r->ReadByte("if (buffer.get() != 0) {");
+
+            qint8 hasChaosParam = r->ReadByte("hasChaosParams");
+            if (hasChaosParam != 0)
+            {
+                entry.m_chaosParams.m_chaosLevel = r->ReadByte("m_chaosLevel");
+                entry.m_chaosParams.m_chaosCollectorParamId = r->ReadInt("m_chaosCollectorParamId");
+            }
 
             r->PushRow();
         }

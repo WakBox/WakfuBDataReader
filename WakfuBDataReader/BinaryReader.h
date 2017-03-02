@@ -3,6 +3,16 @@
 
 #include <QtCore>
 
+struct Row
+{
+    qint64 id;
+    qint32 offset;
+    qint32 size;
+    qint8 seed;
+};
+
+typedef QMap<int, Row> Rows;
+
 struct sEntry
 {
     QString name;
@@ -150,6 +160,24 @@ public:
             AddEntry(name, str);
 
         return str;
+    }
+
+    QStringList ReadStringArray(QString name = "")
+    {
+        QStringList stringArray, v;
+        qint32 size = ReadInt();
+
+        for (qint32 i = 0; i < size; ++i)
+        {
+            QString value = ReadString();
+            stringArray.push_back(value);
+            v.push_back(value);
+        }
+
+        if (!name.isEmpty())
+            AddEntry(name, v.join("|"));
+
+        return stringArray;
     }
 
     QList<qint32> ReadIntArray(QString name = "")

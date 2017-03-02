@@ -1,4 +1,5 @@
 #include "BaseBinaryReader.h"
+#include "TravelLoading.h"
 
 struct Link
 {
@@ -8,7 +9,7 @@ struct Link
     qint32 m_exitWorldId;
     qint32 m_dropWeight;
     QString m_criteria;
-    qint8 if (buffer.get() != 0) {;
+    TravelLoadingBinaryData m_loading;
 };
 
 struct CannonBinaryData
@@ -57,11 +58,18 @@ public:
                 link.m_exitWorldId = r->ReadInt();
                 link.m_dropWeight = r->ReadInt();
                 link.m_criteria = r->ReadString();
-                link.if (buffer.get() != 0) { = r->ReadByte();
+
+                qint8 hasTravelLoading = r->ReadByte("hasTravelLoading");
+                if (hasTravelLoading != 0)
+                {
+                    link.m_loading.m_loadingAnimationName = r->ReadString("m_loadingAnimationName");
+                    link.m_loading.m_loadingMinDuration = r->ReadInt("m_loadingMinDuration");
+                    link.m_loading.m_loadingFadeInDuration = r->ReadInt("m_loadingFadeInDuration");
+                    link.m_loading.m_loadingFadeOutDuration = r->ReadInt("m_loadingFadeOutDuration");
+                }
 
                 entry.m_links.push_back(link);
             }
-
 
             r->PushRow();
         }

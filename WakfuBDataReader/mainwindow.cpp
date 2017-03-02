@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "BinaryReader.h"
 #include "BinaryReaders/BaseBinaryReader.h"
-#include "BinaryReaders/BinaryReaderInclude.h"
 #include "TreeWidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :

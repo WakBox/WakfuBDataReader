@@ -1,4 +1,5 @@
 #include "BaseBinaryReader.h"
+#include "ChaosParam.h"
 
 struct CraftInteractiveElementParamBinaryData
 {
@@ -7,7 +8,7 @@ struct CraftInteractiveElementParamBinaryData
     qint32 m_visualMruId;
     qint32 m_skillId;
     QList<qint32> m_allowedRecipes;
-    qint8 if (buffer.get() != 0) {;
+    ChaosParamBinaryData m_chaosParams;
 };
 
 class CraftInteractiveElementParam : public BaseBinaryReader
@@ -31,7 +32,13 @@ public:
             entry.m_visualMruId = r->ReadInt("m_visualMruId");
             entry.m_skillId = r->ReadInt("m_skillId");
             entry.m_allowedRecipes = r->ReadIntArray("m_allowedRecipes");
-            entry.if (buffer.get() != 0) { = r->ReadByte("if (buffer.get() != 0) {");
+
+            qint8 hasChaosParam = r->ReadByte("hasChaosParams");
+            if (hasChaosParam != 0)
+            {
+                entry.m_chaosParams.m_chaosLevel = r->ReadByte("m_chaosLevel");
+                entry.m_chaosParams.m_chaosCollectorParamId = r->ReadInt("m_chaosCollectorParamId");
+            }
 
             r->PushRow();
         }

@@ -1,4 +1,5 @@
 #include "BaseBinaryReader.h"
+#include "ChaosParam.h"
 
 struct Consumable
 {
@@ -31,7 +32,7 @@ struct ExchangeInteractiveElementParamBinaryData
     qint32 m_visualMruId;
     qint8 m_sortTypeId;
     QList<Exchange> m_exchanges;
-    qint8 if (buffer.get() != 0) {;
+    ChaosParamBinaryData m_chaosParams;
 };
 
 class ExchangeInteractiveElementParam : public BaseBinaryReader
@@ -63,6 +64,7 @@ public:
 
                 exchange.m_exchangeId = r->ReadInt();
                 exchange.m_criteria = r->ReadString();
+
                 qint32 consumableCount = r->ReadInt();
 
                 for (qint32 j = 0; j < consumableCount; ++j)
@@ -74,26 +76,33 @@ public:
 
                     exchange.m_consumables.push_back(consumable);
                 }
+
                 exchange.m_consumableKama = r->ReadInt();
                 exchange.m_consumablePvpMoney = r->ReadInt();
-                    qint32 resultingCount = r->ReadInt();
 
-                    for (qint32 k = 0; k < resultingCount; ++k)
-                    {
-                        Resulting resulting;
+                qint32 resultingCount = r->ReadInt();
 
-                        resulting.m_itemId = r->ReadInt();
-                        resulting.m_quantity = r->ReadShort();
-                        resulting.m_forcedBindType = r->ReadByte();
+                for (qint32 k = 0; k < resultingCount; ++k)
+                {
+                    Resulting resulting;
 
-                        exchange.m_resultings.push_back(resulting);
-                    }
+                    resulting.m_itemId = r->ReadInt();
+                    resulting.m_quantity = r->ReadShort();
+                    resulting.m_forcedBindType = r->ReadByte();
+
+                    exchange.m_resultings.push_back(resulting);
+                }
+
                 exchange.m_resultingKama = r->ReadInt();
-
                 entry.m_exchanges.push_back(exchange);
             }
 
-            entry.if (buffer.get() != 0) { = r->ReadByte("if (buffer.get() != 0) {");
+            qint8 hasChaosParam = r->ReadByte("hasChaosParams");
+            if (hasChaosParam != 0)
+            {
+                entry.m_chaosParams.m_chaosLevel = r->ReadByte("m_chaosLevel");
+                entry.m_chaosParams.m_chaosCollectorParamId = r->ReadInt("m_chaosCollectorParamId");
+            }
 
             r->PushRow();
         }

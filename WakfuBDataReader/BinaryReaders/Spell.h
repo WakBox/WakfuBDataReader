@@ -8,8 +8,7 @@ struct CustomCharac
 
 struct CastParam
 {
-    QList<TByteObjectHashMap<CustomCharac>(costCount);> m_costs;
-    QList<CustomCharac();> final CustomCharac costValue;
+    QMap<qint8, CustomCharac> m_costs;
     qint32 m_cost;
     float m_PA_base;
     float m_PA_inc;
@@ -74,10 +73,8 @@ struct SpellBinaryData
     bool m_associatedWithItemUse;
     QList<qint32> m_properties;
     QList<qint32> m_effectIds;
-    QList<TByteObjectHashMap<CustomCharac>(baseCastParameterCount);> m_baseCastParameters;
-    QList<CustomCharac();> final CustomCharac baseCastParameterValue;
-    QList<THashMap<String, CastParam>(alternativeCastCount);> m_alternativeCasts;
-    QList<CastParam();> final CastParam alternativeCastValue;
+    QMap<qint8, CustomCharac> m_baseCastParameters;
+    QMap<QString, CastParam> m_alternativeCasts;
 };
 
 class Spell : public BaseBinaryReader
@@ -147,45 +144,52 @@ public:
 
             for (qint32 i = 0; i < baseCastParameterCount; ++i)
             {
-                TByteObjectHashMap<CustomCharac>(baseCastParameterCount); tByteObjectHashMap<CustomCharac>(baseCastParameterCount);;
+                qint8 baseCastParameterKey = r->ReadByte();
 
+                CustomCharac baseCastParameterValue;
+                baseCastParameterValue.m_base = r->ReadInt();
+                baseCastParameterValue.m_increment = r->ReadFloat();
 
-                entry.m_baseCastParameters.push_back(tByteObjectHashMap<CustomCharac>(baseCastParameterCount););
+                entry.m_baseCastParameters.insert(baseCastParameterKey, baseCastParameterValue);
             }
-
-
-            qint32 baseCastParameterKey = r->ReadByte();
-
-            for (qint32 i = 0; i < baseCastParameterKey; ++i)
-            {
-                CustomCharac(); customCharac();;
-
-
-                entry.final CustomCharac baseCastParameterValue.push_back(customCharac(););
-            }
-
 
             qint32 alternativeCastCount = r->ReadInt();
 
             for (qint32 i = 0; i < alternativeCastCount; ++i)
             {
-                THashMap<String, CastParam>(alternativeCastCount); tHashMap<String, CastParam>(alternativeCastCount);;
+                QString alternativeCastKey = r->ReadString();
 
+                CastParam alternativeCastValue;
+                qint32 costCount = r->ReadInt();
 
-                entry.m_alternativeCasts.push_back(tHashMap<String, CastParam>(alternativeCastCount););
+                for (qint32 j = 0; j < costCount; ++j)
+                {
+                    qint8 costKey = r->ReadByte();
+
+                    CustomCharac costValue;
+                    baseCastParameterValue.m_base = r->ReadInt();
+                    baseCastParameterValue.m_increment = r->ReadFloat();
+
+                    alternativeCastValue.m_costs.insert(costKey, costValue);
+                }
+
+                alternativeCastValue.m_cost = r->ReadInt();
+                alternativeCastValue.m_PA_base = r->ReadFloat();
+                alternativeCastValue.m_PA_inc = r->ReadFloat();
+                alternativeCastValue.m_PM_base = r->ReadFloat();
+                alternativeCastValue.m_PM_inc = r->ReadFloat();
+                alternativeCastValue.m_PW_base = r->ReadFloat();
+                alternativeCastValue.m_PW_inc = r->ReadFloat();
+                alternativeCastValue.m_rangeMinBase = r->ReadFloat();
+                alternativeCastValue.m_rangeMinInc = r->ReadFloat();
+                alternativeCastValue.m_rangeMaxBase = r->ReadFloat();
+                alternativeCastValue.m_rangeMaxInc = r->ReadFloat();
+                alternativeCastValue.m_isLosAware = r->ReadBool();
+                alternativeCastValue.m_onlyInLine = r->ReadBool();
+                alternativeCastValue.m_rangeIsDynamic = r->ReadBool();
+
+                entry.m_alternativeCasts.insert(alternativeCastKey, alternativeCastValue);
             }
-
-
-            qint32 alternativeCastKey = r->ReadString();
-
-            for (qint32 i = 0; i < alternativeCastKey; ++i)
-            {
-                CastParam(); castParam();;
-
-
-                entry.final CastParam alternativeCastValue.push_back(castParam(););
-            }
-
 
             r->PushRow();
         }

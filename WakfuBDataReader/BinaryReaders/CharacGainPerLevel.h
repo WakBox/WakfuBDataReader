@@ -3,7 +3,7 @@
 struct CharacGainPerLevelBinaryData
 {
     qint16 m_breedId;
-    QList<TByteFloatHashMap(gainCount);> m_gains;
+    QMap<qint8, float> m_gains;
 };
 
 class CharacGainPerLevel : public BaseBinaryReader
@@ -28,23 +28,11 @@ public:
 
             for (qint32 i = 0; i < gainCount; ++i)
             {
-                TByteFloatHashMap(gainCount); tByteFloatHashMap(gainCount);;
+                qint8 key = r->ReadByte();
+                float value = r->ReadFloat();
 
-
-                entry.m_gains.push_back(tByteFloatHashMap(gainCount););
+                entry.m_gains.insert(key, value);
             }
-
-
-            qint32 gainKey = r->ReadByte();
-
-            for (qint32 i = 0; i < gainKey; ++i)
-            {
-                ReadFloat(); readFloat();;
-
-
-                entry.gainValue.push_back(readFloat(););
-            }
-
 
             r->PushRow();
         }

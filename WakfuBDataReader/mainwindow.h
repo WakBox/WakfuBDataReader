@@ -10,16 +10,7 @@
 #include <QTreeWidget>
 
 #include "BinaryReader.h"
-
-struct Row
-{
-    qint64 id;
-    qint32 offset;
-    qint32 size;
-    qint8 seed;
-};
-
-typedef QMap<int, Row> Rows;
+#include "BinaryReaders/BinaryReaderInclude.h"
 
 namespace Ui {
 class MainWindow;

@@ -3,8 +3,8 @@
 struct GroundBinaryData
 {
     qint32 m_id;
-    QList<TIntShortHashMap(resourceFertilityCount);> m_resourceFertility;
-    QList<TShortShortHashMap(resourceTypeFertilityCount);> m_resourceTypeFertility;
+    QMap<qint32, short> m_resourceFertility;
+    QMap<qint16, qint16> m_resourceTypeFertility;
 };
 
 class Ground : public BaseBinaryReader
@@ -29,45 +29,21 @@ public:
 
             for (qint32 i = 0; i < resourceFertilityCount; ++i)
             {
-                TIntShortHashMap(resourceFertilityCount); tIntShortHashMap(resourceFertilityCount);;
+                qint32 resourceFertilityKey = r->ReadInt();
+                qint16 resourceFertilityValue = r->ReadShort();
 
-
-                entry.m_resourceFertility.push_back(tIntShortHashMap(resourceFertilityCount););
+                entry.m_resourceFertility.insert(resourceFertilityKey, resourceFertilityValue);
             }
-
 
             qint32 resourceFertilityKey = r->ReadInt();
 
             for (qint32 i = 0; i < resourceFertilityKey; ++i)
             {
-                ReadShort(); readShort();;
+                qint16 resourceTypeFertilityKey = r->ReadShort();
+                qint16 resourceTypeFertilityValue = r->ReadShort();
 
-
-                entry.resourceFertilityValue.push_back(readShort(););
+                entry.resourceFertilityValue.insert(resourceTypeFertilityKey, resourceTypeFertilityValue);
             }
-
-
-            qint32 resourceTypeFertilityCount = r->ReadInt();
-
-            for (qint32 i = 0; i < resourceTypeFertilityCount; ++i)
-            {
-                TShortShortHashMap(resourceTypeFertilityCount); tShortShortHashMap(resourceTypeFertilityCount);;
-
-
-                entry.m_resourceTypeFertility.push_back(tShortShortHashMap(resourceTypeFertilityCount););
-            }
-
-
-            qint32 resourceTypeFertilityKey = r->ReadShort();
-
-            for (qint32 i = 0; i < resourceTypeFertilityKey; ++i)
-            {
-                ReadShort(); readShort();;
-
-
-                entry.resourceTypeFertilityValue.push_back(readShort(););
-            }
-
 
             r->PushRow();
         }

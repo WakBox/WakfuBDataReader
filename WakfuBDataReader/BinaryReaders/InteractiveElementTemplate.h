@@ -26,7 +26,7 @@ struct InteractiveElementTemplateBinaryData
     qint32 m_templateId;
     QList<qint32> m_properties;
     QList<Point3> m_positionsTrigger;
-    QList<TShortIntHashMap(actionCount);> m_actions;
+    QMap<qint16, qint32> m_actions;
     QList<qint32> m_views;
 };
 
@@ -76,26 +76,14 @@ public:
                 entry.m_positionsTrigger.push_back(point3);
             }
 
-
             qint32 actionCount = r->ReadInt();
 
             for (qint32 i = 0; i < actionCount; ++i)
             {
-                TShortIntHashMap(actionCount); tShortIntHashMap(actionCount);;
+                qint16 actionKey = r->ReadShort();
+                qint32 actionValue = r->ReadInt();
 
-
-                entry.m_actions.push_back(tShortIntHashMap(actionCount););
-            }
-
-
-            qint32 actionKey = r->ReadShort();
-
-            for (qint32 i = 0; i < actionKey; ++i)
-            {
-                ReadInt(); readInt();;
-
-
-                entry.actionValue.push_back(readInt(););
+                entry.m_actions.insert(actionKey, actionValue);
             }
 
             entry.m_views = r->ReadIntArray("m_views");
