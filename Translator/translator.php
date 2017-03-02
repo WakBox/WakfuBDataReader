@@ -5,7 +5,7 @@ echo ">> Starting translator.php...\n\n";
 
 $binaryReaders = array();
 
-if ($handle = opendir('.'))
+if ($handle = opendir('./java'))
 {
     while (false !== ($entry = readdir($handle)))
     {
@@ -25,8 +25,8 @@ if ($handle = opendir('.'))
    		$outputFile = new OutputFile($r);
 
    		$outputFile->GenerateOutputName();
-   		$outputFile->ParseFile();
-   		$outputFile->GenerateOutputFile();
+   		$outputData = $outputFile->ParseFile();
+   		$outputFile->GenerateOutputFile($outputData);
    	}
 }
 else
@@ -36,6 +36,9 @@ class OutputFile
 {
 	private $fileName = '';
 	private $file = [];
+
+	private $mainClassStruct = [];
+	private $subClassesStruct = [];
 
 	private $outputFile = '';
 
@@ -48,25 +51,26 @@ class OutputFile
 
 	private $translate = [
 		'wtf??'						=> 'wtf??',
-		'get'						=> 'ReadByte',
-		'readBoolean'				=> 'ReadBool',
-		'getShort'					=> 'ReadShort',
-		'getFloat'					=> 'ReadFloat',
-		'getInt' 					=> 'ReadInt',
-		'getLong'					=> 'ReadLong',
-		'readUTF8'					=> 'ReadString',
-		'readByteArray'				=> 'ReadByteArray',
-		'readIntArray'				=> 'ReadIntArray',
-		'readShortArray'			=> 'ReadShortArray',
-		'readFloatArray'			=> 'ReadFloatArray',
-		'readStringArray' 			=> 'ReadStringArray',
-		'readLongArray'				=> 'ReadLongArray'
+		'get'						=> 'ReadByte|qint8',
+		'readBoolean'				=> 'ReadBool|bool',
+		'getShort'					=> 'ReadShort|qint16',
+		'getFloat'					=> 'ReadFloat|float',
+		'getInt' 					=> 'ReadInt|qint32',
+		'getLong'					=> 'ReadLong|qint64',
+		'readUTF8'					=> 'ReadString|QString',
+		'readByteArray'				=> 'ReadByteArray|QList<qint8>',
+		'readShortArray'			=> 'ReadShortArray|QList<qint16>',
+		'readIntArray'				=> 'ReadIntArray|QList<qint32>',
+		'readFloatArray'			=> 'ReadFloatArray|QList<float>',
+		'readLongArray'				=> 'ReadLongArray|QList<qint64>',
+		'readStringArray' 			=> 'ReadStringArray|QList<QString>',
+		'Timestamp'					=> 'ReadLong|qint64'
 	];
 
 	public function __construct($fileName)
 	{
 		$this->fileName = $fileName;
-		$this->file = file($fileName);
+		$this->file = file('java/' . $fileName);
 		$this->totalLines = count($this->file);
 	}
 
@@ -86,7 +90,7 @@ class OutputFile
 
 	public function GenerateOutputName()
 	{
-   		$file = explode('BinaryData', $this->file);
+   		$file = explode('BinaryData', $this->fileName);
    		$this->outputFile = $file[0] . '.h';
    		$this->className = $file[0];
    		echo ">> Output filename : " . $this->outputFile . "\n";
@@ -100,32 +104,114 @@ class OutputFile
 		$classes = $this->ParseClasses();
 
 		// Step 2: Get sub classes struct
-		$subClassesStruct = $this->ParseSubClassesStruct($classes['sub_classes']);
+		$this->subClassesStruct = $this->ParseSubClassesStruct($classes['sub_classes']);
+
+		//var_dump($this->subClassesStruct); die;
 
 		// Step 3: Get main class struct
-		$this->ParseMainClassStruct();
+		$this->mainClassStruct = $this->ParseMainClassStruct($classes['main_class']);
 
-		// TMP
-		die;
+		// Step 4: Generate output file
+		$struct = '';
 
-		$handle = fopen($this->file, 'r');
-		if ($handle) 
+		foreach ($this->subClassesStruct as $name => $subClass)
 		{
-			$lineNumber = 0;
-		    while (($line = fgets($handle, 4096)) !== false)
-		    {
-				$this->ParseLine($line, ++$lineNumber);
-		    }
+			$struct .= 'struct ' . $name . "\n" . '{' . "\n";
+			foreach ($subClass as $entry)
+			{
+				if ($entry['type'] == 'sizeOfStruct')
+					continue;
 
-		    var_dump($this->classes); die;
-
-		    if (!feof($handle))
-		        echo ">> Error: unexpected fgets() fail\n";
-
-		    fclose($handle);
+				if ($entry['type'] == 'struct')
+				{
+					$struct .= '    QList<' . $entry['function'] . '> ' . $entry['name'] . ";\n";
+				}
+				else
+					$struct .= '    ' . $entry['type'] . ' ' . $entry['name'] . ";\n";
+			}
+			$struct .= '};' . "\n\n";
 		}
-		else
-			echo '>> Error while opening file : ' . $file . "\n";
+
+		$struct .= 'struct ' . $classes['main_class']['name'] . "\n" . '{' . "\n";
+
+		foreach ($this->mainClassStruct as $entry)
+		{
+			if ($entry['type'] == 'sizeOfStruct')
+				continue;
+
+			if ($entry['type'] == 'struct')
+			{
+				$struct .= '    QList<' . $entry['function'] . '> ' . $entry['name'] . ";\n";
+			}
+			else
+				$struct .= '    ' . $entry['type'] . ' ' . $entry['name'] . ";\n";
+		}
+
+		$struct .= '};' . "\n";
+
+		$reader = $classes['main_class']['name'] . ' entry;' . "\n\n";
+		$totalEntries = count($this->mainClassStruct);
+
+		for ($i = 0; $i < $totalEntries; ++$i)
+		{
+			$entry = $this->mainClassStruct[$i];
+
+			if ($entry['type'] == 'struct')
+				continue;
+
+			if ($entry['type'] == 'sizeOfStruct')
+			{
+				$subClass = $this->ReadSubClass($entry, $this->mainClassStruct[++$i], $i, 'entry');
+				$reader .= "\n" . $subClass['reader'] . "\n";
+			}
+			else
+				$reader .= '            entry.' . $entry['name'] . ' = r->' . $entry['function'] . "\n";			
+		}
+
+		return [
+			'struct' => $struct,
+			'reader' => $reader
+		];
+
+		//echo '>> Error while opening file : ' . $file . "\n";
+	}
+
+	public function ReadSubClass($entry, $struct, $pos, $parentStruct, $depth = 0)
+	{
+		$tab = '            ';
+		$tab .= str_repeat('    ', $depth);
+
+		$letters = ['i', 'j', 'k', 'l', 'm', 'n'];
+
+		$reader = $tab . 'qint32 ' . $entry['name'] . ' = r->' . $entry['function'] . "\n\n";
+		$reader .= $tab . 'for (qint32 ' . $letters[$depth] . ' = 0; ' . $letters[$depth] . ' < ' . $entry['name'] . '; ++' . $letters[$depth] . ')' . "\n";
+		$reader .= $tab . '{' . "\n";
+
+		$reader .= $tab . '    ' . $struct['function'] . ' ' . lcfirst($struct['function']) . ';' . "\n\n";
+
+		$end = count($this->subClassesStruct[$struct['function']]);
+
+		foreach ($this->subClassesStruct[$struct['function']] as $k => $structEntry)
+		{
+			if ($structEntry['type'] == 'struct')
+				continue;
+
+			if ($structEntry['type'] == 'sizeOfStruct')
+			{
+				$subClass = $this->ReadSubClass($structEntry, $this->subClassesStruct[$struct['function']][++$k], $pos, lcfirst($struct['function']), ++$depth);
+				
+				$reader .= $subClass['reader'];
+				$pos = $subClass['pos'];
+			}
+			else
+				$reader .= $tab . '    ' . lcfirst($struct['function']) . '.' . $structEntry['name'] . ' = r->' . $structEntry['function'] . "\n";
+		}
+
+		$reader .= "\n" . $tab . '    ' . lcfirst($parentStruct) . '.' . $struct['name'] . '.push_back(' . lcfirst($struct['function']) . ');' . "\n";
+
+		$reader .= $tab . '}' . "\n";
+
+		return ['pos' => $pos, 'reader' => $reader];
 	}
 
 	public function ParseClasses()
@@ -172,7 +258,6 @@ class OutputFile
 		$lines = $this->file;
 		foreach ($subClasses as $subClass)
 		{
-			echo '<br><br>PARSING ' . $subClass['name'] . '<br><br>';
 			for ($i = $subClass['pos']; $i < $this->totalLines; ++$i)
 			{
 				$line = $lines[$i];
@@ -182,30 +267,62 @@ class OutputFile
 					while (!empty($line))
 					{
 						$line = trim($lines[$i++]);
-						$translated = $this->TranslateFunction($line);
+						$translated = $this->TranslateFunction($line, true);
 
 						if (!empty($translated))
 							$struct[$subClass['name']][] = $translated;
 					}
 
-					var_dump($struct[$subClass['name']]);
-
 					break;
 				}
 			}
 		}
+
+		return $struct;
 	}
 
-	public function TranslateFunction($line)
+	public function ParseMainClassStruct($mainClass)
 	{
-		if (strpos($line, 'new') !== false)
+		$struct = [];
+
+		if (empty($mainClass))
+			return $struct;
+
+		$lines = $this->file;
+
+		for ($i = $mainClass['pos']; $i < $this->totalLines; ++$i)
 		{
-			$name = explode(' = ', $line);
-			$name = trim(str_replace('this.', '', $name[0]));
+			$line = $lines[$i];
 
-			$struct = str_replace('new', '', $name[1]);
+			if (strpos($line, 'read(final') !== false)
+			{
+				while (!empty($line))
+				{
+					$line = trim($lines[$i++]);
+					$translated = $this->TranslateFunction($line);
 
-			var_dump($name . ' : ' . $struct);
+					if (!empty($translated))
+						$struct[] = $translated;
+				}
+
+				break;
+			}
+		}
+
+		return $struct;
+	}
+
+	public function TranslateFunction($line, $isSubStruct = false)
+	{
+		if (strpos($line, 'new') !== false and (strpos($line, 'read') === false) and (strpos($line, 'Timestamp') === false))
+		{
+			$func = explode(' = ', $line);
+			$name = trim(str_replace('this.', '', $func[0]));
+
+			$struct = explode('[', str_replace('new', '', $func[1]));
+			$struct = trim($struct[0]);
+
+			return ['name' => $name, 'type' => 'struct','function' => $struct];
 		}
 		else
 		{
@@ -213,39 +330,48 @@ class OutputFile
 
 			if ($newFunc = $this->Contains($line, $keys))
 			{
-				$function = $this->translate[$keys[$newFunc]];
+				$translated = explode('|', $this->translate[$keys[$newFunc]]);
+				$function = $translated[0];
 				$name = explode(' = ', $line)[0];
 
 				if (strpos($name, 'final') !== false)
 				{
 					$name = explode(' ', $name);
 					$name = trim($name[count($name) - 1]);
+
 					$function .= '();';
+					$type = 'sizeOfStruct';
 				}
 				else
 				{
 					$name = trim(str_replace('this.', '', $name));
-					$function .= '("' . $name . '");';
+					
+					if (!$isSubStruct)
+						$function .= '("' . $name . '");';
+					else
+						$function .= '();';
+
+					$type = $translated[1];
 				}
 
-				return ['name' => $name, 'function' => $function];
+				return ['type' => $type, 'name' => $name, 'function' => $function];
 			}
 		}
 
 		return null;
 	}
 
-	public function GenerateOutputFile()
+	public function GenerateOutputFile($outputData)
 	{
 		echo ">> Generating output file \"$this->outputFile\"...\n";
 		$template = file_get_contents('binaryStorageTemplate.txt');
+
+		$template = str_replace('%struct%', $outputData['struct'], $template);
 		$template = str_replace('%className%', $this->className, $template);
+		$template = str_replace('%reader%', $outputData['reader'], $template);
 
-		$struct = '';
-		foreach ($this->functions as $f)
-			$struct .= '            d << r->' . $f . '();' . "\n";
+		//var_dump($template);
 
-		$template = str_replace('%struct%', $struct, $template);
 		file_put_contents('build/' . $this->outputFile, $template);
 		echo ">> DONE\n\n";
 	}
