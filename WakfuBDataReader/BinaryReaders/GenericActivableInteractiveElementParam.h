@@ -1,5 +1,4 @@
 #include "BaseBinaryReader.h"
-#include "ChaosParam.h"
 
 struct Action
 {

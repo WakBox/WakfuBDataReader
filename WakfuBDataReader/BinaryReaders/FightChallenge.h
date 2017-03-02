@@ -1,6 +1,6 @@
 #include "BaseBinaryReader.h"
 
-struct Reward
+struct FightChallengeReward
 {
     qint32 m_id;
     QString m_criterion;
@@ -20,7 +20,7 @@ struct FightChallengeBinaryData
     bool m_isBase;
     QList<qint32> m_incompatibleChallenges;
     QList<qint32> m_incompatibleMonsters;
-    QList<Reward> m_rewards;
+    QList<FightChallengeReward> m_rewards;
 };
 
 class FightChallenge : public BaseBinaryReader
@@ -54,7 +54,7 @@ public:
 
             for (qint32 i = 0; i < rewardCount; ++i)
             {
-                Reward reward;
+                FightChallengeReward reward;
 
                 reward.m_id = r->ReadInt();
                 reward.m_criterion = r->ReadString();

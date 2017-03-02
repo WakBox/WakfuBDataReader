@@ -42,7 +42,7 @@ public:
                 qint16 resourceTypeFertilityKey = r->ReadShort();
                 qint16 resourceTypeFertilityValue = r->ReadShort();
 
-                entry.resourceFertilityValue.insert(resourceTypeFertilityKey, resourceTypeFertilityValue);
+                entry.m_resourceTypeFertility.insert(resourceTypeFertilityKey, resourceTypeFertilityValue);
             }
 
             r->PushRow();

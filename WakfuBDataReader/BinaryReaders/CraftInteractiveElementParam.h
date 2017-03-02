@@ -1,5 +1,6 @@
 #include "BaseBinaryReader.h"
-#include "ChaosParam.h"
+
+struct ChaosParamBinaryData;
 
 struct CraftInteractiveElementParamBinaryData
 {

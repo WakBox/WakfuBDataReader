@@ -5,7 +5,8 @@ struct ItemSetBinaryData
     qint16 m_id;
     qint32 m_linkedItemReferenceId;
     QList<qint32> m_itemsId;
-    QList<TIntObjectHashMap<int> m_effectIdsByPartCount;
+
+    QMap<qint32, QList<qint32>> m_effectIdsByPartCount;
 };
 
 class ItemSet : public BaseBinaryReader
@@ -32,23 +33,11 @@ public:
 
             for (qint32 i = 0; i < effectIdsByPartCountCount; ++i)
             {
-                TIntObjectHashMap<int tIntObjectHashMap<int;
+                qint32 effectIdsByPartCountKey = r->ReadInt();
+                QList<qint32> effectIdsByPartCountValue = r->ReadIntArray();
 
-
-                entry.m_effectIdsByPartCount.push_back(tIntObjectHashMap<int);
+                entry.m_effectIdsByPartCount.insert(effectIdsByPartCountKey, effectIdsByPartCountValue);
             }
-
-
-            qint32 effectIdsByPartCountKey = r->ReadInt();
-
-            for (qint32 i = 0; i < effectIdsByPartCountKey; ++i)
-            {
-                ReadIntArray(); readIntArray();;
-
-
-                entry.effectIdsByPartCountValue.push_back(readIntArray(););
-            }
-
 
             r->PushRow();
         }

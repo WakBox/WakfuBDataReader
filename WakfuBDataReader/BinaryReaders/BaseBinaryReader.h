@@ -1,8 +1,6 @@
 #ifndef BASEBINARYREADER_H
 #define BASEBINARYREADER_H
 
-#include <QTreeWidget>
-#include "mainwindow.h"
 #include "BinaryReader.h"
 
 class BaseBinaryReader : public QObject

@@ -5,7 +5,7 @@ struct StoolInteractiveElementParamBinaryData
     qint32 m_id;
     QString m_criterion;
     qint32 m_visualId;
-    qint8 if (buffer.get() != 0) {;
+    ChaosParamBinaryData m_chaosParams;
 };
 
 class StoolInteractiveElementParam : public BaseBinaryReader
@@ -27,7 +27,13 @@ public:
             entry.m_id = r->ReadInt("m_id");
             entry.m_criterion = r->ReadString("m_criterion");
             entry.m_visualId = r->ReadInt("m_visualId");
-            entry.if (buffer.get() != 0) { = r->ReadByte("if (buffer.get() != 0) {");
+
+            qint8 hasChaosParam = r->ReadByte("hasChaosParams");
+            if (hasChaosParam != 0)
+            {
+                entry.m_chaosParams.m_chaosLevel = r->ReadByte("m_chaosLevel");
+                entry.m_chaosParams.m_chaosCollectorParamId = r->ReadInt("m_chaosCollectorParamId");
+            }
 
             r->PushRow();
         }

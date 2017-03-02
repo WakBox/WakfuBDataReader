@@ -12,7 +12,7 @@ struct Equipement
     QList<QString> m_parts;
 };
 
-struct Color
+struct MonsterColor
 {
     qint32 m_partIndex;
     qint32 m_color;
@@ -151,7 +151,7 @@ struct MonsterBinaryData
     qint32 m_defeatScriptId;
     QList<qint32> m_gfxEquipment;
     QList<Equipement> m_specialGfxEquipement;
-    QList<Color> m_specialGfxColor;
+    QList<MonsterColor> m_specialGfxColor;
     QList<Anim> m_specialGfxAnim;
     qint32 m_gfx;
     qint32 m_timelineGfx;
@@ -351,7 +351,7 @@ public:
 
             for (qint32 i = 0; i < specialGfxColorCount; ++i)
             {
-                Color color;
+                MonsterColor color;
 
                 color.m_partIndex = r->ReadInt();
                 color.m_color = r->ReadInt();

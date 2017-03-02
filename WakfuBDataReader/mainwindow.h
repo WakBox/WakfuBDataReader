@@ -10,7 +10,7 @@
 #include <QTreeWidget>
 
 #include "BinaryReader.h"
-#include "BinaryReaders/BinaryReaderInclude.h"
+#include "TreeWidget.h"
 
 namespace Ui {
 class MainWindow;

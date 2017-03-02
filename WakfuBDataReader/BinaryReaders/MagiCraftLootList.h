@@ -1,6 +1,6 @@
 #include "BaseBinaryReader.h"
 
-struct LootEntry
+struct MagiCraftLootEntry
 {
     qint32 m_itemId;
 };
@@ -9,7 +9,7 @@ struct MagiCraftLootListBinaryData
 {
     qint32 m_id;
     qint8 m_gemType;
-    QList<LootEntry> m_entries;
+    QList<MagiCraftLootEntry> m_entries;
 };
 
 class MagiCraftLootList : public BaseBinaryReader
@@ -35,7 +35,7 @@ public:
 
             for (qint32 i = 0; i < entrieCount; ++i)
             {
-                LootEntry lootEntry;
+                MagiCraftLootEntry lootEntry;
 
                 lootEntry.m_itemId = r->ReadInt();
 

@@ -47,7 +47,7 @@ struct ResourceBinaryData
     QList<ResourceStep> m_steps;
     qint16 m_height;
     qint32 m_iconGfxId;
-    QList<TIntObjectHashMap<int> m_gfxIds;
+    QMap<qint32, QList<qint32>> m_gfxIds;
 };
 
 class Resource : public BaseBinaryReader
@@ -126,23 +126,11 @@ public:
 
             for (qint32 i = 0; i < gfxIdCount; ++i)
             {
-                TIntObjectHashMap<int tIntObjectHashMap<int;
+                qint32 gfxIdKey = r->ReadInt();
+                QList<qint32> gfxIdValue = r->ReadIntArray();
 
-
-                entry.m_gfxIds.push_back(tIntObjectHashMap<int);
+                entry.m_gfxIds.insert(gfxIdKey, gfxIdValue);
             }
-
-
-            qint32 gfxIdKey = r->ReadInt();
-
-            for (qint32 i = 0; i < gfxIdKey; ++i)
-            {
-                ReadIntArray(); readIntArray();;
-
-
-                entry.gfxIdValue.push_back(readIntArray(););
-            }
-
 
             r->PushRow();
         }

@@ -9,7 +9,7 @@ struct DragoBinaryData
     qint32 m_uiGfxId;
     QString m_dragoCriterion;
     qint8 m_landmarkTravelType;
-    qint8 if (buffer.get() != 0) {;
+    TravelLoadingBinaryData m_loading;
 };
 
 class Drago : public BaseBinaryReader
@@ -35,7 +35,15 @@ public:
             entry.m_uiGfxId = r->ReadInt("m_uiGfxId");
             entry.m_dragoCriterion = r->ReadString("m_dragoCriterion");
             entry.m_landmarkTravelType = r->ReadByte("m_landmarkTravelType");
-            entry.if (buffer.get() != 0) { = r->ReadByte("if (buffer.get() != 0) {");
+
+            qint8 hasTravelLoading = r->ReadByte("hasTravelLoading");
+            if (hasTravelLoading != 0)
+            {
+                entry.m_loading.m_loadingAnimationName = r->ReadString("m_loadingAnimationName");
+                entry.m_loading.m_loadingMinDuration = r->ReadInt("m_loadingMinDuration");
+                entry.m_loading.m_loadingFadeInDuration = r->ReadInt("m_loadingFadeInDuration");
+                entry.m_loading.m_loadingFadeOutDuration = r->ReadInt("m_loadingFadeOutDuration");
+            }
 
             r->PushRow();
         }

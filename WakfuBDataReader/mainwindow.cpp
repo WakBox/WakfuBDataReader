@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "BinaryReaders/BaseBinaryReader.h"
-#include "TreeWidget.h"
+#include "BinaryReaders/BinaryReaderInclude.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -127,7 +127,7 @@ void MainWindow::ReadHeader()
 
     switch (m_fileId)
     {
-    case 1:
+    /*case 1:
         m_binaryReader = new Achievement();
         break;
     case 2:
@@ -515,7 +515,7 @@ void MainWindow::ReadHeader()
         break;
     case 133:
         m_binaryReader = new Secret();
-        break;
+        break;*/
     default:
         break;
     }

@@ -11,8 +11,6 @@ struct Row
     qint8 seed;
 };
 
-typedef QMap<int, Row> Rows;
-
 struct sEntry
 {
     QString name;
@@ -21,6 +19,7 @@ struct sEntry
 
 typedef QList<sEntry> Entry;
 typedef QList<Entry> DataRow;
+typedef QMap<int, Row> Rows;
 
 class BinaryReader
 {
@@ -235,6 +234,25 @@ public:
             AddEntry(name, v.join("|"));
 
         return byteArray;
+    }
+
+    QList<qint16> ReadShortArray(QString name = "")
+    {
+        QList<qint16> shortArray;
+        qint32 size = ReadInt();
+        QStringList v;
+
+        for (qint32 i = 0; i < size; ++i)
+        {
+            qint8 value = ReadShort();
+            shortArray.push_back(value);
+            v.push_back(QString::number(value));
+        }
+
+        if (!name.isEmpty())
+            AddEntry(name, v.join("|"));
+
+        return shortArray;
     }
 
     QByteArray ReadAllFromCurrentPos() { return m_stream.device()->readAll(); }

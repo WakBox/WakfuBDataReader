@@ -1,4 +1,5 @@
 #include "BaseBinaryReader.h"
+#include "ChaosParam.h"
 
 struct LootChestInteractiveElementParamBinaryData
 {
@@ -12,7 +13,7 @@ struct LootChestInteractiveElementParamBinaryData
     qint32 m_nbActivation;
     qint32 m_distributionDuration;
     QString m_criteria;
-    qint8 if (buffer.get() != 0) {;
+    ChaosParamBinaryData m_chaosParams;
 };
 
 class LootChestInteractiveElementParam : public BaseBinaryReader
@@ -41,7 +42,13 @@ public:
             entry.m_nbActivation = r->ReadInt("m_nbActivation");
             entry.m_distributionDuration = r->ReadInt("m_distributionDuration");
             entry.m_criteria = r->ReadString("m_criteria");
-            entry.if (buffer.get() != 0) { = r->ReadByte("if (buffer.get() != 0) {");
+
+            qint8 hasChaosParam = r->ReadByte("hasChaosParams");
+            if (hasChaosParam != 0)
+            {
+                entry.m_chaosParams.m_chaosLevel = r->ReadByte("m_chaosLevel");
+                entry.m_chaosParams.m_chaosCollectorParamId = r->ReadInt("m_chaosCollectorParamId");
+            }
 
             r->PushRow();
         }
