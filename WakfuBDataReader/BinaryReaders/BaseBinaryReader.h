@@ -9,6 +9,14 @@ class BaseBinaryReader : public QObject
 
 public:
     BaseBinaryReader(QObject* parent = 0) : QObject(parent) {}
+    virtual ~BaseBinaryReader()
+    {
+        if (r)
+        {
+            delete r;
+            r = NULL;
+        }
+    }
 
     void Open(QByteArray buffer, quint8 fileId, qint32 fileSize)
     {

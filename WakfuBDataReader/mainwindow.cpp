@@ -21,6 +21,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    if (m_binaryReader)
+    {
+        m_binaryReader->deleteLater();
+        m_binaryReader = NULL;
+    }
+
     delete ui;
 }
 
@@ -72,9 +78,10 @@ void MainWindow::ReadHeader()
     // Clean first
     if (m_binaryReader)
     {
-        delete m_binaryReader;
+        m_binaryReader->deleteLater();
         m_binaryReader = NULL;
 
+        m_rows.clear();
         ui->treeWidget->clear();
     }
 

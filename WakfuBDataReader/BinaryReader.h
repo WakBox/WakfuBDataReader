@@ -51,7 +51,7 @@ public:
 
     void CalcHoo()
     {
-        m_hoo = (qint8)(qint32)(m_hoo + (m_fileId * (m_stream.device()->pos()) + m_size));
+        m_hoo += (qint8)(m_fileId * (m_stream.device()->pos()) + m_size);
     }
 
     void AddEntry(QString name, QVariant value)
@@ -121,7 +121,7 @@ public:
     bool ReadBool(QString name = "") { return Read<bool>(name); }
     qint32 ReadInt(QString name = "") { return Read<qint32>(name); }
     quint32 ReadUInt(QString name = "") { return Read<quint32>(name); }
-    double ReadDouble(QString name = "") { return Read<double>(name); }
+    //double ReadDouble(QString name = "") { return Read<double>(name); }
     qint16 ReadShort(QString name = "") { return Read<qint16>(name); }
     quint16 ReadUShort(QString name = "") { return Read<quint16>(name); }
     qint8 ReadByte(QString name = ""){ return Read<qint8>(name); }
@@ -141,12 +141,12 @@ public:
 
     QString ReadString(QString name = "")
     {
-        quint32 len = ReadInt();
+        qint32 len = ReadInt();
 
         QByteArray bytes;
         bytes.resize(len);
 
-        for (quint32 i = 0; i < len; ++i)
+        for (qint32 i = 0; i < len; ++i)
         {
             qint8 v;
             *this >> v;
