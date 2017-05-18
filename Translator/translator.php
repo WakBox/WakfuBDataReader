@@ -373,6 +373,8 @@ class OutputFile
 
 		//var_dump($template);
 
+		file_put_contents('BinaryDataStructure.h', $outputData['struct'] . "\n", FILE_APPEND);
+
 		file_put_contents('build/' . $this->outputFile, $template);
 		echo ">> DONE\n\n";
 	}
